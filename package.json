@@ -1,7 +1,7 @@
 {
   "name": "stopskill",
   "version": "0.1.1",
-  "homepage": "https://zyvoxi.github.io/SS-Test",
+  "homepage": "https://zyvoxi.github.io/SS",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.13.3",

@@ -11,14 +11,14 @@ function App() {
       <div className="App">
         <Routes>
           {/* Redireciona a rota raiz para /SS-Test */}
-          <Route path="/" element={<Navigate to="/SS-Test" replace />} />
+          <Route path="/" element={<Navigate to="/SS" replace />} />
 
           {/* Define a rota para o componente SignIn */}
-          <Route path="/SS-Test/signin" element={<SignIn />} />
+          <Route path="/SS/signin" element={<SignIn />} />
 
           {/* Define a rota para o componente Main (aqui é a página principal) */}
           <Route
-            path="/SS-Test"
+            path="/SS"
             element={
               <>
                 <AppBar />
