@@ -50,7 +50,7 @@ function SignIn() {
       // Salva no armazenamento local (apenas para testes)
       localStorage.setItem("GoogleUserProfile", JSON.stringify(userProfile));
 
-      navigate("/SS-Test");
+      navigate("/SS");
     } catch (error) {
       console.error("Erro ao decodificar o token:", error);
     }
@@ -97,7 +97,7 @@ function SignIn() {
     const userProfile = localStorage.getItem("GoogleUserProfile");
 
     if (userProfile) {
-      // Se o perfil do usuário existir, redireciona para /SS-Test
+      // Se o perfil do usuário existir, redireciona para /SS
       navigate("/SS");
     }
   }, [navigate]); // Inclui 'navigate' como dependência

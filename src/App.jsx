@@ -10,7 +10,7 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          {/* Redireciona a rota raiz para /SS-Test */}
+          {/* Redireciona a rota raiz para /SS */}
           <Route path="/" element={<Navigate to="/SS" replace />} />
 
           {/* Define a rota para o componente SignIn */}
