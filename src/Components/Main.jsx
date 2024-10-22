@@ -9,11 +9,11 @@ import {
   Fade,
   Avatar,
 } from "@mui/material";
-import "./Style/MCSS.css";
+import "./Styles/Main.css";
 
 const ModalRender = ({ show, onClose, article }) => {
   if (!article) {
-      return null;
+    return null;
   }
 
   const style = {
@@ -48,7 +48,7 @@ const ModalRender = ({ show, onClose, article }) => {
             {article.title}
           </Typography>
           <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            {article.uuid}
           </Typography>
         </Box>
       </Fade>
@@ -64,7 +64,7 @@ const Article = ({ title, text, imgSrc, onClick }) => {
       onClick={onClick}
       component="article"
       elevation={elevation}
-      onMouseEnter={() => setElevation(13)} // Aumenta a elevação no hover
+      onMouseEnter={() => setElevation(15)} // Aumenta a elevação no hover
       onMouseLeave={() => setElevation(2)} // Retorna à elevação original ao sair do hover
       sx={{
         padding: "10px",
@@ -105,13 +105,14 @@ function Main() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://randomuser.me/api/?results=128&nat=br"
+          "https://raw.githubusercontent.com/Zyvoxi/SS/refs/heads/main/users.json"
         );
         const data = await response.json();
         const articles = data.results.map((user) => ({
           title: `${user.name.first} ${user.name.last}`,
           email: `${user.email}`,
           phone: `${user.phone}`,
+          uuid: `${user.login.uuid}`,
           location: {
             state: user.location.state,
             city: user.location.city,
