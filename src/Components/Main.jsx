@@ -12,10 +12,8 @@ import {
 import "./Style/MCSS.css";
 
 const ModalRender = ({ show, onClose, article }) => {
-  if (!show) {
-    setTimeout(() => {
+  if (!article) {
       return null;
-    }, 2000);
   }
 
   const style = {
@@ -47,7 +45,7 @@ const ModalRender = ({ show, onClose, article }) => {
       <Fade in={show}>
         <Box sx={style}>
           <Typography id="transition-modal-title" variant="h6" component="h2">
-            Text in a modal
+            {article.title}
           </Typography>
           <Typography id="transition-modal-description" sx={{ mt: 2 }}>
             Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
@@ -64,6 +62,7 @@ const Article = ({ title, text, imgSrc, onClick }) => {
   return (
     <Paper
       onClick={onClick}
+      component="article"
       elevation={elevation}
       onMouseEnter={() => setElevation(13)} // Aumenta a elevação no hover
       onMouseLeave={() => setElevation(2)} // Retorna à elevação original ao sair do hover
@@ -142,9 +141,9 @@ function Main() {
     setShowModal(false);
   };
 
-  if (!loading) {
+  if (loading) {
     return (
-      <section className="Main-Section">
+      <Box component="section" className="Main-Section">
         {/* Simulação de esqueleto para carregamento de 20 artigos */}
         {Array.from({ length: 200 }).map((_, index) => (
           <Paper
@@ -160,17 +159,17 @@ function Main() {
               flexDirection: "row",
             }}
           >
-            <div
+            <Box
               className="Profile-Pic"
-              style={{
+              sx={{
                 display: "flex",
                 alignItems: "center",
                 marginRight: "10px",
               }}
             >
               <Skeleton variant="circular" width={150} height={150} />
-            </div>
-            <div
+            </Box>
+            <Box
               className="Infos"
               style={{ display: "flex", flexDirection: "column", flexGrow: 1 }}
             >
@@ -182,7 +181,7 @@ function Main() {
                   sx={{ margin: "5px", marginLeft: "calc(14% - 5px)" }}
                 />
               </Box>
-              <div
+              <Box
                 className="Article-Main-Info"
                 style={{ marginLeft: "10px", maxWidth: "250px" }}
               >
@@ -193,17 +192,17 @@ function Main() {
                   sx={{ marginBottom: "10px" }}
                 />
                 <Skeleton variant="text" width="100%" height={20} />
-              </div>
-            </div>
+              </Box>
+            </Box>
           </Paper>
         ))}
-      </section>
+      </Box>
     );
   }
 
   return (
     <>
-      <section className="Main-Section">
+      <Box component="section" className="Main-Section">
         {articlesData.map((article, index) => (
           <Article
             key={index}
@@ -213,7 +212,7 @@ function Main() {
             onClick={() => handleArticleClick(article)}
           />
         ))}
-      </section>
+      </Box>
 
       <ModalRender
         show={showModal}

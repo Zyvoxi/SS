@@ -18,7 +18,7 @@ import {
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 import { GoogleIcon } from "./Images/Icons/CustomIcons";
 import { useState } from "react";
-import { jwtDecode } from "jwt-decode"
+import { jwtDecode } from "jwt-decode";
 import "./Style/SCSS.css";
 import { useNavigate } from "react-router-dom";
 
@@ -32,26 +32,25 @@ function SignIn() {
   const handleCredentialResponse = (response) => {
     const token = response.credential;
     console.log("Token de acesso:", token);
-  
+
     try {
       const userData = jwtDecode(token); // Decodifica o token JWT para obter as informações do usuário
       const userId = crypto.randomUUID(); // Gera um UUID único para o usuário
-  
+
       const userProfile = {
         id: userId,
         name: userData.name,
-        picture: userData.picture
+        picture: userData.picture,
       };
-  
+
       console.log("Nome do usuário:", userData.name);
       console.log("Foto do usuário:", userData.picture);
       console.log("UUID gerado:", userId);
-  
-      // Salva no armazenamento local (apenas para testes)
-      localStorage.setItem('GoogleUserProfile', JSON.stringify(userProfile)); 
 
-      navigate('/SS-Test');
-  
+      // Salva no armazenamento local (apenas para testes)
+      localStorage.setItem("GoogleUserProfile", JSON.stringify(userProfile));
+
+      navigate("/SS-Test");
     } catch (error) {
       console.error("Erro ao decodificar o token:", error);
     }
@@ -75,16 +74,17 @@ function SignIn() {
       script.onload = () => {
         if (window.google) {
           google.accounts.id.initialize({
-            client_id: "763143041695-60bjan0591o8rbm3juj9bk004cr9ng8e.apps.googleusercontent.com",
+            client_id:
+              "763143041695-60bjan0591o8rbm3juj9bk004cr9ng8e.apps.googleusercontent.com",
             callback: handleCredentialResponse,
           });
         }
       };
       document.body.appendChild(script);
     };
-  
+
     loadGoogleScript();
-  
+
     return () => {
       if (window.google && google.accounts) {
         google.accounts.id.cancel();
@@ -94,11 +94,11 @@ function SignIn() {
 
   React.useEffect(() => {
     // Verifica se o GoogleUserProfile está armazenado
-    const userProfile = localStorage.getItem('GoogleUserProfile');
+    const userProfile = localStorage.getItem("GoogleUserProfile");
 
     if (userProfile) {
       // Se o perfil do usuário existir, redireciona para /SS-Test
-      navigate('/SS-Test');
+      navigate("/SS-Test");
     }
   }, [navigate]); // Inclui 'navigate' como dependência
 
@@ -125,42 +125,46 @@ function SignIn() {
     },
   });
 
-  const BpIcon = styled('span')(({ theme }) => ({
+  const BpIcon = styled("span")(({ theme }) => ({
     borderRadius: 3,
     width: 16,
     height: 16,
-    boxShadow: 'inset 0 0 0 1px rgba(16,22,26,.2), inset 0 -1px 0 rgba(16,22,26,.1)',
-    backgroundColor: '#f5f8fa',
-    backgroundImage: 'linear-gradient(180deg,hsla(0,0%,100%,.8),hsla(0,0%,100%,0))',
-    '.Mui-focusVisible &': {
-      outline: '2px auto rgba(19,124,189,.6)',
+    boxShadow:
+      "inset 0 0 0 1px rgba(16,22,26,.2), inset 0 -1px 0 rgba(16,22,26,.1)",
+    backgroundColor: "#f5f8fa",
+    backgroundImage:
+      "linear-gradient(180deg,hsla(0,0%,100%,.8),hsla(0,0%,100%,0))",
+    ".Mui-focusVisible &": {
+      outline: "2px auto rgba(19,124,189,.6)",
       outlineOffset: 2,
     },
-    'input:hover ~ &': {
-      backgroundColor: '#ebf1f5',
-      ...theme.applyStyles('dark', {
-        backgroundColor: '#30404d',
+    "input:hover ~ &": {
+      backgroundColor: "#ebf1f5",
+      ...theme.applyStyles("dark", {
+        backgroundColor: "#30404d",
       }),
     },
-    'input:disabled ~ &': {
-      boxShadow: 'none',
-      background: 'rgba(206,217,224,.5)',
-      ...theme.applyStyles('dark', {
-        background: 'rgba(57,75,89,.5)',
+    "input:disabled ~ &": {
+      boxShadow: "none",
+      background: "rgba(206,217,224,.5)",
+      ...theme.applyStyles("dark", {
+        background: "rgba(57,75,89,.5)",
       }),
     },
-    ...theme.applyStyles('dark', {
-      boxShadow: '0 0 0 1px rgb(16 22 26 / 40%)',
-      backgroundColor: '#394b59',
-      backgroundImage: 'linear-gradient(180deg,hsla(0,0%,100%,.05),hsla(0,0%,100%,0))',
+    ...theme.applyStyles("dark", {
+      boxShadow: "0 0 0 1px rgb(16 22 26 / 40%)",
+      backgroundColor: "#394b59",
+      backgroundImage:
+        "linear-gradient(180deg,hsla(0,0%,100%,.05),hsla(0,0%,100%,0))",
     }),
   }));
-  
+
   const BpCheckedIcon = styled(BpIcon)({
-    backgroundColor: '#137cbd',
-    backgroundImage: 'linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))',
-    '&::before': {
-      display: 'block',
+    backgroundColor: "#137cbd",
+    backgroundImage:
+      "linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))",
+    "&::before": {
+      display: "block",
       width: 16,
       height: 16,
       backgroundImage:
@@ -169,8 +173,8 @@ function SignIn() {
         "1.003 0 00-1.42 1.42l3 3c.18.18.43.29.71.29s.53-.11.71-.29l5-5A1.003 1.003 0 0012 5z' fill='%23fff'/%3E%3C/svg%3E\")",
       content: '""',
     },
-    'input:hover ~ &': {
-      backgroundColor: '#106ba3',
+    "input:hover ~ &": {
+      backgroundColor: "#106ba3",
     },
   });
 
@@ -226,7 +230,7 @@ function SignIn() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        alignSelf: "center",
       }}
     >
       <Paper
@@ -264,7 +268,7 @@ function SignIn() {
 
         {/* Seção de Login */}
         <Box mt={5} mb={3}>
-          <Typography variant="h4" align="start" fontWeight={550}>
+          <Typography variant="h4" align="left" fontWeight={550}>
             Entrar
           </Typography>
         </Box>
@@ -346,10 +350,13 @@ function SignIn() {
             />
           </FormControl>
         </Box>
-        <Box mb={2} sx={{
-          display: "flex",
-          justifyContent: "start"
-        }}>
+        <Box
+          mb={2}
+          sx={{
+            display: "flex",
+            justifyContent: "start",
+          }}
+        >
           <FormControlLabel
             control={
               <Checkbox
@@ -362,7 +369,7 @@ function SignIn() {
                 inputProps={{ "aria-label": "Checkbox demo" }}
               />
             }
-            label="Remember me"
+            label="Lembre-me"
           />
         </Box>
         {/* Botão Entrar */}
@@ -374,38 +381,36 @@ function SignIn() {
           </ThemeProvider>
           <Typography sx={{ textAlign: "center" }} mt={2}>
             Não possui uma conta?{" "}
-            <span>
-              <Link
-                component="button"
-                type="button"
-                onClick={handleForgotPassword}
-                variant="body2"
-                underline="none"
-                sx={{
-                  alignSelf: "baseline",
-                  color: "black",
-                  position: "relative", // Necessário para o posicionamento do ::after
-                  overflow: "hidden",
-                  "&::after": {
-                    content: "''",
-                    position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "0.1em",
-                    backgroundColor: "#aaa",
-                    opacity: 1,
-                    transform: "translate3d(0, 0, 0)",
-                    transition: "ease-out 400ms",
-                  },
-                  "&:hover::after, &:focus::after": {
-                    transform: "translate3d(-100%, 0, 0)",
-                  },
-                }}
-              >
-                Registre-se
-              </Link>
-            </span>
+            <Link
+              component="button"
+              type="button"
+              onClick={handleForgotPassword}
+              underline="none"
+              sx={{
+                color: "black",
+                fontSize: "inherit", // Herda o tamanho de fonte
+                lineHeight: "inherit", // Herda a altura da linha
+                position: "relative", // Necessário para o posicionamento do ::after
+                overflow: "hidden",
+                "&::after": {
+                  content: "''",
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "0.1em",
+                  backgroundColor: "#aaa",
+                  opacity: 1,
+                  transform: "translate3d(0, 0, 0)",
+                  transition: "ease-out 400ms",
+                },
+                "&:hover::after, &:focus::after": {
+                  transform: "translate3d(-100%, 0, 0)",
+                },
+              }}
+            >
+              Registre-se
+            </Link>
           </Typography>
         </Box>
 

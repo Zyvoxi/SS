@@ -16,3 +16,9 @@ body {
   height: 100vh;
   margin: 0;
 }
+
+@media (max-width: 450px) {
+  body {
+    height: 90vh;
+  }
+}

@@ -244,6 +244,7 @@ export default function AppAppBar() {
                         color="primary"
                         variant="outlined"
                         fullWidth
+                        onClick={handleSignInClick}
                         sx={{
                           color: "black",
                           backgroundColor: "transparent",

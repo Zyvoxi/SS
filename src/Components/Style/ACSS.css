@@ -9,6 +9,14 @@ body {
 
 .App {
   text-align: center;
+  display: flex;
+  height: 100vh;
+}
+
+@media (max-width: 450px) {
+  .App {
+    height: 90vh;
+  }
 }
 
 .App-logo {
@@ -19,94 +27,5 @@ body {
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 10s linear;
-  }
-}
-
-.App-header {
-  background-color: #6c8cf6;
-  min-height: 70px;
-  max-height: 70px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  font-size: calc(10px + 2vmin);
-  color: white;
-  position: fixed;
-  top: 0;
-  min-width: 100%;
-  z-index: 1000;
-}
-
-.App-header .Brand {
-  min-height: 70px;
-  max-height: 70px;
-  display: flex;
-  align-items: center;
-}
-
-.App-header .Brand p {
-  font-size: 30px;
-  font-weight: 700;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-}
-
-.App-header .User {
-  max-height: 70px;
-  min-height: 70px;
-  display: flex;
-  align-items: center;
-  position: relative;
-  top: 0;
-  right: 10px;
-}
-
-.App-header .User:hover {
-  cursor: pointer;
-}
-
-.App-header .User img {
-  padding: 5px;
-  max-height: 50px;
-  min-height: 50px;
-  border-radius: 100px;
-  display: flex;
-  position: relative;
-  top: 0;
-}
-
-.App-header .User .User-Name {
-  font-size: 25px;
-  font-weight: 800;
-}
-
-@media (max-width: 768px) {
-  .App-header .User .User-Name {
-    display: none;
-  }
-}
-
-.App-header a {
-  padding: 10px;
-  text-decoration: none;
-  color: rgb(0, 0, 0);
-  transition: ease 0.5s;
-}
-
-.App-header a:hover {
-  transform: scale(1.05);
-  color: rgb(114, 114, 114);
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
   }
 }
