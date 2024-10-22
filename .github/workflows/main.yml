@@ -13,13 +13,13 @@ jobs:
     steps:
     # Step 1: Faz o checkout do repositório
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       
     # Step 2: Configura o Node.js
     - name: Set up Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
-        node-version: '16'
+        node-version: '20'
 
     # Step 3: Instala dependências
     - name: Install dependencies
