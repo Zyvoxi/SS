@@ -1,0 +1,50 @@
+name: Build React App and Deploy to Build Branch
+
+# Aciona o workflow sempre que houver um push na branch main
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Faz o checkout do repositório
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      
+    # Step 2: Configura o Node.js
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20' # Certifique-se de usar a versão correta do Node.js para o seu projeto React
+
+    # Step 3: Instala dependências
+    - name: Install dependencies
+      run: npm install
+
+    # Step 4: Faz o build da aplicação
+    - name: Build the React app
+      run: npm run build
+
+    # Step 5: Faz o checkout da branch build e limpa o conteúdo
+    - name: Checkout build branch
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git fetch origin build
+        git checkout -B build origin/build || git checkout --orphan build
+        git rm -rf .
+
+    # Step 6: Copia o conteúdo do build para a branch build
+    - name: Copy Build Files
+      run: cp -r build/* .
+
+    # Step 7: Commit e push para a branch build
+    - name: Commit and push changes
+      run: |
+        git add .
+        git commit -m "Deploy build from main"
+        git push origin build --force
