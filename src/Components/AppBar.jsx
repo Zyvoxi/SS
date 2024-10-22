@@ -44,7 +44,7 @@ export default function AppAppBar() {
   };
 
   const handleSignInClick = () => {
-    navigate("/SS-Test/signin");
+    navigate("/SS/signin");
   };
 
   const handleSignOutClick = () => {

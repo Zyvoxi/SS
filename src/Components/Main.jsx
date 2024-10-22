@@ -141,7 +141,7 @@ function Main() {
     setShowModal(false);
   };
 
-  if (loading) {
+  if (!loading) {
     return (
       <Box component="section" className="Main-Section">
         {/* Simulação de esqueleto para carregamento de 20 artigos */}

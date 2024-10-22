@@ -98,7 +98,7 @@ function SignIn() {
 
     if (userProfile) {
       // Se o perfil do usuário existir, redireciona para /SS-Test
-      navigate("/SS-Test");
+      navigate("/SS");
     }
   }, [navigate]); // Inclui 'navigate' como dependência
 
