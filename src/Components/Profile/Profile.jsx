@@ -91,6 +91,8 @@ export default function Profile() {
           mt: "120px",
           ml: "20px",
           mr: "20px",
+          paddingLeft: "0 !important",
+          paddingRight: "0 !important"
         }}
       >
         <Box

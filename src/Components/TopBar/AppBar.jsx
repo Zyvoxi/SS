@@ -27,7 +27,7 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   backdropFilter: "blur(24px)",
   border: "1px solid",
   borderColor: theme.palette.divider,
-  backgroundColor: alpha(theme.palette.background.default, 0.4),
+  backgroundColor: alpha(theme.palette.background.default, 0.2),
   boxShadow: theme.shadows[1],
   padding: "2px 12px",
 }));
@@ -115,7 +115,7 @@ export default function AppAppBar() {
               src={logo}
               alt="logo"
               className="rotating-logo"
-              style={{ width: "40px", height: "40px", marginRight: "0px" }}
+              style={{ width: "50px", height: "40px", marginRight: "0px" }}
             />
             <Typography color="#6c8cf6" variant="h5" fontWeight={700} mr={5}>
               STOPSKILL

@@ -75,7 +75,7 @@ const Article = ({ title, text, imgSrc, onClick }) => {
         backgroundColor: "#fefefe41",
         display: "flex",
         flexDirection: "row",
-        transition: "transform 0.1s ease, box-shadow 0.25s ease", // Mantém a transição suave
+        transition: "transform 0.25s ease, box-shadow 0.25s ease", // Mantém a transição suave
         "&:hover": {
           transform: "scale(1.04)", // Efeito de escala ao passar o mouse
           cursor: "pointer",
@@ -152,6 +152,7 @@ function Main() {
             sx={{
               padding: "10px",
               marginBottom: "15px",
+              backgroundColor: "#fefefe41",
               width: "100%",
               maxWidth: "402px",
               height: "150px",
