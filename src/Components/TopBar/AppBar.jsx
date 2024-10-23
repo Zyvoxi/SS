@@ -79,7 +79,10 @@ export default function AppAppBar() {
 
   // Função para alternar o estado do Drawer
   const toggleDrawer = (isOpen) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
       return;
     }
     setOpen(isOpen);
@@ -289,7 +292,7 @@ export default function AppAppBar() {
                     <CloseRoundedIcon />
                   </IconButton>
                 </Box>
-                <Divider sx={{ my: 3 }} />
+                <Divider sx={{ my: 1 }} />
                 <MenuItem
                   onClick={() => {
                     navigate("/SS/");
@@ -303,9 +306,9 @@ export default function AppAppBar() {
                 <MenuItem>Blog</MenuItem>
                 {isUserLoggedIn && (
                   <>
-                    <Divider />
+                    <Divider sx={{ my: 1 }} />
                     <MenuItem
-                      sx={{ gap: "8px" }}
+                      sx={{ gap: "8px", mt: 2 }}
                       onClick={() => {
                         handleMenuClick("perfil");
                         setOpen(false); // Fechar o Drawer
@@ -327,8 +330,8 @@ export default function AppAppBar() {
                 )}
                 {!isUserLoggedIn && (
                   <>
-                    <Divider />
-                    <MenuItem>
+                    <Divider sx={{ my: 1 }} />
+                    <MenuItem sx={{ mt: 2 }}>
                       <Button
                         color="primary"
                         variant="outlined"

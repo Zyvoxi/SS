@@ -1,6 +1,6 @@
 {
   "name": "stopskill",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "homepage": "https://zyvoxi.github.io/SS",
   "private": true,
   "dependencies": {

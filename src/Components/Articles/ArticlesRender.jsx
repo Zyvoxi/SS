@@ -9,7 +9,7 @@ import {
   Fade,
   Avatar,
 } from "@mui/material";
-import "./Styles/ArticlesRender.css";
+import "./ArticlesRender.css";
 
 const ModalRender = ({ show, onClose, article }) => {
   if (!article) {

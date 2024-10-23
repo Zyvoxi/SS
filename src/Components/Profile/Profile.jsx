@@ -3,7 +3,6 @@ import {
   Box,
   Container,
   Typography,
-  Paper,
   Divider,
   Skeleton,
   Avatar,
@@ -18,10 +17,10 @@ import { useParams, useNavigate } from "react-router-dom";
 export default function Profile() {
   // Estados para gerenciar o carregamento e os dados do usuário
   const [loading, setLoading] = React.useState(true);
+  const [ready, setReady] = React.useState(false); // Condição que indica a possibilidade de carregar os dados
   const [userName, setUserName] = React.useState(""); // Nome do usuário
   const [userPicture, setUserPicture] = React.useState(""); // URL da imagem do usuário
   const [signedUserUUID, setSignedUserUUID] = React.useState(""); // UUID do usuário conectado
-  const [userProfile, setUserProfile] = React.useState(null); // Dados do perfil do usuário
   const { uuid } = useParams(); // Obtém o UUID do usuário da URL
   const navigate = useNavigate(); // Hook para navegação programática
 
@@ -30,21 +29,25 @@ export default function Profile() {
     const profileData = localStorage.getItem("GoogleUserProfile");
     if (profileData) {
       const profile = JSON.parse(profileData); // Converte a string do localStorage em um objeto
-      setUserProfile(profile); // Define o estado do perfil do usuário
       setSignedUserUUID(profile.id); // Armazena o UUID do usuário conectado
     }
-  }, []);
+    setReady(true);
+  }, [setReady]);
 
   // Lógica principal de navegação e busca de dados do usuário
   React.useEffect(() => {
-    // Verifica se o perfil do usuário já foi carregado
-    if (!userProfile) return;
+    // Se ainda não estiver pronto -> return
+    if (!ready) return;
 
     // Verifica se o UUID do usuário na URL corresponde ao UUID do usuário conectado
-    if (userProfile && uuid === signedUserUUID) {
-      setUserName(userProfile.name); // Define o nome do usuário
-      setUserPicture(userProfile.picture); // Define a imagem do usuário
-      setLoading(false); // Atualiza o estado de carregamento
+    if (uuid === signedUserUUID) {
+      console.log("valid");
+      const profileData = localStorage.getItem("GoogleUserProfile");
+      if (profileData) {
+        setUserName(profileData.name); // Define o nome do usuário
+        setUserPicture(profileData.picture); // Define a imagem do usuário
+        setLoading(false); // Atualiza o estado de carregamento
+      }
     } else {
       // Função assíncrona para buscar dados do usuário de uma API externa
       const fetchUserData = async () => {
@@ -81,7 +84,7 @@ export default function Profile() {
         fetchUserData(); // Chama a função de busca de dados se o UUID estiver disponível
       }
     }
-  }, [uuid, signedUserUUID, navigate, userProfile]); // Dependências que disparam o efeito
+  }, [uuid, signedUserUUID, navigate, ready]); // Dependências que disparam o efeito
 
   return (
     <>
@@ -111,33 +114,24 @@ export default function Profile() {
               <Box maxWidth={296} alignSelf="start">
                 <Avatar
                   src={userPicture}
+                  alt={userName}
                   sx={{
                     height: "296px",
                     width: "296px",
                   }}
                 />
-                <Typography variant="h4" fontWeight={600}>{userName}</Typography>
-                <Skeleton
-                  variant="h2"
-                  width={296}
-                  sx={{
-                    mt: "10px",
-                  }}
-                />
-                <Skeleton
-                  variant="h2"
-                  width={296}
-                  sx={{
-                    mt: "20px",
-                  }}
-                />
-                <Skeleton
-                  variant="h2"
-                  width={296}
-                  sx={{
-                    mt: "20px",
-                  }}
-                />
+                <Typography variant="h4" fontWeight={600}>
+                  {userName}
+                </Typography>
+                <Typography variant="h6" mt={2} align="left">
+                  Null: dd/mm/aa
+                </Typography>
+                <Typography variant="h6" mt={2} align="left">
+                  Null: Some info
+                </Typography>
+                <Typography variant="h6" mt={2} align="left">
+                  Null: Some info
+                </Typography>
                 <Divider
                   sx={{
                     mt: "30px",
@@ -145,66 +139,86 @@ export default function Profile() {
                     color: "gray",
                   }}
                 />
-                <Skeleton
-                  variant="h2"
-                  width={296}
-                  sx={{
-                    mt: "0px",
-                  }}
-                />
-                <Skeleton
-                  variant="h2"
-                  width={296}
-                  sx={{
-                    mt: "20px",
-                  }}
-                />
-                <Skeleton
-                  variant="h2"
-                  width={296}
-                  sx={{
-                    mt: "20px",
-                  }}
-                />
-                <Skeleton
-                  variant="h2"
-                  width={296}
-                  sx={{
-                    mt: "20px",
-                    mb: "20px",
-                  }}
-                />
+                <Typography variant="h6" mt={2} align="left">
+                  Some more info
+                </Typography>
+                <Typography variant="h6" mt={2} align="left">
+                  Some more info
+                </Typography>
+                <Typography variant="h6" mt={2} align="left">
+                  Some more info
+                </Typography>
+                <Typography variant="h6" mt={2} align="left">
+                  Some more info
+                </Typography>
               </Box>
               <Box width="100%" pl={4}>
-                <Skeleton
-                  variant="h2"
-                  width="100%"
-                  sx={{
-                    mt: "20px",
-                    mb: "20px",
-                  }}
-                />
-                <Skeleton
-                  variant="h2"
-                  width="100%"
-                  sx={{
-                    mt: "20px",
-                  }}
-                />
-                <Skeleton
-                  variant="h2"
-                  width="100%"
-                  sx={{
-                    mt: "20px",
-                  }}
-                />
-                <Skeleton
-                  variant="h2"
-                  width="100%"
-                  sx={{
-                    mt: "20px",
-                  }}
-                />
+                <Box borderRadius={2} border="1px solid #ddddddef" padding={1}>
+                  <Skeleton variant="h2" width="100%" />
+                  <Skeleton
+                    variant="h2"
+                    width="100%"
+                    sx={{
+                      mt: 2,
+                    }}
+                  />
+                  <Skeleton
+                    variant="h2"
+                    width="100%"
+                    sx={{
+                      mt: 2,
+                    }}
+                  />
+                  <Skeleton
+                    variant="h2"
+                    width="100%"
+                    sx={{
+                      mt: 2,
+                    }}
+                  />
+                  <Skeleton
+                    variant="h2"
+                    width="100%"
+                    sx={{
+                      mt: 2,
+                    }}
+                  />
+                  <Skeleton
+                    variant="h2"
+                    width="100%"
+                    sx={{
+                      mt: 2,
+                    }}
+                  />
+                  <Skeleton
+                    variant="h2"
+                    width="100%"
+                    sx={{
+                      mt: 2,
+                    }}
+                  />
+                  <Skeleton
+                    variant="h2"
+                    width="100%"
+                    sx={{
+                      mt: 2,
+                    }}
+                  />
+                  <Skeleton
+                    variant="h2"
+                    width="100%"
+                    sx={{
+                      mt: 2,
+                    }}
+                  />
+                  <Skeleton
+                    variant="h2"
+                    width="100%"
+                    sx={{
+                      mt: 2,
+                    }}
+                  />
+                </Box>
               </Box>
             </Box>
           </>
@@ -223,12 +237,8 @@ export default function Profile() {
               }}
             >
               <Box maxWidth={296} alignSelf="start">
-              <Skeleton
-                  variant="circular"
-                  width={296}
-                  height={296}
-                />
-                 <Skeleton
+                <Skeleton variant="circular" width={296} height={296} />
+                <Skeleton
                   variant="h2"
                   width={296}
                   sx={{
