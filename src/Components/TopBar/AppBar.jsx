@@ -12,11 +12,13 @@ import {
   Drawer,
   Typography,
   Avatar,
+  Menu,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import logo from "../Images/Logo/logo-alt.svg";
 import { useNavigate } from "react-router-dom";
+import "./AppBar.css";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: "flex",
@@ -36,41 +38,51 @@ function stringToColor(string) {
   let hash = 0;
   let i;
 
-  /* eslint-disable no-bitwise */
   for (i = 0; i < string.length; i += 1) {
     hash = string.charCodeAt(i) + ((hash << 5) - hash);
   }
 
-  let color = '#';
+  let color = "#";
 
   for (i = 0; i < 3; i += 1) {
     const value = (hash >> (i * 8)) & 0xff;
     color += `00${value.toString(16)}`.slice(-2);
   }
-  /* eslint-enable no-bitwise */
 
   return color;
 }
 
 function stringAvatar(name) {
+  const nameParts = name.split(" ");
+
+  const initials =
+    nameParts.length === 1
+      ? `${nameParts[0][0]}`
+      : `${nameParts[0][0]}${nameParts[1][0]}`;
+
   return {
     sx: {
       bgcolor: stringToColor(name),
     },
-    children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+    children: initials,
   };
 }
 
 export default function AppAppBar() {
   const [open, setOpen] = React.useState(false);
-  const [isUserLoggedIn, setIsUserLoggedIn] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
+  const [isUserLoggedIn, setIsUserLoggedIn] = React.useState(false);
   const [userName, setUserName] = React.useState("");
   const [userPicture, setUserPicture] = React.useState("");
   const [userUUID, setUserUUID] = React.useState("");
 
-  const toggleDrawer = (newOpen) => () => {
-    setOpen(newOpen);
+  // Função para alternar o estado do Drawer
+  const toggleDrawer = (isOpen) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setOpen(isOpen);
   };
 
   const handleSignInClick = () => {
@@ -78,21 +90,40 @@ export default function AppAppBar() {
   };
 
   const handleSignOutClick = () => {
-    navigate(`/SS/user/${userUUID}/profile`);
+    setIsUserLoggedIn(false);
+    localStorage.removeItem("GoogleUserProfile"); // Limpa os dados do perfil
+    navigate("/SS/signin");
+  };
+
+  const handleAvatarClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
+
+  const handleMenuClick = (option) => {
+    if (option === "perfil") {
+      navigate(`/SS/user/${userUUID}/profile`);
+    } else if (option === "config") {
+      console.log("Página de configurações");
+    } else if (option === "sair") {
+      handleSignOutClick();
+    } else if (option === "inicio") {
+      navigate("/SS/");
+    }
+    handleCloseMenu();
   };
 
   React.useEffect(() => {
-    // Verifica se o GoogleUserProfile está armazenado
-    const userProfile = localStorage.getItem("GoogleUserProfile"); // ou sessionStorage, se preferir
-
+    const userProfile = localStorage.getItem("GoogleUserProfile");
     if (userProfile) {
       const profile = JSON.parse(userProfile);
-
+      setUserName(profile.name);
+      setUserPicture(profile.picture);
       setUserUUID(profile.id);
-      setUserName(profile.name); // Armazena o nome
-      setUserPicture(profile.picture); // Armazena a foto
-
-      setIsUserLoggedIn(true); // Define o estado para indicar que o usuário está logado
+      setIsUserLoggedIn(true);
     }
   }, []);
 
@@ -124,54 +155,29 @@ export default function AppAppBar() {
               <Button
                 variant="text"
                 size="small"
-                sx={{
-                  fontWeight: "600",
-                  color: "#888",
-                }}
+                onClick={() => navigate("/SS/")}
+                sx={{ fontWeight: "600", color: "#888" }}
               >
-                Features
+                Início
               </Button>
               <Button
                 variant="text"
                 size="small"
-                sx={{
-                  fontWeight: "600",
-                  color: "#888",
-                }}
+                sx={{ fontWeight: "600", color: "#888" }}
               >
-                Testimonials
+                Contratos
               </Button>
               <Button
                 variant="text"
                 size="small"
-                sx={{
-                  fontWeight: "600",
-                  color: "#888",
-                }}
-              >
-                Highlights
-              </Button>
-              <Button
-                variant="text"
-                size="small"
-                sx={{
-                  fontWeight: "600",
-                  color: "#888",
-                }}
-              >
-                Pricing
-              </Button>
-              <Button
-                variant="text"
-                size="small"
-                sx={{ minWidth: 0, fontWeight: "600", color: "#888" }}
+                sx={{ fontWeight: "600", color: "#888" }}
               >
                 FAQ
               </Button>
               <Button
                 variant="text"
                 size="small"
-                sx={{ minWidth: 0, fontWeight: "600", color: "#888" }}
+                sx={{ fontWeight: "600", color: "#888" }}
               >
                 Blog
               </Button>
@@ -186,11 +192,53 @@ export default function AppAppBar() {
           >
             {isUserLoggedIn && (
               <>
-                <Avatar  {...stringAvatar('User 1234')} alt={userName} src={userPicture} onClick={handleSignOutClick} sx={{
-                  "&:hover": {
-                    cursor: "pointer",
-                  },
-                }} />
+                <Button
+                  onClick={handleAvatarClick}
+                  sx={{
+                    gap: "5px",
+                    color: "#888",
+                  }}
+                >
+                  <Avatar
+                    {...stringAvatar(userName)}
+                    alt={userName}
+                    src={userPicture}
+                  />
+                  <Typography
+                    variant="text"
+                    fontSize={20}
+                    fontWeight={600}
+                    color="#888"
+                  >
+                    {userName}
+                  </Typography>
+                </Button>
+                <Menu
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={handleCloseMenu}
+                  sx={{
+                    mt: 1.5,
+                  }}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "center",
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "center",
+                  }}
+                >
+                  <MenuItem onClick={() => handleMenuClick("perfil")}>
+                    Perfil
+                  </MenuItem>
+                  <MenuItem onClick={() => handleMenuClick("config")}>
+                    Configurações
+                  </MenuItem>
+                  <MenuItem onClick={() => handleMenuClick("sair")}>
+                    Sair
+                  </MenuItem>
+                </Menu>
               </>
             )}
             {!isUserLoggedIn && (
@@ -199,10 +247,7 @@ export default function AppAppBar() {
                   variant="text"
                   size="small"
                   onClick={handleSignInClick}
-                  sx={{
-                    fontWeight: "600",
-                    color: "#888",
-                  }}
+                  sx={{ fontWeight: "600", color: "#888" }}
                 >
                   Entrar
                 </Button>
@@ -211,17 +256,15 @@ export default function AppAppBar() {
                   variant="contained"
                   size="small"
                   sx={{
-                    transition: "500ms ease !important", // Forçar transição
-                    backgroundColor: "#333 !important", // Cor padrão
+                    transition: "500ms ease !important",
+                    backgroundColor: "#333 !important",
                     backgroundImage: "linear-gradient(to bottom, #333, #000)",
                     "&:hover": {
                       background: "linear-gradient(to bottom, #333, #333)",
                       backgroundImage:
-                        "linear-gradient(to bottom, #00000000, #00000000)", // Cor ao passar o mouse
+                        "linear-gradient(to bottom, #00000000, #00000000)",
                     },
-                    "&:focus": {
-                      outline: "none !important", // Remover contorno de foco
-                    },
+                    "&:focus": { outline: "none !important" },
                   }}
                 >
                   Registrar-se
@@ -247,23 +290,39 @@ export default function AppAppBar() {
                   </IconButton>
                 </Box>
                 <Divider sx={{ my: 3 }} />
-                <MenuItem>Features</MenuItem>
-                <MenuItem>Testimonials</MenuItem>
-                <MenuItem>Highlights</MenuItem>
-                <MenuItem>Pricing</MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    navigate("/SS/");
+                    setOpen(false); // Fechar o Drawer
+                  }}
+                >
+                  Início
+                </MenuItem>
+                <MenuItem>Contratos</MenuItem>
                 <MenuItem>FAQ</MenuItem>
                 <MenuItem>Blog</MenuItem>
                 {isUserLoggedIn && (
                   <>
                     <Divider />
-                    <MenuItem sx={{
-                      gap: "8px"
-                    }}>
+                    <MenuItem
+                      sx={{ gap: "8px" }}
+                      onClick={() => {
+                        handleMenuClick("perfil");
+                        setOpen(false); // Fechar o Drawer
+                      }}
+                    >
                       <Avatar alt={userName} src={userPicture} />
-                      {userName}
+                      <Typography variant="text">{userName}</Typography>
                     </MenuItem>
                     <MenuItem>Configurações</MenuItem>
-                    <MenuItem onClick={handleSignOutClick}>Sair</MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        setOpen(false); // Fechar o Drawer
+                        handleSignOutClick();
+                      }}
+                    >
+                      Sair
+                    </MenuItem>
                   </>
                 )}
                 {!isUserLoggedIn && (
@@ -279,9 +338,7 @@ export default function AppAppBar() {
                           color: "black",
                           backgroundColor: "transparent",
                           borderColor: "black",
-                          "&:hover": {
-                            borderColor: "#666",
-                          },
+                          "&:hover": { borderColor: "#666" },
                         }}
                       >
                         Entrar
@@ -289,23 +346,21 @@ export default function AppAppBar() {
                     </MenuItem>
                     <MenuItem>
                       <Button
-                        variant="conteined"
+                        variant="contained"
                         fullWidth
                         sx={{
-                          transition: "500ms ease !important", // Forçar transição
+                          transition: "500ms ease !important",
                           color: "white",
-                          backgroundColor: "#333 !important", // Cor padrão
+                          backgroundColor: "#333 !important",
                           backgroundImage:
                             "linear-gradient(to bottom, #333, #000)",
                           "&:hover": {
                             background:
                               "linear-gradient(to bottom, #333, #333)",
                             backgroundImage:
-                              "linear-gradient(to bottom, #00000000, #00000000)", // Cor ao passar o mouse
+                              "linear-gradient(to bottom, #00000000, #00000000)",
                           },
-                          "&:focus": {
-                            outline: "none !important", // Remover contorno de foco
-                          },
+                          "&:focus": { outline: "none !important" },
                         }}
                       >
                         Registrar-se

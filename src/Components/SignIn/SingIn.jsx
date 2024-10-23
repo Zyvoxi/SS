@@ -53,10 +53,6 @@ function SignIn() {
         picture: userData.picture,
       };
 
-      console.log("Nome do usuário:", userData.name);
-      console.log("Foto do usuário:", userData.picture);
-      console.log("UUID gerado:", userId);
-
       // Salva o perfil do usuário no armazenamento local (apenas para testes)
       localStorage.setItem("GoogleUserProfile", JSON.stringify(userProfile));
 
@@ -70,7 +66,6 @@ function SignIn() {
    * Função para iniciar o login via Google.
    */
   const handleGoogleLogin = () => {
-    console.log("Login via Google");
     if (google && google.accounts) {
       google.accounts.id.prompt(); // Verifica se google.accounts está disponível
     } else {
@@ -105,7 +100,7 @@ function SignIn() {
         google.accounts.id.cancel();
       }
     };
-  }, []); // O efeito é executado apenas uma vez na montagem
+  }); // O efeito é executado apenas uma vez na montagem
 
   // Efeito para verificar se o perfil do usuário já está armazenado
   React.useEffect(() => {
@@ -239,7 +234,6 @@ function SignIn() {
     }
 
     if (isValid) {
-      console.log("Login bem-sucedido");
       const userId = crypto.randomUUID(); // Gera um UUID único para o usuário
 
       // Cria um objeto de perfil do usuário
@@ -249,9 +243,6 @@ function SignIn() {
         picture: null,
       };
 
-      console.log("Nome do usuário:", emailOrUsername);
-      console.log("Foto do usuário:", "");
-      console.log("UUID gerado:", userId);
 
       // Salva o perfil do usuário no armazenamento local (apenas para testes)
       localStorage.setItem("GoogleUserProfile", JSON.stringify(userProfile));

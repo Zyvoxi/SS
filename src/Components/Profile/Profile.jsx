@@ -92,120 +92,241 @@ export default function Profile() {
           ml: "20px",
           mr: "20px",
           paddingLeft: "0 !important",
-          paddingRight: "0 !important"
+          paddingRight: "0 !important",
         }}
       >
-        <Box
-          maxWidth
-          padding={2}
-          borderLeft="1px solid lightgray"
-          borderRight="1px solid lightgray"
-          borderRadius={3}
-          sx={{
-            display: "flex",
-            height: "120vh",
-          }}
-        >
-          <Box maxWidth={296} alignSelf="start">
-            <Avatar
-              src={userPicture}
+        {!loading && (
+          <>
+            <Box
+              maxWidth
+              padding={2}
+              borderLeft="1px solid lightgray"
+              borderRight="1px solid lightgray"
+              borderRadius={3}
               sx={{
-                height: "296px",
-                width: "296px",
+                display: "flex",
+                height: "120vh",
               }}
-            />
-            <Typography variant="h4">{userName}</Typography>
-            <Skeleton
-              variant="h2"
-              width={296}
+            >
+              <Box maxWidth={296} alignSelf="start">
+                <Avatar
+                  src={userPicture}
+                  sx={{
+                    height: "296px",
+                    width: "296px",
+                  }}
+                />
+                <Typography variant="h4" fontWeight={600}>{userName}</Typography>
+                <Skeleton
+                  variant="h2"
+                  width={296}
+                  sx={{
+                    mt: "10px",
+                  }}
+                />
+                <Skeleton
+                  variant="h2"
+                  width={296}
+                  sx={{
+                    mt: "20px",
+                  }}
+                />
+                <Skeleton
+                  variant="h2"
+                  width={296}
+                  sx={{
+                    mt: "20px",
+                  }}
+                />
+                <Divider
+                  sx={{
+                    mt: "30px",
+                    mb: "30px",
+                    color: "gray",
+                  }}
+                />
+                <Skeleton
+                  variant="h2"
+                  width={296}
+                  sx={{
+                    mt: "0px",
+                  }}
+                />
+                <Skeleton
+                  variant="h2"
+                  width={296}
+                  sx={{
+                    mt: "20px",
+                  }}
+                />
+                <Skeleton
+                  variant="h2"
+                  width={296}
+                  sx={{
+                    mt: "20px",
+                  }}
+                />
+                <Skeleton
+                  variant="h2"
+                  width={296}
+                  sx={{
+                    mt: "20px",
+                    mb: "20px",
+                  }}
+                />
+              </Box>
+              <Box width="100%" pl={4}>
+                <Skeleton
+                  variant="h2"
+                  width="100%"
+                  sx={{
+                    mt: "20px",
+                    mb: "20px",
+                  }}
+                />
+                <Skeleton
+                  variant="h2"
+                  width="100%"
+                  sx={{
+                    mt: "20px",
+                  }}
+                />
+                <Skeleton
+                  variant="h2"
+                  width="100%"
+                  sx={{
+                    mt: "20px",
+                  }}
+                />
+                <Skeleton
+                  variant="h2"
+                  width="100%"
+                  sx={{
+                    mt: "20px",
+                  }}
+                />
+              </Box>
+            </Box>
+          </>
+        )}
+        {loading && (
+          <>
+            <Box
+              maxWidth
+              padding={2}
+              borderLeft="1px solid lightgray"
+              borderRight="1px solid lightgray"
+              borderRadius={3}
               sx={{
-                mt: "20px",
+                display: "flex",
+                height: "120vh",
               }}
-            />
-            <Skeleton
-              variant="h2"
-              width={296}
-              sx={{
-                mt: "20px",
-              }}
-            />
-            <Skeleton
-              variant="h2"
-              width={296}
-              sx={{
-                mt: "20px",
-              }}
-            />
-            <Divider
-              sx={{
-                mt: "30px",
-                mb: "30px",
-                color: "gray",
-              }}
-            />
-            <Skeleton
-              variant="h2"
-              width={296}
-              sx={{
-                mt: "0px",
-              }}
-            />
-            <Skeleton
-              variant="h2"
-              width={296}
-              sx={{
-                mt: "20px",
-              }}
-            />
-            <Skeleton
-              variant="h2"
-              width={296}
-              sx={{
-                mt: "20px",
-              }}
-            />
-            <Skeleton
-              variant="h2"
-              width={296}
-              sx={{
-                mt: "20px",
-                mb: "20px",
-              }}
-            />
-          </Box>
-          <Box width="100%" pl={4}>
-            <Skeleton
-              variant="h2"
-              width="100%"
-              sx={{
-                mt: "20px",
-                mb: "20px",
-              }}
-            />
-            <Skeleton
-              variant="h2"
-              width="100%"
-              sx={{
-                mt: "20px",
-              }}
-            />
-            <Skeleton
-              variant="h2"
-              width="100%"
-              sx={{
-                mt: "20px",
-              }}
-            />
-            <Skeleton
-              variant="h2"
-              width="100%"
-              sx={{
-                mt: "20px",
-              }}
-            />
-            <Typography variant="h4">{uuid}</Typography>
-          </Box>
-        </Box>
+            >
+              <Box maxWidth={296} alignSelf="start">
+              <Skeleton
+                  variant="circular"
+                  width={296}
+                  height={296}
+                />
+                 <Skeleton
+                  variant="h2"
+                  width={296}
+                  sx={{
+                    mt: "20px",
+                  }}
+                />
+                <Skeleton
+                  variant="h2"
+                  width={296}
+                  sx={{
+                    mt: "20px",
+                  }}
+                />
+                <Skeleton
+                  variant="h2"
+                  width={296}
+                  sx={{
+                    mt: "20px",
+                  }}
+                />
+                <Skeleton
+                  variant="h2"
+                  width={296}
+                  sx={{
+                    mt: "20px",
+                  }}
+                />
+                <Divider
+                  sx={{
+                    mt: "30px",
+                    mb: "30px",
+                    color: "gray",
+                  }}
+                />
+                <Skeleton
+                  variant="h2"
+                  width={296}
+                  sx={{
+                    mt: "0px",
+                  }}
+                />
+                <Skeleton
+                  variant="h2"
+                  width={296}
+                  sx={{
+                    mt: "20px",
+                  }}
+                />
+                <Skeleton
+                  variant="h2"
+                  width={296}
+                  sx={{
+                    mt: "20px",
+                  }}
+                />
+                <Skeleton
+                  variant="h2"
+                  width={296}
+                  sx={{
+                    mt: "20px",
+                    mb: "20px",
+                  }}
+                />
+              </Box>
+              <Box width="100%" pl={4}>
+                <Skeleton
+                  variant="h2"
+                  width="100%"
+                  sx={{
+                    mt: "20px",
+                    mb: "20px",
+                  }}
+                />
+                <Skeleton
+                  variant="h2"
+                  width="100%"
+                  sx={{
+                    mt: "20px",
+                  }}
+                />
+                <Skeleton
+                  variant="h2"
+                  width="100%"
+                  sx={{
+                    mt: "20px",
+                  }}
+                />
+                <Skeleton
+                  variant="h2"
+                  width="100%"
+                  sx={{
+                    mt: "20px",
+                  }}
+                />
+              </Box>
+            </Box>
+          </>
+        )}
       </Container>
     </>
   );
