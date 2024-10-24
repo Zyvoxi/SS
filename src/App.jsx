@@ -15,7 +15,7 @@ import "./Components/Styles/App.css";
 // Componente para redirecionamento dinâmico
 function RedirectToProfile() {
   const { uuid } = useParams(); // Captura o UUID da URL
-  return <Navigate to={`/SS/user/${uuid}/profile`} replace />;
+  return <Navigate to={`/SS/user/${uuid}/profile`} replace={true} />;
 }
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
       <div className="App">
         <Routes>
           {/* Redireciona a rota raiz para /SS */}
-          <Route path="/" element={<Navigate to="/SS" replace />} />
+          <Route path="/" element={<Navigate to="/SS" replace={true} />} />
 
           {/* Define a rota para o componente SignIn */}
           <Route path="/SS/signin" element={<SignIn />} />

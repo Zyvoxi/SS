@@ -1,0 +1,43 @@
+{
+    // Mantém o Prettier para HTML, CSS e JSON, se necessário
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[css]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+
+    // Configurações visuais e preferências
+    "workbench.colorTheme": "Andromeda Italic Bordered",
+    "workbench.iconTheme": "material-icon-theme",
+    "files.autoSave": "afterDelay",
+    "editor.minimap.size": "fill",
+    "editor.minimap.showSlider": "always",
+
+    // ESLint como formatador para JavaScript e React (desativa o Prettier)
+    "[javascript]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "[javascriptreact]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+
+    // Desativa o Prettier para evitar conflitos
+    "prettier.enable": false,
+
+    // Configura o VS Code para aplicar correções automáticas do ESLint ao salvar
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "always"
+    },
+
+    // Faz o ESLint validar corretamente os arquivos
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact"
+    ]
+}

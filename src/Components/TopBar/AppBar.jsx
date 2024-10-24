@@ -1,3 +1,4 @@
+/* eslint-disable no-magic-numbers */
 import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import {
@@ -25,7 +26,7 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   alignItems: "center",
   justifyContent: "space-between",
   flexShrink: 0,
-  borderRadius: `15px`,
+  borderRadius: "15px",
   backdropFilter: "blur(24px)",
   border: "1px solid",
   borderColor: theme.palette.divider,
@@ -110,7 +111,7 @@ export default function AppAppBar() {
     if (option === "perfil") {
       navigate(`/SS/user/${userUUID}/profile`);
     } else if (option === "config") {
-      console.log("Página de configurações");
+      /* Página de configurações */
     } else if (option === "sair") {
       handleSignOutClick();
     } else if (option === "inicio") {
@@ -141,7 +142,7 @@ export default function AppAppBar() {
       }}
     >
       <Container maxWidth="lg">
-        <StyledToolbar variant="dense" disableGutters>
+        <StyledToolbar variant="dense" disableGutters={true}>
           <Box
             sx={{ flexGrow: 1, display: "flex", alignItems: "center", px: 0 }}
           >
@@ -335,7 +336,7 @@ export default function AppAppBar() {
                       <Button
                         color="primary"
                         variant="outlined"
-                        fullWidth
+                        fullWidth={true}
                         onClick={handleSignInClick}
                         sx={{
                           color: "black",
@@ -350,7 +351,7 @@ export default function AppAppBar() {
                     <MenuItem>
                       <Button
                         variant="contained"
-                        fullWidth
+                        fullWidth={true}
                         sx={{
                           transition: "500ms ease !important",
                           color: "white",

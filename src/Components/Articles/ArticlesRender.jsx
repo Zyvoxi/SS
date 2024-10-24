@@ -9,6 +9,7 @@ import {
   Fade,
   Avatar,
 } from "@mui/material";
+import PropTypes from "prop-types";
 import "./ArticlesRender.css";
 
 const ModalRender = ({ show, onClose, article }) => {
@@ -34,7 +35,7 @@ const ModalRender = ({ show, onClose, article }) => {
       aria-describedby="transition-modal-description"
       open={show}
       onClose={onClose}
-      closeAfterTransition
+      closeAfterTransition={true}
       slots={{ backdrop: Backdrop }}
       slotProps={{
         backdrop: {
@@ -56,16 +57,27 @@ const ModalRender = ({ show, onClose, article }) => {
   );
 };
 
+ModalRender.propTypes = {
+  show: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  article: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    uuid: PropTypes.string.isRequired,
+  }),
+};
+
 const Article = ({ title, text, imgSrc, onClick }) => {
-  const [elevation, setElevation] = React.useState(2);
+  const defaultElevation = 2;
+  const hoveredElevation = 15;
+  const [elevation, setElevation] = React.useState(defaultElevation);
 
   return (
     <Paper
       onClick={onClick}
       component="article"
       elevation={elevation}
-      onMouseEnter={() => setElevation(15)} // Aumenta a elevação no hover
-      onMouseLeave={() => setElevation(2)} // Retorna à elevação original ao sair do hover
+      onMouseEnter={() => setElevation(hoveredElevation)} // Aumenta a elevação no hover
+      onMouseLeave={() => setElevation(defaultElevation)} // Retorna à elevação original ao sair do hover
       sx={{
         padding: "10px",
         width: "100%",
@@ -95,6 +107,13 @@ const Article = ({ title, text, imgSrc, onClick }) => {
   );
 };
 
+Article.propTypes = {
+  title: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  imgSrc: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
+
 function Main() {
   const [articlesData, setArticlesData] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
@@ -105,7 +124,7 @@ function Main() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://raw.githubusercontent.com/Zyvoxi/SS/refs/heads/main/users.json"
+          "https://randomuser.me/api/?results=128&nat=br",
         );
         const data = await response.json();
         const articles = data.results.map((user) => ({
@@ -120,11 +139,13 @@ function Main() {
           },
           text: `Generated user from ${user.location.city}, ${user.location.country}.`,
           imgSrc: user.picture.large,
+          // eslint-disable-next-line no-magic-numbers
           rating: Math.floor(Math.random() * 6),
         }));
         setArticlesData(articles);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        /* Log removido até o termino dos ajustes do ESLint (no-console.{log, warn, error, etc}) */
+        /* console.error("Error fetching data:", error); */
       } finally {
         setLoading(false);
       }
@@ -142,7 +163,7 @@ function Main() {
     setShowModal(false);
   };
 
-  if (!loading) {
+  if (loading) {
     return (
       <Box component="section" className="Main-Section">
         {/* Simulação de esqueleto para carregamento de 20 artigos */}

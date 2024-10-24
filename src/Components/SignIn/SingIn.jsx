@@ -40,25 +40,25 @@ function SignIn() {
    */
   const handleCredentialResponse = (response) => {
     const token = response.credential; // Obtém o token de acesso
-    console.log("Token de acesso:", token);
 
     try {
       const userData = jwtDecode(token); // Decodifica o token JWT para obter as informações do usuário
       const userId = crypto.randomUUID(); // Gera um UUID único para o usuário
 
-      // Cria um objeto de perfil do usuário
+      // Cria um objeto de perfil do usuário(apenas informações "não-pessoais")
       const userProfile = {
         id: userId,
         name: userData.name,
         picture: userData.picture,
       };
 
-      // Salva o perfil do usuário no armazenamento local (apenas para testes)
+      // Salva o perfil do usuário no armazenamento local (apenas para testes, nenhuma informação é enviada a servidores)
       localStorage.setItem("GoogleUserProfile", JSON.stringify(userProfile));
 
       navigate("/SS"); // Redireciona para a página principal
     } catch (error) {
-      console.error("Erro ao decodificar o token:", error);
+      /* Log removido até o termino dos ajustes do ESLint (no-console {.log,.warn,.error, etc}) */
+      /* console.error("Erro ao decodificar o token:", error); */
     }
   };
 
@@ -69,7 +69,7 @@ function SignIn() {
     if (google && google.accounts) {
       google.accounts.id.prompt(); // Verifica se google.accounts está disponível
     } else {
-      console.error("Google Accounts não está disponível.");
+      /* Log removido até o termino dos ajustes do ESLint (no-console {.log,.warn,.error, etc}) */
     }
   };
 
@@ -183,7 +183,7 @@ function SignIn() {
         "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath" +
         " fill-rule='evenodd' clip-rule='evenodd' d='M12 5c-.28 0-.53.11-.71.29L7 9.59l-2.29-2.3a1.003 " +
         "1.003 0 00-1.42 1.42l3 3c.18.18.43.29.71.29s.53-.11.71-.29l5-5A1.003 1.003 0 0012 5z' fill='%23fff'/%3E%3C/svg%3E\")",
-      content: '""',
+      content: "",
     },
     "input:hover ~ &": {
       backgroundColor: "#106ba3",
@@ -215,7 +215,7 @@ function SignIn() {
       isValid = false;
     } else if (!validateEmailOrUsername(emailOrUsername)) {
       setEmailOrUsernameError(
-        "Por favor, insira um nome de usuário ou e-mail válido."
+        "Por favor, insira um nome de usuário ou e-mail válido.",
       );
       isValid = false;
     } else {
@@ -226,6 +226,7 @@ function SignIn() {
     if (!password) {
       setPasswordError("O campo de senha é obrigatório.");
       isValid = false;
+      // eslint-disable-next-line no-magic-numbers
     } else if (password.length < 6) {
       setPasswordError("A senha deve ter pelo menos 6 caracteres.");
       isValid = false;
@@ -243,7 +244,6 @@ function SignIn() {
         picture: null,
       };
 
-
       // Salva o perfil do usuário no armazenamento local (apenas para testes)
       localStorage.setItem("GoogleUserProfile", JSON.stringify(userProfile));
 
@@ -255,7 +255,7 @@ function SignIn() {
    * Função para lidar com a ação de recuperação de senha.
    */
   const handleForgotPassword = () => {
-    console.log("Redirecionar para recuperação de senha");
+    /* Redirecionar para recuperação de senha(função não implementada) */
   };
 
   // Renderização do componente
@@ -311,10 +311,10 @@ function SignIn() {
 
         {/* Campo de Nome de Usuário ou Email */}
         <Box mb={1}>
-          <FormControl fullWidth sx={{ textAlign: "left" }}>
+          <FormControl fullWidth={true} sx={{ textAlign: "left" }}>
             <FormLabel htmlFor="email">Usuário:</FormLabel>
             <TextField
-              fullWidth
+              fullWidth={true}
               variant="outlined"
               placeholder="User1234"
               type="text"
@@ -334,7 +334,7 @@ function SignIn() {
 
         {/* Campo de Senha */}
         <Box mb={2}>
-          <FormControl fullWidth sx={{ textAlign: "left" }}>
+          <FormControl fullWidth={true} sx={{ textAlign: "left" }}>
             <Box display="flex" justifyContent="space-between" mt={1}>
               <FormLabel htmlFor="password">Senha:</FormLabel>
               <Link
@@ -369,7 +369,7 @@ function SignIn() {
               </Link>
             </Box>
             <TextField
-              fullWidth
+              fullWidth={true}
               variant="outlined"
               placeholder="••••••"
               type="password"
@@ -398,7 +398,7 @@ function SignIn() {
               <Checkbox
                 value="remember"
                 sx={{ "&:hover": { bgcolor: "transparent" } }}
-                disableRipple
+                disableRipple={true}
                 color="default"
                 checkedIcon={<BpCheckedIcon />}
                 icon={<BpIcon />}
@@ -411,7 +411,7 @@ function SignIn() {
         {/* Botão Entrar */}
         <Box mb={2}>
           <ThemeProvider theme={theme}>
-            <Button fullWidth variant="contained" onClick={handleLogin}>
+            <Button fullWidth={true} variant="contained" onClick={handleLogin}>
               Entrar
             </Button>
           </ThemeProvider>
@@ -458,7 +458,7 @@ function SignIn() {
         {/* Botão de login via Google */}
         <Box width="100%">
           <Button
-            fullWidth
+            fullWidth={true}
             variant="outlined"
             startIcon={<GoogleIcon />}
             onClick={handleGoogleLogin}

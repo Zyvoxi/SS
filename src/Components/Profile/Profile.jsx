@@ -17,7 +17,7 @@ import { useParams, useNavigate } from "react-router-dom";
 export default function Profile() {
   // Estados para gerenciar o carregamento e os dados do usuário
   const [loading, setLoading] = React.useState(true);
-  const [ready, setReady] = React.useState(false); // Condição que indica a possibilidade de carregar os dados
+  const [ready, setReady] = React.useState(false); // Condição que indica a possibilidade de buscar os dados
   const [userName, setUserName] = React.useState(""); // Nome do usuário
   const [userPicture, setUserPicture] = React.useState(""); // URL da imagem do usuário
   const [signedUserUUID, setSignedUserUUID] = React.useState(""); // UUID do usuário conectado
@@ -31,17 +31,18 @@ export default function Profile() {
       const profile = JSON.parse(profileData); // Converte a string do localStorage em um objeto
       setSignedUserUUID(profile.id); // Armazena o UUID do usuário conectado
     }
-    setReady(true);
+    setReady(true); // Libera a busca dos dados
   }, [setReady]);
 
   // Lógica principal de navegação e busca de dados do usuário
   React.useEffect(() => {
-    // Se ainda não estiver pronto -> return
-    if (!ready) return;
+    // Não faz nada se ainda não estiver pronto
+    if (!ready) {
+      return;
+    }
 
     // Verifica se o UUID do usuário na URL corresponde ao UUID do usuário conectado
     if (uuid === signedUserUUID) {
-      console.log("valid");
       const profileData = localStorage.getItem("GoogleUserProfile");
       if (profileData) {
         setUserName(profileData.name); // Define o nome do usuário
@@ -53,7 +54,7 @@ export default function Profile() {
       const fetchUserData = async () => {
         try {
           const response = await fetch(
-            "https://raw.githubusercontent.com/Zyvoxi/SS/refs/heads/main/users.json"
+            "https://raw.githubusercontent.com/Zyvoxi/SS/refs/heads/main/users.json",
           );
           const data = await response.json(); // Converte a resposta da API em JSON
 
@@ -73,7 +74,8 @@ export default function Profile() {
           }
         } catch (error) {
           // Captura e exibe erros de busca de dados
-          console.error("Erro ao buscar dados:", error);
+          /* Log removido até o termino dos ajustes do ESLint (no-console {.log,.warn,.error, etc}) */
+          /* console.error("Erro ao buscar dados:", error); */
         } finally {
           // Atualiza o estado de carregamento após a busca
           setLoading(false);
@@ -101,7 +103,7 @@ export default function Profile() {
         {!loading && (
           <>
             <Box
-              maxWidth
+              maxWidth={true}
               padding={2}
               borderLeft="1px solid lightgray"
               borderRight="1px solid lightgray"
@@ -116,8 +118,10 @@ export default function Profile() {
                   src={userPicture}
                   alt={userName}
                   sx={{
-                    height: "296px",
-                    width: "296px",
+                    height:
+                      "296px" /* 296px se a largura for maior que 1012px, 256px se a largura for menor que 1012px e maior que 720px, 156px se a largura for menor que 720px */,
+                    width:
+                      "296px" /* 296px se a largura for maior que 1012px, 256px se a largura for menor que 1012px e maior que 720px, 156px se a largura for menor que 720px */,
                   }}
                 />
                 <Typography variant="h4" fontWeight={600}>
@@ -226,7 +230,7 @@ export default function Profile() {
         {loading && (
           <>
             <Box
-              maxWidth
+              maxWidth={true}
               padding={2}
               borderLeft="1px solid lightgray"
               borderRight="1px solid lightgray"
