@@ -7,6 +7,8 @@ import {
   Skeleton,
   Avatar,
 } from "@mui/material";
+import CakeOutlinedIcon from "@mui/icons-material/CakeOutlined";
+import RoomOutlinedIcon from "@mui/icons-material/RoomOutlined";
 import "./Profile.css";
 import winston from "winston";
 import { useParams, useNavigate } from "react-router-dom";
@@ -23,12 +25,12 @@ export default function Profile() {
   const [userName, setUserName] = React.useState(""); // Nome do usuário
   const [userPicture, setUserPicture] = React.useState(""); // URL da imagem do usuário
   const [userDOB, setUserDOB] = React.useState(""); // Data de nascimento do usuário
+  const [userLocation, setUserLocation] = React.useState("");
   const [signedUserUUID, setSignedUserUUID] = React.useState(""); // UUID do usuário conectado
   const { uuid } = useParams(); // Obtém o UUID do usuário da URL
   const navigate = useNavigate(); // Hook para navegação programática
 
   const logger = winston.createLogger({
-    // eslint-disable-next-line no-undef
     level: process.env.NODE_ENV === "production" ? "warn" : "debug",
     transports: [new winston.transports.Console()],
   });
@@ -65,6 +67,7 @@ export default function Profile() {
         setUserName(profile.name); // Define o nome do usuário
         setUserPicture(profile.picture); // Define a imagem do usuário
         setUserDOB(profile.dob); // Define a data de nascimento do usuário
+        setUserLocation(profile.location);
         setLoading(false); // Atualiza o estado de carregamento
       }
     } else {
@@ -84,6 +87,7 @@ export default function Profile() {
             setUserName(`${user.name.first} ${user.name.last}`);
             setUserPicture(user.picture.large);
             setUserDOB(formatDate(user.dob.date));
+            setUserLocation(`${user.location.city} - ${user.location.state}`);
             setLoading(false);
           } else if (!signedUserUUID) {
             // Se o UUID do usuário conectado não estiver disponível, redireciona para a página de login
@@ -183,13 +187,10 @@ export default function Profile() {
                   borderRadius={3}
                 >
                   <Typography variant="h6" mt={2} align="left">
-                    Data de nascimento: {userDOB}
+                    {<CakeOutlinedIcon />}: {userDOB}
                   </Typography>
                   <Typography variant="h6" mt={2} align="left">
-                    Null: Some info
-                  </Typography>
-                  <Typography variant="h6" mt={2} align="left">
-                    Null: Some info
+                    {<RoomOutlinedIcon />}: {userLocation}
                   </Typography>
                   <Divider
                     sx={{

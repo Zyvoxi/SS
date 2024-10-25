@@ -35,7 +35,6 @@ export default function SignIn() {
   const navigate = useNavigate(); // Hook para navegação programática
 
   const logger = winston.createLogger({
-    // eslint-disable-next-line no-undef
     level: process.env.NODE_ENV === "production" ? "warn" : "debug",
     transports: [new winston.transports.Console()],
   });
@@ -59,6 +58,7 @@ export default function SignIn() {
         name: userData.name,
         picture: userData.picture,
         dob: userData.birthday || "27/07/1997",
+        location: "Extrema - MG",
       };
 
       // Salva o perfil do usuário no armazenamento local (apenas para testes, nenhuma informação é enviada a servidores)
@@ -77,7 +77,7 @@ export default function SignIn() {
     if (google && google.accounts) {
       google.accounts.id.prompt(); // Verifica se google.accounts está disponível
     } else {
-      logger.error("Google.acconts não está disponível");
+      logger.error("google.acconts não está disponível");
     }
   };
 

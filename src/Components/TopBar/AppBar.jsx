@@ -15,6 +15,9 @@ import {
   Avatar,
   Menu,
 } from "@mui/material";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import winston from "winston";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
@@ -80,7 +83,6 @@ export default function AppAppBar() {
   const [userUUID, setUserUUID] = React.useState("");
 
   const logger = winston.createLogger({
-    // eslint-disable-next-line no-undef
     level: process.env.NODE_ENV === "production" ? "warn" : "debug",
     transports: [new winston.transports.Console()],
   });
@@ -243,13 +245,13 @@ export default function AppAppBar() {
                   }}
                 >
                   <MenuItem onClick={() => handleMenuClick("perfil")}>
-                    Perfil
+                    {<PersonOutlineOutlinedIcon />}Perfil
                   </MenuItem>
                   <MenuItem onClick={() => handleMenuClick("config")}>
-                    Configurações
+                    {<SettingsOutlinedIcon />}Configurações
                   </MenuItem>
                   <MenuItem onClick={() => handleMenuClick("sair")}>
-                    Sair
+                    {<LogoutOutlinedIcon />}Sair
                   </MenuItem>
                 </Menu>
               </>
