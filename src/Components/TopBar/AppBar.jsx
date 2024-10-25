@@ -326,17 +326,17 @@ export default function AppAppBar() {
                         setOpen(false); // Fechar o Drawer
                       }}
                     >
-                      <Avatar alt={userName} src={userPicture} />
-                      <Typography variant="text">{userName}</Typography>
+                      {<Avatar alt={userName} src={userPicture} />}
+                      {userName}
                     </MenuItem>
-                    <MenuItem>Configurações</MenuItem>
+                    <MenuItem>{<SettingsOutlinedIcon />}Configurações</MenuItem>
                     <MenuItem
                       onClick={() => {
                         setOpen(false); // Fechar o Drawer
                         handleSignOutClick();
                       }}
                     >
-                      Sair
+                      {<LogoutOutlinedIcon />}Sair
                     </MenuItem>
                   </>
                 )}
