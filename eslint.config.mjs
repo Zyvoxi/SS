@@ -11,7 +11,10 @@ export default [
   {
     files: ["**/*.{js,mjs,cjs,jsx}"],
     languageOptions: {
-      globals: globals.browser,
+      globals: {
+        ...globals.browser,
+        google: "readonly",
+      },
     },
     plugins: {
       react: pluginReact,

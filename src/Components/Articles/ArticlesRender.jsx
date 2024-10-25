@@ -9,6 +9,7 @@ import {
   Fade,
   Avatar,
 } from "@mui/material";
+import winston from "winston";
 import PropTypes from "prop-types";
 import "./ArticlesRender.css";
 
@@ -114,17 +115,23 @@ Article.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-function Main() {
+export default function Main() {
   const [articlesData, setArticlesData] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [showModal, setShowModal] = React.useState(false);
   const [selectedArticle, setSelectedArticle] = React.useState(null);
 
+  const logger = winston.createLogger({
+    // eslint-disable-next-line no-undef
+    level: process.env.NODE_ENV === "production" ? "warn" : "debug",
+    transports: [new winston.transports.Console()],
+  });
+
   React.useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://randomuser.me/api/?results=128&nat=br",
+          "https://raw.githubusercontent.com/Zyvoxi/SS/refs/heads/main/users.json",
         );
         const data = await response.json();
         const articles = data.results.map((user) => ({
@@ -144,8 +151,7 @@ function Main() {
         }));
         setArticlesData(articles);
       } catch (error) {
-        /* Log removido até o termino dos ajustes do ESLint (no-console.{log, warn, error, etc}) */
-        /* console.error("Error fetching data:", error); */
+        logger.error("Error fetching data:", error);
       } finally {
         setLoading(false);
       }
@@ -245,5 +251,3 @@ function Main() {
     </>
   );
 }
-
-export default Main;

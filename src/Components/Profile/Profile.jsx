@@ -8,6 +8,7 @@ import {
   Avatar,
 } from "@mui/material";
 import "./Profile.css";
+import winston from "winston";
 import { useParams, useNavigate } from "react-router-dom";
 
 /**
@@ -16,17 +17,33 @@ import { useParams, useNavigate } from "react-router-dom";
  */
 export default function Profile() {
   // Estados para gerenciar o carregamento e os dados do usuário
+  const profileData = localStorage.getItem("GoogleUserProfile");
   const [loading, setLoading] = React.useState(true);
   const [ready, setReady] = React.useState(false); // Condição que indica a possibilidade de buscar os dados
   const [userName, setUserName] = React.useState(""); // Nome do usuário
   const [userPicture, setUserPicture] = React.useState(""); // URL da imagem do usuário
+  const [userDOB, setUserDOB] = React.useState(""); // Data de nascimento do usuário
   const [signedUserUUID, setSignedUserUUID] = React.useState(""); // UUID do usuário conectado
   const { uuid } = useParams(); // Obtém o UUID do usuário da URL
   const navigate = useNavigate(); // Hook para navegação programática
 
+  const logger = winston.createLogger({
+    // eslint-disable-next-line no-undef
+    level: process.env.NODE_ENV === "production" ? "warn" : "debug",
+    transports: [new winston.transports.Console()],
+  });
+
+  const formatDate = (isoString) => {
+    const sliceValue = -2;
+    const date = new Date(isoString);
+    const day = `0${date.getDate()}`.slice(sliceValue);
+    const month = `0${date.getMonth() + 1}`.slice(sliceValue);
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
   // Atualiza o userProfile do localStorage na montagem do componente
   React.useEffect(() => {
-    const profileData = localStorage.getItem("GoogleUserProfile");
     if (profileData) {
       const profile = JSON.parse(profileData); // Converte a string do localStorage em um objeto
       setSignedUserUUID(profile.id); // Armazena o UUID do usuário conectado
@@ -43,10 +60,11 @@ export default function Profile() {
 
     // Verifica se o UUID do usuário na URL corresponde ao UUID do usuário conectado
     if (uuid === signedUserUUID) {
-      const profileData = localStorage.getItem("GoogleUserProfile");
       if (profileData) {
-        setUserName(profileData.name); // Define o nome do usuário
-        setUserPicture(profileData.picture); // Define a imagem do usuário
+        const profile = JSON.parse(profileData);
+        setUserName(profile.name); // Define o nome do usuário
+        setUserPicture(profile.picture); // Define a imagem do usuário
+        setUserDOB(profile.dob); // Define a data de nascimento do usuário
         setLoading(false); // Atualiza o estado de carregamento
       }
     } else {
@@ -65,6 +83,7 @@ export default function Profile() {
             // Se o usuário for encontrado, atualiza o estado com os dados do usuário
             setUserName(`${user.name.first} ${user.name.last}`);
             setUserPicture(user.picture.large);
+            setUserDOB(formatDate(user.dob.date));
           } else if (!signedUserUUID) {
             // Se o UUID do usuário conectado não estiver disponível, redireciona para a página de login
             navigate("/SS/signin");
@@ -74,8 +93,7 @@ export default function Profile() {
           }
         } catch (error) {
           // Captura e exibe erros de busca de dados
-          /* Log removido até o termino dos ajustes do ESLint (no-console {.log,.warn,.error, etc}) */
-          /* console.error("Erro ao buscar dados:", error); */
+          logger.error("Erro ao buscar dados:", error);
         } finally {
           // Atualiza o estado de carregamento após a busca
           setLoading(false);
@@ -110,53 +128,102 @@ export default function Profile() {
               borderRadius={3}
               sx={{
                 display: "flex",
-                height: "120vh",
+                flexDirection: {
+                  xs: "column",
+                  sm: "column",
+                  md: "row",
+                },
+                height: "100%",
               }}
             >
-              <Box maxWidth={296} alignSelf="start">
-                <Avatar
-                  src={userPicture}
-                  alt={userName}
-                  sx={{
-                    height:
-                      "296px" /* 296px se a largura for maior que 1012px, 256px se a largura for menor que 1012px e maior que 720px, 156px se a largura for menor que 720px */,
-                    width:
-                      "296px" /* 296px se a largura for maior que 1012px, 256px se a largura for menor que 1012px e maior que 720px, 156px se a largura for menor que 720px */,
-                  }}
-                />
-                <Typography variant="h4" fontWeight={600}>
-                  {userName}
-                </Typography>
-                <Typography variant="h6" mt={2} align="left">
-                  Null: dd/mm/aa
-                </Typography>
-                <Typography variant="h6" mt={2} align="left">
-                  Null: Some info
-                </Typography>
-                <Typography variant="h6" mt={2} align="left">
-                  Null: Some info
-                </Typography>
-                <Divider
-                  sx={{
-                    mt: "30px",
-                    mb: "30px",
-                    color: "gray",
-                  }}
-                />
-                <Typography variant="h6" mt={2} align="left">
-                  Some more info
-                </Typography>
-                <Typography variant="h6" mt={2} align="left">
-                  Some more info
-                </Typography>
-                <Typography variant="h6" mt={2} align="left">
-                  Some more info
-                </Typography>
-                <Typography variant="h6" mt={2} align="left">
-                  Some more info
-                </Typography>
+              <Box
+                alignSelf="start"
+                sx={{
+                  width: "100%",
+                  maxWidth: {
+                    xs: "100vw",
+                    sm: "100vw",
+                    md: "296px",
+                  },
+                  display: {
+                    sm: "flex",
+                    md: "block",
+                  },
+                }}
+              >
+                <Box
+                  display={{ xs: "flex", sm: "flex", md: "block" }}
+                  flexDirection={"column"}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                >
+                  <Avatar
+                    src={userPicture}
+                    alt={userName}
+                    sx={{
+                      height: {
+                        xs: "156px", // Para telas menores que 600px
+                        sm: "256px", // Para telas maiores que 600px
+                        md: "296px", // Para telas maiores que 900px
+                      },
+                      width: {
+                        xs: "156px", // Para telas menores que 600px
+                        sm: "256px", // Para telas maiores que 600px
+                        md: "296px", // Para telas maiores que 900px
+                      },
+                    }}
+                  />
+                  <Typography variant="h4" fontWeight={600}>
+                    {userName}
+                  </Typography>
+                </Box>
+                <Box
+                  maxWidth={true}
+                  paddingRight={{ sm: "0", md: "7px" }}
+                  paddingLeft={{ sm: "16px", md: "0" }}
+                  paddingBottom={{ xs: "16px", sm: "16px", md: "0" }}
+                  borderRight={{ sm: "0", md: "1px solid lightgray" }}
+                  borderRadius={3}
+                >
+                  <Typography variant="h6" mt={2} align="left">
+                    Data de nascimento: {userDOB}
+                  </Typography>
+                  <Typography variant="h6" mt={2} align="left">
+                    Null: Some info
+                  </Typography>
+                  <Typography variant="h6" mt={2} align="left">
+                    Null: Some info
+                  </Typography>
+                  <Divider
+                    sx={{
+                      mt: "30px",
+                      mb: "30px",
+                      color: "gray",
+                    }}
+                  />
+                  <Typography
+                    variant="h6"
+                    mt={2}
+                    align="left"
+                    textAlign={"justify"}
+                  >
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    Debitis aliquid mollitia iusto fugit iure aliquam quidem
+                    cumque, id magnam eveniet numquam cupiditate nobis deserunt
+                    voluptas sunt ea ratione adipisci dolor.
+                  </Typography>
+                </Box>
               </Box>
-              <Box width="100%" pl={4}>
+              <Box
+                width="100%"
+                sx={{
+                  paddingLeft: {
+                    xs: "0px",
+                    sm: "0px",
+                    md: "16px",
+                  },
+                }}
+              >
                 <Box borderRadius={2} border="1px solid #ddddddef" padding={1}>
                   <Skeleton variant="h2" width="100%" />
                   <Skeleton

@@ -15,6 +15,7 @@ import {
   Avatar,
   Menu,
 } from "@mui/material";
+import winston from "winston";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import logo from "../Images/Logo/logo-alt.svg";
@@ -78,6 +79,12 @@ export default function AppAppBar() {
   const [userPicture, setUserPicture] = React.useState("");
   const [userUUID, setUserUUID] = React.useState("");
 
+  const logger = winston.createLogger({
+    // eslint-disable-next-line no-undef
+    level: process.env.NODE_ENV === "production" ? "warn" : "debug",
+    transports: [new winston.transports.Console()],
+  });
+
   // Função para alternar o estado do Drawer
   const toggleDrawer = (isOpen) => (event) => {
     if (
@@ -112,6 +119,7 @@ export default function AppAppBar() {
       navigate(`/SS/user/${userUUID}/profile`);
     } else if (option === "config") {
       /* Página de configurações */
+      logger.debug("Redirecionar para a página de configurações ");
     } else if (option === "sair") {
       handleSignOutClick();
     } else if (option === "inicio") {
@@ -131,6 +139,7 @@ export default function AppAppBar() {
     }
   }, []);
 
+  // Renderização do componente
   return (
     <AppBar
       position="fixed"

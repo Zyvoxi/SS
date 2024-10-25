@@ -11,8 +11,8 @@
     },
 
     // Configurações visuais e preferências
-    "workbench.colorTheme": "Andromeda Italic Bordered",
-    "workbench.iconTheme": "material-icon-theme",
+    "workbench.colorTheme": "Pão's Lyo",
+    "workbench.iconTheme": "icons",
     "files.autoSave": "afterDelay",
     "editor.minimap.size": "fill",
     "editor.minimap.showSlider": "always",

@@ -18,7 +18,7 @@ function RedirectToProfile() {
   return <Navigate to={`/SS/user/${uuid}/profile`} replace={true} />;
 }
 
-function App() {
+export default function App() {
   return (
     <Router>
       <div className="App">
@@ -62,5 +62,3 @@ function App() {
     </Router>
   );
 }
-
-export default App;

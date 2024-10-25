@@ -1,4 +1,3 @@
-/* global google */
 import * as React from "react";
 import logo from "../Images/Logo/logo-alt.svg";
 import {
@@ -15,6 +14,7 @@ import {
   FormControlLabel,
   Checkbox,
 } from "@mui/material";
+import winston from "winston";
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 import { GoogleIcon } from "../Images/Icons/CustomIcons";
 import { useState } from "react";
@@ -26,13 +26,19 @@ import { useNavigate } from "react-router-dom";
  * Componente SignIn que gerencia o processo de login do usuário.
  * O componente permite login via Google ou através de credenciais (nome de usuário/e-mail e senha).
  */
-function SignIn() {
+export default function SignIn() {
   // Estados para gerenciar as credenciais e erros de validação
   const [emailOrUsername, setEmailOrUsername] = useState(""); // Armazena o nome de usuário ou e-mail do usuário
   const [password, setPassword] = useState(""); // Armazena a senha do usuário
   const [emailOrUsernameError, setEmailOrUsernameError] = useState(""); // Mensagem de erro para o campo de nome de usuário ou e-mail
   const [passwordError, setPasswordError] = useState(""); // Mensagem de erro para o campo de senha
   const navigate = useNavigate(); // Hook para navegação programática
+
+  const logger = winston.createLogger({
+    // eslint-disable-next-line no-undef
+    level: process.env.NODE_ENV === "production" ? "warn" : "debug",
+    transports: [new winston.transports.Console()],
+  });
 
   /**
    * Função de callback para lidar com a resposta de credenciais do Google.
@@ -50,6 +56,7 @@ function SignIn() {
         id: userId,
         name: userData.name,
         picture: userData.picture,
+        bd: userData.birthday || "27/07/1997",
       };
 
       // Salva o perfil do usuário no armazenamento local (apenas para testes, nenhuma informação é enviada a servidores)
@@ -57,8 +64,7 @@ function SignIn() {
 
       navigate("/SS"); // Redireciona para a página principal
     } catch (error) {
-      /* Log removido até o termino dos ajustes do ESLint (no-console {.log,.warn,.error, etc}) */
-      /* console.error("Erro ao decodificar o token:", error); */
+      logger.error("Erro ao decodificar o token:", error);
     }
   };
 
@@ -69,7 +75,7 @@ function SignIn() {
     if (google && google.accounts) {
       google.accounts.id.prompt(); // Verifica se google.accounts está disponível
     } else {
-      /* Log removido até o termino dos ajustes do ESLint (no-console {.log,.warn,.error, etc}) */
+      logger.error("Google.acconts não está disponível");
     }
   };
 
@@ -183,7 +189,7 @@ function SignIn() {
         "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath" +
         " fill-rule='evenodd' clip-rule='evenodd' d='M12 5c-.28 0-.53.11-.71.29L7 9.59l-2.29-2.3a1.003 " +
         "1.003 0 00-1.42 1.42l3 3c.18.18.43.29.71.29s.53-.11.71-.29l5-5A1.003 1.003 0 0012 5z' fill='%23fff'/%3E%3C/svg%3E\")",
-      content: "",
+      content: "''",
     },
     "input:hover ~ &": {
       backgroundColor: "#106ba3",
@@ -256,6 +262,9 @@ function SignIn() {
    */
   const handleForgotPassword = () => {
     /* Redirecionar para recuperação de senha(função não implementada) */
+    logger.debug(
+      "Redirecionar para recuperação de senha(função não implementada)",
+    );
   };
 
   // Renderização do componente
@@ -478,5 +487,3 @@ function SignIn() {
     </Container>
   );
 }
-
-export default SignIn;
