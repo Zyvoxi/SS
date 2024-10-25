@@ -122,7 +122,6 @@ export default function Main() {
   const [selectedArticle, setSelectedArticle] = React.useState(null);
 
   const logger = winston.createLogger({
-    // eslint-disable-next-line no-undef
     level: process.env.NODE_ENV === "production" ? "warn" : "debug",
     transports: [new winston.transports.Console()],
   });

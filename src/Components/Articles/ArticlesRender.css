@@ -4,7 +4,7 @@ main {
   display: flex;
   justify-content: center;
   top: 0;
-  height: 140vh;
+  height: 100%;
   width: 100%;
 }
 

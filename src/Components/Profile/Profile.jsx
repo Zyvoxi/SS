@@ -84,6 +84,7 @@ export default function Profile() {
             setUserName(`${user.name.first} ${user.name.last}`);
             setUserPicture(user.picture.large);
             setUserDOB(formatDate(user.dob.date));
+            setLoading(false);
           } else if (!signedUserUUID) {
             // Se o UUID do usuário conectado não estiver disponível, redireciona para a página de login
             navigate("/SS/signin");
@@ -94,9 +95,6 @@ export default function Profile() {
         } catch (error) {
           // Captura e exibe erros de busca de dados
           logger.error("Erro ao buscar dados:", error);
-        } finally {
-          // Atualiza o estado de carregamento após a busca
-          setLoading(false);
         }
       };
 
@@ -111,7 +109,7 @@ export default function Profile() {
       <Container
         maxWidth="lg"
         sx={{
-          mt: "120px",
+          mt: "100px",
           ml: "20px",
           mr: "20px",
           paddingLeft: "0 !important",
@@ -133,7 +131,6 @@ export default function Profile() {
                   sm: "column",
                   md: "row",
                 },
-                height: "100%",
               }}
             >
               <Box
@@ -290,120 +287,6 @@ export default function Profile() {
                     }}
                   />
                 </Box>
-              </Box>
-            </Box>
-          </>
-        )}
-        {loading && (
-          <>
-            <Box
-              maxWidth={true}
-              padding={2}
-              borderLeft="1px solid lightgray"
-              borderRight="1px solid lightgray"
-              borderRadius={3}
-              sx={{
-                display: "flex",
-                height: "120vh",
-              }}
-            >
-              <Box maxWidth={296} alignSelf="start">
-                <Skeleton variant="circular" width={296} height={296} />
-                <Skeleton
-                  variant="h2"
-                  width={296}
-                  sx={{
-                    mt: "20px",
-                  }}
-                />
-                <Skeleton
-                  variant="h2"
-                  width={296}
-                  sx={{
-                    mt: "20px",
-                  }}
-                />
-                <Skeleton
-                  variant="h2"
-                  width={296}
-                  sx={{
-                    mt: "20px",
-                  }}
-                />
-                <Skeleton
-                  variant="h2"
-                  width={296}
-                  sx={{
-                    mt: "20px",
-                  }}
-                />
-                <Divider
-                  sx={{
-                    mt: "30px",
-                    mb: "30px",
-                    color: "gray",
-                  }}
-                />
-                <Skeleton
-                  variant="h2"
-                  width={296}
-                  sx={{
-                    mt: "0px",
-                  }}
-                />
-                <Skeleton
-                  variant="h2"
-                  width={296}
-                  sx={{
-                    mt: "20px",
-                  }}
-                />
-                <Skeleton
-                  variant="h2"
-                  width={296}
-                  sx={{
-                    mt: "20px",
-                  }}
-                />
-                <Skeleton
-                  variant="h2"
-                  width={296}
-                  sx={{
-                    mt: "20px",
-                    mb: "20px",
-                  }}
-                />
-              </Box>
-              <Box width="100%" pl={4}>
-                <Skeleton
-                  variant="h2"
-                  width="100%"
-                  sx={{
-                    mt: "20px",
-                    mb: "20px",
-                  }}
-                />
-                <Skeleton
-                  variant="h2"
-                  width="100%"
-                  sx={{
-                    mt: "20px",
-                  }}
-                />
-                <Skeleton
-                  variant="h2"
-                  width="100%"
-                  sx={{
-                    mt: "20px",
-                  }}
-                />
-                <Skeleton
-                  variant="h2"
-                  width="100%"
-                  sx={{
-                    mt: "20px",
-                  }}
-                />
               </Box>
             </Box>
           </>

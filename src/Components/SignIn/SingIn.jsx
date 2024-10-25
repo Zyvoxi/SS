@@ -47,6 +47,8 @@ export default function SignIn() {
   const handleCredentialResponse = (response) => {
     const token = response.credential; // Obtém o token de acesso
 
+    logger.debug("TOKEN: ", token);
+
     try {
       const userData = jwtDecode(token); // Decodifica o token JWT para obter as informações do usuário
       const userId = crypto.randomUUID(); // Gera um UUID único para o usuário
@@ -56,7 +58,7 @@ export default function SignIn() {
         id: userId,
         name: userData.name,
         picture: userData.picture,
-        bd: userData.birthday || "27/07/1997",
+        dob: userData.birthday || "27/07/1997",
       };
 
       // Salva o perfil do usuário no armazenamento local (apenas para testes, nenhuma informação é enviada a servidores)
@@ -213,6 +215,7 @@ export default function SignIn() {
    * Função que valida as credenciais inseridas pelo usuário.
    */
   const handleLogin = () => {
+    const minPWLength = 6;
     let isValid = true;
 
     // Validação do campo de nome de usuário ou e-mail
@@ -232,8 +235,7 @@ export default function SignIn() {
     if (!password) {
       setPasswordError("O campo de senha é obrigatório.");
       isValid = false;
-      // eslint-disable-next-line no-magic-numbers
-    } else if (password.length < 6) {
+    } else if (password.length < minPWLength) {
       setPasswordError("A senha deve ter pelo menos 6 caracteres.");
       isValid = false;
     } else {
