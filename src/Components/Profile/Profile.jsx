@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import CakeOutlinedIcon from "@mui/icons-material/CakeOutlined";
 import RoomOutlinedIcon from "@mui/icons-material/RoomOutlined";
+import BusinessIcon from "@mui/icons-material/Business";
 import "./Profile.css";
 import winston from "winston";
 import { useParams, useNavigate } from "react-router-dom";
@@ -19,13 +20,15 @@ import { useParams, useNavigate } from "react-router-dom";
  */
 export default function Profile() {
   // Estados para gerenciar o carregamento e os dados do usuário
-  const profileData = localStorage.getItem("GoogleUserProfile");
+  const profileData = localStorage.getItem("userProfile");
   const [loading, setLoading] = React.useState(true);
   const [ready, setReady] = React.useState(false); // Condição que indica a possibilidade de buscar os dados
   const [userName, setUserName] = React.useState(""); // Nome do usuário
   const [userPicture, setUserPicture] = React.useState(""); // URL da imagem do usuário
   const [userDOB, setUserDOB] = React.useState(""); // Data de nascimento do usuário
   const [userLocation, setUserLocation] = React.useState(""); // Localização do usuário
+  const [userCompanny, setUserCompany] = React.useState("");
+  const [userSkill, setUserSkill] = React.useState("");
   const [signedUserUUID, setSignedUserUUID] = React.useState(""); // UUID do usuário conectado
   const { uuid } = useParams(); // Obtém o UUID do usuário da URL
   const navigate = useNavigate(); // Hook para navegação programática
@@ -67,6 +70,8 @@ export default function Profile() {
         setUserPicture(profile.picture); // Define a imagem do usuário
         setUserDOB(profile.dob); // Define a data de nascimento do usuário
         setUserLocation(profile.location); // Define a localização do usuário
+        setUserCompany(profile.company); // Define a empresa do usuário
+        setUserSkill(profile.skill); // Define a abilidade do usuário
         setLoading(false); // Atualiza o estado de carregamento
       }
     } else {
@@ -87,6 +92,8 @@ export default function Profile() {
             setUserPicture(user.picture.large);
             setUserDOB(formatDate(user.dob.date));
             setUserLocation(`${user.location.city} - ${user.location.state}`);
+            setUserCompany(user.company);
+            setUserSkill(user.skills);
             setLoading(false);
           } else if (!signedUserUUID) {
             // Se o UUID do usuário conectado não estiver disponível, redireciona para a página de login
@@ -205,6 +212,18 @@ export default function Profile() {
                   >
                     {<RoomOutlinedIcon />} Brasil, {userLocation}
                   </Typography>
+                  {userCompanny !== "none" && (
+                    <Typography
+                      variant="h6"
+                      mt={2}
+                      align="left"
+                      alignItems={"center"}
+                      display={"flex"}
+                      gap={1}
+                    >
+                      {<BusinessIcon />} {userCompanny}
+                    </Typography>
+                  )}
                   <Divider
                     sx={{
                       mt: "30px",
@@ -236,7 +255,9 @@ export default function Profile() {
                 }}
               >
                 <Box borderRadius={2} border="1px solid #ddddddef" padding={1}>
-                  <Skeleton variant="h2" width="100%" />
+                  <Typography variant="h6" align="left">
+                    {userSkill}
+                  </Typography>
                   <Skeleton
                     variant="h2"
                     width="100%"

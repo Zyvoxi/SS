@@ -19,8 +19,90 @@ import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 import { GoogleIcon } from "../Images/Icons/CustomIcons";
 import { useState } from "react";
 import { jwtDecode } from "jwt-decode";
-import "./SignIn.css";
 import { useNavigate } from "react-router-dom";
+import "./SignIn.css";
+
+// Listas de empresas e habilidades para seleção aleatória no perfil do usuário
+const companies = [
+  "none",
+  "Tech Solutions Inc.",
+  "Innovatech Ltda.",
+  "Global FinTech",
+  "Eco Solutions",
+  "Bright Future Corp.",
+  "HealthTech Innovators",
+  "Green Energy Partners",
+  "Skyline Technologies",
+  "QuickDelivery Services",
+  "EduPrime Learning",
+  "none",
+  "NextGen Robotics",
+  "Quantum Computing Co.",
+  "Virtual Reality Innovations",
+  "Sustainable Resources Corp.",
+  "Smart Home Solutions",
+  "Cybersecurity Experts",
+  "AI Development Labs",
+  "Digital Marketing Agency",
+  "E-Commerce Hub",
+  "Data Analytics Inc.",
+  "none",
+];
+const skills = [
+  "Desenvolvimento Frontend - React, Vue.js, Angular, HTML, CSS, JavaScript, TypeScript",
+  "Desenvolvimento Backend - Node.js, Express, Django, Ruby on Rails, PHP, Go, Java, Python",
+  "Desenvolvimento Full-Stack - Integração frontend e backend, arquitetura MVC, RESTful APIs",
+  "Desenvolvimento Mobile - Flutter, React Native, Kotlin, Swift",
+  "Desenvolvimento de Jogos - Unity, Unreal Engine, C#, Godot",
+  "Machine Learning e Inteligência Artificial - Python, TensorFlow, Keras, PyTorch, OpenCV",
+  "Data Science e Análise de Dados - Pandas, NumPy, SQL, R, Data Mining, BI Tools (Tableau, Power BI)",
+  "Desenvolvimento de APIs - RESTful, GraphQL, documentação com Swagger, Postman",
+  "Testes e Qualidade de Software - Selenium, JUnit, Cypress, TDD, BDD",
+  "DevOps e Infraestrutura - Docker, Kubernetes, AWS, Azure, CI/CD, Terraform",
+  "Blockchain e Criptografia - Solidity, contratos inteligentes, criptomoedas, segurança de redes",
+  "Engenharia de Software - Arquitetura de software, design patterns, engenharia de requisitos",
+  "Desenvolvimento de Scripts e Automação - Bash, PowerShell, automação de tarefas",
+  "Design de Interface (UI) - Figma, Adobe XD, Sketch, design responsivo, design para mobile",
+  "Experiência do Usuário (UX) - Pesquisa de usuários, prototipagem, testes de usabilidade, user journey",
+  "Design Gráfico - Adobe Photoshop, Illustrator, InDesign, branding, tipografia",
+  "Design de Animação - After Effects, Blender, animações para web, motion graphics",
+  "Design de Produtos Digitais - Prototipagem, wireframes, design thinking, storytelling",
+  "Design de Interação - Transições, feedback do usuário, microinterações",
+  "Marketing Digital - SEO, SEM, Google Ads, estratégias de conteúdo",
+  "Gestão de Redes Sociais - Instagram, Twitter, LinkedIn, estratégia de postagens",
+  "Copywriting e Redação Publicitária - Escrita persuasiva, call to action, storytelling",
+  "E-mail Marketing - Campanhas de e-mail, automação de e-mails, Mailchimp, ActiveCampaign",
+  "Gestão de Projetos - Metodologias ágeis (Scrum, Kanban), Jira, Trello, MS Project",
+  "Análise de Métricas e KPIs - Google Analytics, relatórios de conversão, análise de público",
+  "Publicidade Paga - PPC, campanhas de anúncios, Facebook Ads, LinkedIn Ads",
+  "Desenvolvimento de Marca - Posicionamento, criação de identidade, design de logotipo",
+  "Growth Hacking - Estratégias de crescimento rápido, experimentação, otimização de conversão",
+  "Cibersegurança - Ethical hacking, pentesting, auditoria de segurança, criptografia",
+  "Big Data - Hadoop, Spark, processamento de dados em larga escala, NoSQL",
+  "Engenharia de Dados - ETL, bancos de dados relacionais e não relacionais, pipelines de dados",
+  "Arquitetura de Cloud Computing - AWS, Azure, GCP, cloud-native, multicloud",
+  "Internet das Coisas (IoT) - MQTT, sensores, comunicação máquina-a-máquina",
+  "Banco de Dados - SQL, NoSQL, MongoDB, PostgreSQL, otimização de consultas",
+  "Realidade Aumentada (AR) e Realidade Virtual (VR) - Desenvolvimento AR/VR, Unity, 3D Modeling",
+  "Automação de Processos Robóticos (RPA) - UiPath, Blue Prism, automação de tarefas manuais",
+];
+
+// Configuração do logger para debug ou produção
+const logger = winston.createLogger({
+  level: process.env.NODE_ENV === "production" ? "warn" : "debug",
+  transports: [new winston.transports.Console()],
+});
+
+/**
+ * Função para validar se o input é um nome de usuário (aceita espaços) ou e-mail válido.
+ * @param {string} input - O valor a ser validado.
+ * @returns {boolean} - Retorna true se o input for válido, caso contrário false.
+ */
+const validateEmailOrUsername = (input) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const usernameRegex = /^[a-zA-Z0-9._ -]{3,}$/;
+  return emailRegex.test(input) || usernameRegex.test(input);
+};
 
 /**
  * Componente SignIn que gerencia o processo de login do usuário.
@@ -28,16 +110,11 @@ import { useNavigate } from "react-router-dom";
  */
 export default function SignIn() {
   // Estados para gerenciar as credenciais e erros de validação
-  const [emailOrUsername, setEmailOrUsername] = useState(""); // Armazena o nome de usuário ou e-mail do usuário
-  const [password, setPassword] = useState(""); // Armazena a senha do usuário
-  const [emailOrUsernameError, setEmailOrUsernameError] = useState(""); // Mensagem de erro para o campo de nome de usuário ou e-mail
-  const [passwordError, setPasswordError] = useState(""); // Mensagem de erro para o campo de senha
+  const [emailOrUsername, setEmailOrUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [emailOrUsernameError, setEmailOrUsernameError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate(); // Hook para navegação programática
-
-  const logger = winston.createLogger({
-    level: process.env.NODE_ENV === "production" ? "warn" : "debug",
-    transports: [new winston.transports.Console()],
-  });
 
   /**
    * Função de callback para lidar com a resposta de credenciais do Google.
@@ -52,17 +129,24 @@ export default function SignIn() {
       const userData = jwtDecode(token); // Decodifica o token JWT para obter as informações do usuário
       const userId = crypto.randomUUID(); // Gera um UUID único para o usuário
 
-      // Cria um objeto de perfil do usuário(apenas informações "não-pessoais")
+      // Seleciona uma empresa e uma habilidade aleatoriamente
+      const randomCompany =
+        companies[Math.floor(Math.random() * companies.length)];
+      const randomSkill = skills[Math.floor(Math.random() * skills.length)];
+
+      // Cria um objeto de perfil do usuário (apenas informações "não-pessoais")
       const userProfile = {
         id: userId,
         name: userData.name,
         picture: userData.picture,
         dob: userData.birthday || "27/07/1997",
         location: "Extrema - MG",
+        company: randomCompany,
+        skill: randomSkill,
       };
 
       // Salva o perfil do usuário no armazenamento local (apenas para testes, nenhuma informação é enviada a servidores)
-      localStorage.setItem("GoogleUserProfile", JSON.stringify(userProfile));
+      localStorage.setItem("userProfile", JSON.stringify(userProfile));
 
       navigate("/SS"); // Redireciona para a página principal
     } catch (error) {
@@ -77,7 +161,7 @@ export default function SignIn() {
     if (google && google.accounts) {
       google.accounts.id.prompt(); // Verifica se google.accounts está disponível
     } else {
-      logger.error("google.acconts não está disponível");
+      logger.error("google.accounts não está disponível");
     }
   };
 
@@ -108,40 +192,73 @@ export default function SignIn() {
         google.accounts.id.cancel();
       }
     };
-  }); // O efeito é executado apenas uma vez na montagem
+  }, []); // O efeito é executado apenas uma vez na montagem
 
-  // Efeito para verificar se o perfil do usuário já está armazenado
-  React.useEffect(() => {
-    const userProfile = localStorage.getItem("GoogleUserProfile");
+  /**
+   * Função que valida as credenciais inseridas pelo usuário.
+   */
+  const handleLogin = () => {
+    const minPWLength = 6;
+    let isValid = true;
 
-    if (userProfile) {
-      // Se o perfil do usuário existir, redireciona para /SS
-      navigate("/SS");
+    // Validação do campo de nome de usuário ou e-mail
+    if (!emailOrUsername) {
+      setEmailOrUsernameError("O campo é obrigatório.");
+      isValid = false;
+    } else if (!validateEmailOrUsername(emailOrUsername)) {
+      setEmailOrUsernameError(
+        "Por favor, insira um nome de usuário ou e-mail válido.",
+      );
+      isValid = false;
+    } else {
+      setEmailOrUsernameError("");
     }
-  }, [navigate]); // Inclui 'navigate' como dependência
 
-  // Criação do tema do botão
-  const theme = createTheme({
-    components: {
-      MuiButton: {
-        styleOverrides: {
-          root: {
-            transition: "500ms ease !important", // Forçar transição
-            backgroundColor: "#333 !important", // Cor padrão
-            backgroundImage: "linear-gradient(to bottom, #333, #000)",
-            "&:hover": {
-              background: "linear-gradient(to bottom, #333, #333)",
-              backgroundImage:
-                "linear-gradient(to bottom, #00000000, #00000000)", // Cor ao passar o mouse
-            },
-            "&:focus": {
-              outline: "none !important", // Remover contorno de foco
-            },
-          },
-        },
-      },
-    },
-  });
+    // Validação da senha
+    if (!password) {
+      setPasswordError("O campo de senha é obrigatório.");
+      isValid = false;
+    } else if (password.length < minPWLength) {
+      setPasswordError("A senha deve ter pelo menos 6 caracteres.");
+      isValid = false;
+    } else {
+      setPasswordError("");
+    }
+
+    if (isValid) {
+      const userId = crypto.randomUUID(); // Gera um UUID único para o usuário
+
+      // Seleciona uma empresa e uma habilidade aleatoriamente
+      const randomCompany =
+        companies[Math.floor(Math.random() * companies.length)];
+      const randomSkill = skills[Math.floor(Math.random() * skills.length)];
+
+      // Cria um objeto de perfil do usuário
+      const userProfile = {
+        id: userId,
+        name: emailOrUsername,
+        dob: "27/07/1997",
+        location: "Extrema - MG",
+        company: randomCompany,
+        skill: randomSkill,
+      };
+
+      // Salva o perfil do usuário no armazenamento local (apenas para testes)
+      localStorage.setItem("userProfile", JSON.stringify(userProfile));
+
+      navigate("/SS"); // Redireciona para a página principal
+    }
+  };
+
+  /**
+   * Função para lidar com a ação de recuperação de senha.
+   */
+  const handleForgotPassword = () => {
+    /* Redirecionar para recuperação de senha (função não implementada) */
+    logger.debug(
+      "Redirecionar para recuperação de senha (função não implementada)",
+    );
+  };
 
   // Estilização personalizada para o ícone do checkbox
   const BpIcon = styled("span")(({ theme }) => ({
@@ -198,78 +315,26 @@ export default function SignIn() {
     },
   });
 
-  /**
-   * Função para validar se o input é um nome de usuário (aceita espaços) ou e-mail válido.
-   * @param {string} input - O valor a ser validado.
-   * @returns {boolean} - Retorna true se o input for válido, caso contrário false.
-   */
-  const validateEmailOrUsername = (input) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regex para validar e-mail
-    const usernameRegex = /^[a-zA-Z0-9._ -]{3,}$/; // Regex para nome de usuário (mínimo 3 caracteres, aceita espaços)
-
-    // Retorna true se o input for um e-mail ou nome de usuário válido
-    return emailRegex.test(input) || usernameRegex.test(input);
-  };
-
-  /**
-   * Função que valida as credenciais inseridas pelo usuário.
-   */
-  const handleLogin = () => {
-    const minPWLength = 6;
-    let isValid = true;
-
-    // Validação do campo de nome de usuário ou e-mail
-    if (!emailOrUsername) {
-      setEmailOrUsernameError("O campo é obrigatório.");
-      isValid = false;
-    } else if (!validateEmailOrUsername(emailOrUsername)) {
-      setEmailOrUsernameError(
-        "Por favor, insira um nome de usuário ou e-mail válido.",
-      );
-      isValid = false;
-    } else {
-      setEmailOrUsernameError("");
-    }
-
-    // Validação da senha
-    if (!password) {
-      setPasswordError("O campo de senha é obrigatório.");
-      isValid = false;
-    } else if (password.length < minPWLength) {
-      setPasswordError("A senha deve ter pelo menos 6 caracteres.");
-      isValid = false;
-    } else {
-      setPasswordError("");
-    }
-
-    if (isValid) {
-      const userId = crypto.randomUUID(); // Gera um UUID único para o usuário
-
-      // Cria um objeto de perfil do usuário
-      const userProfile = {
-        id: userId,
-        name: emailOrUsername,
-        picture: null,
-        dob: "27/07/1997",
-        location: "Extrema - MG",
-      };
-
-      // Salva o perfil do usuário no armazenamento local (apenas para testes)
-      localStorage.setItem("GoogleUserProfile", JSON.stringify(userProfile));
-
-      navigate("/SS"); // Redireciona para a página principal
-    }
-  };
-
-  /**
-   * Função para lidar com a ação de recuperação de senha.
-   */
-  const handleForgotPassword = () => {
-    /* Redirecionar para recuperação de senha(função não implementada) */
-    logger.debug(
-      "Redirecionar para recuperação de senha(função não implementada)",
-    );
-  };
+  // Criação do tema do botão
+  const theme = createTheme({
+    components: {
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            transition: "500ms ease !important", // Força a transição para o hover
+            backgroundColor: "#333 !important", // Cor padrão
+            backgroundImage: "linear-gradient(to bottom, #333, #000)",
+            "&:hover": {
+              background: "linear-gradient(to bottom, #333, #333)",
+            },
+            "&:focus": {
+              outline: "none !important", // Remove contorno ao focar
+            },
+          },
+        },
+      },
+    },
+  });
 
   // Renderização do componente
   return (

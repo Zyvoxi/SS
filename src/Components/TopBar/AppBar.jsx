@@ -152,7 +152,7 @@ export default function AppAppBar() {
    */
   const handleSignOutClick = () => {
     setIsUserLoggedIn(false); // Marca o usuário como deslogado
-    localStorage.removeItem("GoogleUserProfile"); // Remove dados do perfil do localStorage
+    localStorage.removeItem("userProfile"); // Remove dados do perfil do localStorage
     navigate("/SS/signin"); // Redireciona para a página de login
   };
 
@@ -197,7 +197,7 @@ export default function AppAppBar() {
    */
   React.useEffect(() => {
     // Recupera dados do perfil do usuário no localStorage
-    const userProfile = localStorage.getItem("GoogleUserProfile");
+    const userProfile = localStorage.getItem("userProfile");
 
     if (userProfile) {
       // Se existir, faz o parse dos dados e atualiza o estado
