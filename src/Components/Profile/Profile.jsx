@@ -93,7 +93,7 @@ export default function Profile() {
             setUserDOB(formatDate(user.dob.date));
             setUserLocation(`${user.location.city} - ${user.location.state}`);
             setUserCompany(user.company);
-            setUserSkill(user.skills);
+            setUserSkill(user.skill);
             setLoading(false);
           } else if (!signedUserUUID) {
             // Se o UUID do usuário conectado não estiver disponível, redireciona para a página de login
