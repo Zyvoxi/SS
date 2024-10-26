@@ -162,6 +162,7 @@ export default function Profile() {
                     src={userPicture}
                     alt={userName}
                     sx={{
+                      border: "2px solid gray",
                       height: {
                         xs: "156px", // Para telas menores que 600px
                         sm: "256px", // Para telas maiores que 600px
@@ -186,11 +187,24 @@ export default function Profile() {
                   borderRight={{ sm: "0", md: "1px solid lightgray" }}
                   borderRadius={3}
                 >
-                  <Typography variant="h6" mt={2} align="left">
-                    {<CakeOutlinedIcon />}: {userDOB}
+                  <Typography
+                    variant="h6"
+                    mt={2}
+                    align="left"
+                    display={"flex"}
+                    gap={1}
+                  >
+                    {<CakeOutlinedIcon />} {userDOB}
                   </Typography>
-                  <Typography variant="h6" mt={2} align="left">
-                    {<RoomOutlinedIcon />}: Brasil, {userLocation}
+                  <Typography
+                    variant="h6"
+                    mt={2}
+                    align="left"
+                    alignItems={"center"}
+                    display={"flex"}
+                    gap={1}
+                  >
+                    {<RoomOutlinedIcon />} Brasil, {userLocation}
                   </Typography>
                   <Divider
                     sx={{
