@@ -13,6 +13,7 @@ import PropTypes from "prop-types";
 import "./ArticlesRender.css";
 import { useNavigate } from "react-router-dom";
 
+// Modal para Exibir Informações do Artigo
 const ModalRender = ({ show, onClose, article }) => {
   const navigate = useNavigate();
 
@@ -25,7 +26,7 @@ const ModalRender = ({ show, onClose, article }) => {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 400,
+    width: 400, // Constante de número mágico usada diretamente
     bgcolor: "background.paper",
     border: "2px solid #000",
     boxShadow: 24,
@@ -34,29 +35,18 @@ const ModalRender = ({ show, onClose, article }) => {
 
   return (
     <Modal
-      aria-labelledby="transition-modal-title"
-      aria-describedby="transition-modal-description"
       open={show}
       onClose={onClose}
       closeAfterTransition={true}
       slots={{ backdrop: Backdrop }}
-      slotProps={{
-        backdrop: {
-          timeout: 500,
-        },
-      }}
+      slotProps={{ backdrop: { timeout: 500 } }}
     >
       <Fade in={show}>
         <Box sx={style}>
-          <Typography id="transition-modal-title" variant="h6" component="h2">
-            {article.title}
-          </Typography>
+          <Typography variant="h6">{article.title}</Typography>
           <Typography
-            id="transition-modal-description"
-            onClick={() => {
-              navigate(`/SS/user/${article.uuid}`);
-            }}
             sx={{ mt: 2, cursor: "pointer" }}
+            onClick={() => navigate(`/SS/user/${article.uuid}`)}
           >
             {article.uuid}
           </Typography>
@@ -75,18 +65,20 @@ ModalRender.propTypes = {
   }),
 };
 
+// Componente de Artigo Individual
 const Article = ({ title, text, imgSrc, onClick }) => {
-  const defaultElevation = 2;
-  const hoveredElevation = 15;
-  const [elevation, setElevation] = React.useState(defaultElevation);
+  // Constantes para a elevação padrão e no hover
+  const DEFAULT_ELEVATION = 2;
+  const HOVERED_ELEVATION = 15;
+  const [elevation, setElevation] = React.useState(DEFAULT_ELEVATION);
 
   return (
     <Paper
       onClick={onClick}
       component="article"
       elevation={elevation}
-      onMouseEnter={() => setElevation(hoveredElevation)} // Aumenta a elevação no hover
-      onMouseLeave={() => setElevation(defaultElevation)} // Retorna à elevação original ao sair do hover
+      onMouseEnter={() => setElevation(HOVERED_ELEVATION)}
+      onMouseLeave={() => setElevation(DEFAULT_ELEVATION)}
       sx={{
         padding: "10px",
         width: "100%",
@@ -96,21 +88,17 @@ const Article = ({ title, text, imgSrc, onClick }) => {
         backgroundColor: "#fefefe41",
         display: "flex",
         flexDirection: "row",
-        transition: "transform 0.25s ease, box-shadow 0.25s ease", // Mantém a transição suave
+        transition: "transform 0.25s ease, box-shadow 0.25s ease",
         "&:hover": {
-          transform: "scale(1.04)", // Efeito de escala ao passar o mouse
+          transform: "scale(1.04)",
           cursor: "pointer",
         },
       }}
     >
       <Avatar src={imgSrc} alt={title} sx={{ width: 150, height: 150 }} />
       <Box>
-        <Box>
-          <Typography variant="h5">{title}</Typography>
-        </Box>
-        <Box>
-          <Typography variant="subtitle1">{text}</Typography>
-        </Box>
+        <Typography variant="h5">{title}</Typography>
+        <Typography variant="subtitle1">{text}</Typography>
       </Box>
     </Paper>
   );
@@ -123,11 +111,15 @@ Article.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
+// Componente Principal com Infinite Scroll
 export default function Main() {
+  const VISIBLE_ARTICLES = 20;
   const [articlesData, setArticlesData] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [showModal, setShowModal] = React.useState(false);
   const [selectedArticle, setSelectedArticle] = React.useState(null);
+  const [visibleArticles, setVisibleArticles] =
+    React.useState(VISIBLE_ARTICLES);
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -136,25 +128,26 @@ export default function Main() {
           "https://raw.githubusercontent.com/Zyvoxi/SS/refs/heads/main/users.json",
         );
         const data = await response.json();
-        const articles = data.results.map((user) => ({
-          title: `${user.name.first} ${user.name.last}`,
-          email: `${user.email}`,
-          phone: `${user.phone}`,
-          uuid: `${user.login.uuid}`,
-          location: {
-            state: user.location.state,
-            city: user.location.city,
-            country: user.location.country,
-          },
-          text: `Generated user from ${user.location.city}, ${user.location.country}.`,
-          imgSrc: user.picture.large,
-          // eslint-disable-next-line no-magic-numbers
-          rating: Math.floor(Math.random() * 6),
-        }));
+        const articles = data.results.map((user) => {
+          const RANDOM_RATING_MAX = 6;
+          return {
+            title: `${user.name.first} ${user.name.last}`,
+            email: user.email,
+            phone: user.phone,
+            uuid: user.login.uuid,
+            location: {
+              state: user.location.state,
+              city: user.location.city,
+              country: user.location.country,
+            },
+            text: `Generated user from ${user.location.city}, ${user.location.country}.`,
+            imgSrc: user.picture.large,
+            rating: Math.floor(Math.random() * RANDOM_RATING_MAX),
+          };
+        });
         setArticlesData(articles);
-        // eslint-disable-next-line no-unused-vars
       } catch (error) {
-        // logger.error("Error fetching data:", error);
+        console.error("Error fetching data:", error);
       } finally {
         setLoading(false);
       }
@@ -172,11 +165,31 @@ export default function Main() {
     setShowModal(false);
   };
 
+  // Função para carregar mais artigos quando o usuário rolar até o final
+  const loadMoreArticles = () => {
+    const LOAD_MORE_ARTICLES_COUNT = 20;
+    setVisibleArticles((prev) => prev + LOAD_MORE_ARTICLES_COUNT);
+  };
+
+  // Observador de scroll para carregar mais artigos
+  React.useEffect(() => {
+    const handleScroll = () => {
+      const SCROLL_OFFSET_THRESHOLD = 50;
+      if (
+        window.innerHeight + document.documentElement.scrollTop >=
+        document.documentElement.offsetHeight - SCROLL_OFFSET_THRESHOLD
+      ) {
+        loadMoreArticles();
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   if (loading) {
     return (
       <Box component="section" className="Main-Section">
-        {/* Simulação de esqueleto para carregamento de 30 artigos */}
-        {Array.from({ length: 30 }).map((_, index) => (
+        {Array.from({ length: 20 }).map((_, index) => (
           <Paper
             key={index}
             sx={{
@@ -192,7 +205,6 @@ export default function Main() {
             }}
           >
             <Box
-              className="Profile-Pic"
               sx={{
                 display: "flex",
                 alignItems: "center",
@@ -202,29 +214,11 @@ export default function Main() {
               <Skeleton variant="circular" width={150} height={150} />
             </Box>
             <Box
-              className="Infos"
               style={{ display: "flex", flexDirection: "column", flexGrow: 1 }}
             >
-              <Box justifyContent={"center"}>
-                <Skeleton
-                  variant="text"
-                  width="80%"
-                  height={35}
-                  sx={{ margin: "5px", marginLeft: "calc(14% - 5px)" }}
-                />
-              </Box>
-              <Box
-                className="Article-Main-Info"
-                style={{ marginLeft: "10px", maxWidth: "250px" }}
-              >
-                <Skeleton
-                  variant="text"
-                  width="100%"
-                  height={20}
-                  sx={{ marginBottom: "10px" }}
-                />
-                <Skeleton variant="text" width="100%" height={20} />
-              </Box>
+              <Skeleton variant="text" width="80%" height={35} />
+              <Skeleton variant="text" width="100%" height={20} />
+              <Skeleton variant="text" width="100%" height={20} />
             </Box>
           </Paper>
         ))}
@@ -235,7 +229,7 @@ export default function Main() {
   return (
     <>
       <Box component="section" className="Main-Section">
-        {articlesData.map((article, index) => (
+        {articlesData.slice(0, visibleArticles).map((article, index) => (
           <Article
             key={index}
             title={article.title}

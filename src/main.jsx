@@ -4,21 +4,14 @@ import {
   createBrowserRouter,
   RouterProvider,
   Navigate,
-  useParams,
 } from "react-router-dom";
 import Main from "./Components/Articles/ArticlesRender";
 import AppBar from "./Components/TopBar/AppBar";
 import SignIn from "./Components/SignIn/SingIn";
 import Profile from "./Components/Profile/Profile";
-import "./Components/Styles/App.css";
-import "./Components/Styles/index.css";
-
-// Componente para redirecionamento dinâmico
-// eslint-disable-next-line react-refresh/only-export-components
-const RedirectToProfile = () => {
-  const { uuid } = useParams(); // Extraindo uuid da URL
-  return <Navigate to={`/SS/user/${uuid}/profile`} replace={true} />;
-};
+import RedirectToProfile from "./Components/RedirectToProfile/RedirectToProfile";
+import "./Styles/App.css";
+import "./Styles/index.css";
 
 const router = createBrowserRouter([
   {

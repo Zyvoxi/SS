@@ -1,5 +1,5 @@
 import * as React from "react";
-import logo from "../Images/Logo/logo-alt.svg";
+import logo from "../../Assets/Logo/logo-alt.svg";
 import {
   Divider,
   Container,
@@ -15,7 +15,7 @@ import {
   Checkbox,
 } from "@mui/material";
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
-import { GoogleIcon } from "../Images/Icons/CustomIcons";
+import { GoogleIcon } from "../../Assets/Icons/CustomIcons";
 import { useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";

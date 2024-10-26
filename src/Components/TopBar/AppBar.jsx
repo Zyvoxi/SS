@@ -1,4 +1,3 @@
-/* eslint-disable no-magic-numbers */
 import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import {
@@ -20,14 +19,13 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import logo from "../Images/Logo/logo-alt.svg";
+import logo from "../../Assets/Logo/logo-alt.svg";
 import { useNavigate } from "react-router-dom";
 import "./AppBar.css";
 
-/**
- * Cria uma barra de navegação customizada com estilo.
- * Configura elementos visuais, como cor de fundo e bordas, usando propriedades de estilo de tema.
- */
+// Constante para definir a opacidade do fundo
+const BGC_ALPHA = 0.4;
+
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -37,7 +35,7 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   backdropFilter: "blur(24px)", // Cria efeito de desfoque para um fundo translúcido
   border: "1px solid",
   borderColor: theme.palette.divider,
-  backgroundColor: alpha(theme.palette.background.default, 0.2), // Define uma cor de fundo levemente translúcida
+  backgroundColor: alpha(theme.palette.background.default, BGC_ALPHA), // Define uma cor de fundo levemente translúcida
   boxShadow: theme.shadows[1],
   padding: "2px 12px", // Ajuste do padding para controlar o espaçamento
 }));
@@ -50,20 +48,27 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
  * @returns {string} - Cor hexadecimal gerada a partir do hash da string.
  */
 function stringToColor(string) {
+  const HASH_SHIFT = 5; // Constante para definir o deslocamento do hash
+  const HEX_COLOR_PARTS = 3; // Número de partes hexadecimais na cor
+  const BYTE_MASK = 0xff; // Máscara para obter o byte correto
+  const BYTE_SHIFT_MULTIPLIER = 8; // Deslocamento de byte para cada componente de cor
+  const HEX_PADDING = 2; // Padding para formatação hexadecimal
+  const HEX_BASE = 16; // Base hexadecimal
+
   let hash = 0;
-  let i;
 
   // Calcula um hash numérico da string
-  for (i = 0; i < string.length; i += 1) {
-    hash = string.charCodeAt(i) + ((hash << 5) - hash);
+  for (let i = 0; i < string.length; i += 1) {
+    hash = string.charCodeAt(i) + ((hash << HASH_SHIFT) - hash);
   }
 
   let color = "#";
 
   // Gera cor hexadecimal a partir dos bits do hash
-  for (i = 0; i < 3; i += 1) {
-    const value = (hash >> (i * 8)) & 0xff;
-    color += `00${value.toString(16)}`.slice(-2);
+  for (let i = 0; i < HEX_COLOR_PARTS; i += 1) {
+    const BYTE_SHIFT = i * BYTE_SHIFT_MULTIPLIER;
+    const value = (hash >> BYTE_SHIFT) & BYTE_MASK;
+    color += `00${value.toString(HEX_BASE)}`.slice(-HEX_PADDING);
   }
 
   return color;
