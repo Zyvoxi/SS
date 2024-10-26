@@ -11,7 +11,7 @@ import AppBar from "./Components/TopBar/AppBar";
 import SignIn from "./Components/SignIn/SingIn";
 import Profile from "./Components/Profile/Profile";
 import "./Components/Styles/App.css";
-import "./Components/Styles/index.css"
+import "./Components/Styles/index.css";
 
 // Componente para redirecionamento dinâmico
 // eslint-disable-next-line react-refresh/only-export-components

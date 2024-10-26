@@ -5,11 +5,11 @@ import fs from "fs";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/SS/',
+  base: "/SS/",
   server: {
     https: {
-      key: fs.readFileSync("./localhost-key.pem"), // Caminho para a chave privada
-      cert: fs.readFileSync("./localhost-cert.pem"), // Caminho para o certificado
+      key: fs.readFileSync("./localhost-key.pem"),
+      cert: fs.readFileSync("./localhost.pem"),
     },
   },
 });

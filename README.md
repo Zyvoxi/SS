@@ -6,7 +6,6 @@ Este projeto utiliza as seguintes bibliotecas:
 
 - **@mui/material** - Licença MIT
 - **react** - Licença MIT
-- **axios** - Licença MIT
 - **jwt-decode** - Licença MIT
 
 As licenças das bibliotecas estão disponíveis em seus repositórios do GitHub.
