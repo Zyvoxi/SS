@@ -9,7 +9,6 @@ import {
   Fade,
   Avatar,
 } from "@mui/material";
-import winston from "winston";
 import PropTypes from "prop-types";
 import "./ArticlesRender.css";
 import { useNavigate } from "react-router-dom";
@@ -130,11 +129,6 @@ export default function Main() {
   const [showModal, setShowModal] = React.useState(false);
   const [selectedArticle, setSelectedArticle] = React.useState(null);
 
-  const logger = winston.createLogger({
-    level: process.env.NODE_ENV === "production" ? "warn" : "debug",
-    transports: [new winston.transports.Console()],
-  });
-
   React.useEffect(() => {
     const fetchData = async () => {
       try {
@@ -158,8 +152,9 @@ export default function Main() {
           rating: Math.floor(Math.random() * 6),
         }));
         setArticlesData(articles);
+        // eslint-disable-next-line no-unused-vars
       } catch (error) {
-        logger.error("Error fetching data:", error);
+        // logger.error("Error fetching data:", error);
       } finally {
         setLoading(false);
       }

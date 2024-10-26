@@ -14,7 +14,6 @@ import {
   FormControlLabel,
   Checkbox,
 } from "@mui/material";
-import winston from "winston";
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 import { GoogleIcon } from "../Images/Icons/CustomIcons";
 import { useState } from "react";
@@ -35,7 +34,6 @@ const companies = [
   "Skyline Technologies",
   "QuickDelivery Services",
   "EduPrime Learning",
-  "none",
   "NextGen Robotics",
   "Quantum Computing Co.",
   "Virtual Reality Innovations",
@@ -88,10 +86,7 @@ const skills = [
 ];
 
 // Configuração do logger para debug ou produção
-const logger = winston.createLogger({
-  level: process.env.NODE_ENV === "production" ? "warn" : "debug",
-  transports: [new winston.transports.Console()],
-});
+// const logger = console.log()
 
 /**
  * Função para validar se o input é um nome de usuário (aceita espaços) ou e-mail válido.
@@ -123,7 +118,7 @@ export default function SignIn() {
   const handleCredentialResponse = (response) => {
     const token = response.credential; // Obtém o token de acesso
 
-    logger.debug("TOKEN: ", token);
+    console.debug("TOKEN: ", token);
 
     try {
       const userData = jwtDecode(token); // Decodifica o token JWT para obter as informações do usuário
@@ -150,7 +145,7 @@ export default function SignIn() {
 
       navigate("/SS"); // Redireciona para a página principal
     } catch (error) {
-      logger.error("Erro ao decodificar o token:", error);
+      console.error("Erro ao decodificar o token:", error);
     }
   };
 
@@ -158,10 +153,11 @@ export default function SignIn() {
    * Função para iniciar o login via Google.
    */
   const handleGoogleLogin = () => {
+    console.debug("login via google");
     if (google && google.accounts) {
       google.accounts.id.prompt(); // Verifica se google.accounts está disponível
     } else {
-      logger.error("google.accounts não está disponível");
+      console.error("google.accounts não está disponível");
     }
   };
 
@@ -192,7 +188,7 @@ export default function SignIn() {
         google.accounts.id.cancel();
       }
     };
-  }, []); // O efeito é executado apenas uma vez na montagem
+  }); // O efeito é executado apenas uma vez na montagem
 
   /**
    * Função que valida as credenciais inseridas pelo usuário.
@@ -255,9 +251,9 @@ export default function SignIn() {
    */
   const handleForgotPassword = () => {
     /* Redirecionar para recuperação de senha (função não implementada) */
-    logger.debug(
-      "Redirecionar para recuperação de senha (função não implementada)",
-    );
+    // logger.debug(
+    // "Redirecionar para recuperação de senha (função não implementada)",
+    // );
   };
 
   // Estilização personalizada para o ícone do checkbox

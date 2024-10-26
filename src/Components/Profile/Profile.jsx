@@ -11,7 +11,6 @@ import CakeOutlinedIcon from "@mui/icons-material/CakeOutlined";
 import RoomOutlinedIcon from "@mui/icons-material/RoomOutlined";
 import BusinessIcon from "@mui/icons-material/Business";
 import "./Profile.css";
-import winston from "winston";
 import { useParams, useNavigate } from "react-router-dom";
 
 /**
@@ -33,11 +32,6 @@ export default function Profile() {
   const { uuid } = useParams(); // Obtém o UUID do usuário da URL
   const navigate = useNavigate(); // Hook para navegação programática
 
-  const logger = winston.createLogger({
-    level: process.env.NODE_ENV === "production" ? "warn" : "debug",
-    transports: [new winston.transports.Console()],
-  });
-
   const formatDate = (isoString) => {
     const sliceValue = -2;
     const date = new Date(isoString);
@@ -53,7 +47,7 @@ export default function Profile() {
       setSignedUserUUID(profile.id); // Armazena o UUID do usuário conectado
     }
     setReady(true); // Libera a busca dos dados
-  }, [setReady]);
+  }, [setReady, profileData]);
 
   // Lógica principal de navegação e busca de dados do usuário
   React.useEffect(() => {
@@ -102,9 +96,10 @@ export default function Profile() {
             // Se o usuário não for encontrado, redireciona para o perfil do usuário conectado
             navigate(`/SS/user/${signedUserUUID}`);
           }
+          // eslint-disable-next-line no-unused-vars
         } catch (error) {
           // Captura e exibe erros de busca de dados
-          logger.error("Erro ao buscar dados:", error);
+          // logger.error("Erro ao buscar dados:", error);
         }
       };
 
@@ -112,7 +107,7 @@ export default function Profile() {
         fetchUserData(); // Chama a função de busca de dados se o UUID estiver disponível
       }
     }
-  }, [uuid, signedUserUUID, navigate, ready]); // Dependências que disparam o efeito
+  }, [uuid, signedUserUUID, navigate, ready, profileData]); // Dependências que disparam o efeito
 
   return (
     <>

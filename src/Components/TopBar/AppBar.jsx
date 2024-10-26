@@ -18,7 +18,6 @@ import {
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import winston from "winston";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import logo from "../Images/Logo/logo-alt.svg";
@@ -117,12 +116,6 @@ export default function AppAppBar() {
   const [userPicture, setUserPicture] = React.useState("");
   const [userUUID, setUserUUID] = React.useState("");
 
-  // Logger configurado com winston para registro de mensagens de depuração
-  const logger = winston.createLogger({
-    level: process.env.NODE_ENV === "production" ? "warn" : "debug",
-    transports: [new winston.transports.Console()],
-  });
-
   /**
    * Alterna o estado de exibição do Drawer, abrindo ou fechando o menu lateral.
    *
@@ -182,7 +175,7 @@ export default function AppAppBar() {
     if (option === "perfil") {
       navigate(`/SS/user/${userUUID}/profile`);
     } else if (option === "config") {
-      logger.debug("Redirecionar para a página de configurações "); // Log de debug
+      // logger.debug("Redirecionar para a página de configurações "); // Log de debug
     } else if (option === "sair") {
       handleSignOutClick(); // Realiza logout
     } else if (option === "inicio") {
