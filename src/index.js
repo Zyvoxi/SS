@@ -14,7 +14,7 @@ const logger = winston.createLogger({
   transports: [new winston.transports.Console()],
 });
 
-logger.debug("Development Build");
+logger.debug("Development Build"); // <== Esse log apenas aparece na build de desenvolvimento.
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -23,4 +23,4 @@ root.render(
   </React.StrictMode>,
 );
 
-reportWebVitals(logger.debug);
+reportWebVitals(logger.debug); // <== Esse log apenas aparece na build de desenvolvimento.

@@ -25,7 +25,7 @@ export default function Profile() {
   const [userName, setUserName] = React.useState(""); // Nome do usuário
   const [userPicture, setUserPicture] = React.useState(""); // URL da imagem do usuário
   const [userDOB, setUserDOB] = React.useState(""); // Data de nascimento do usuário
-  const [userLocation, setUserLocation] = React.useState("");
+  const [userLocation, setUserLocation] = React.useState(""); // Localização do usuário
   const [signedUserUUID, setSignedUserUUID] = React.useState(""); // UUID do usuário conectado
   const { uuid } = useParams(); // Obtém o UUID do usuário da URL
   const navigate = useNavigate(); // Hook para navegação programática
@@ -44,7 +44,6 @@ export default function Profile() {
     return `${day}/${month}/${year}`;
   };
 
-  // Atualiza o userProfile do localStorage na montagem do componente
   React.useEffect(() => {
     if (profileData) {
       const profile = JSON.parse(profileData); // Converte a string do localStorage em um objeto
@@ -67,7 +66,7 @@ export default function Profile() {
         setUserName(profile.name); // Define o nome do usuário
         setUserPicture(profile.picture); // Define a imagem do usuário
         setUserDOB(profile.dob); // Define a data de nascimento do usuário
-        setUserLocation(profile.location);
+        setUserLocation(profile.location); // Define a localização do usuário
         setLoading(false); // Atualiza o estado de carregamento
       }
     } else {

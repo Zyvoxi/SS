@@ -5,7 +5,7 @@ import {
   Routes,
   Navigate,
   useParams,
-} from "react-router-dom"; // Importa as funções do React Router
+} from "react-router-dom";
 import Main from "./Components/Articles/ArticlesRender.jsx";
 import AppBar from "./Components/TopBar/AppBar.jsx";
 import SignIn from "./Components/SignIn/SingIn.jsx";
