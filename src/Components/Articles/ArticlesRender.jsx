@@ -12,8 +12,11 @@ import {
 import winston from "winston";
 import PropTypes from "prop-types";
 import "./ArticlesRender.css";
+import { useNavigate } from "react-router-dom";
 
 const ModalRender = ({ show, onClose, article }) => {
+  const navigate = useNavigate();
+
   if (!article) {
     return null;
   }
@@ -49,7 +52,13 @@ const ModalRender = ({ show, onClose, article }) => {
           <Typography id="transition-modal-title" variant="h6" component="h2">
             {article.title}
           </Typography>
-          <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+          <Typography
+            id="transition-modal-description"
+            onClick={() => {
+              navigate(`/SS/user/${article.uuid}`);
+            }}
+            sx={{ mt: 2, cursor: "pointer" }}
+          >
             {article.uuid}
           </Typography>
         </Box>
@@ -171,8 +180,8 @@ export default function Main() {
   if (loading) {
     return (
       <Box component="section" className="Main-Section">
-        {/* Simulação de esqueleto para carregamento de 20 artigos */}
-        {Array.from({ length: 200 }).map((_, index) => (
+        {/* Simulação de esqueleto para carregamento de 30 artigos */}
+        {Array.from({ length: 30 }).map((_, index) => (
           <Paper
             key={index}
             sx={{

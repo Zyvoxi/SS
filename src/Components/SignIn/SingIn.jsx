@@ -250,6 +250,8 @@ export default function SignIn() {
         id: userId,
         name: emailOrUsername,
         picture: null,
+        dob: "27/07/1997",
+        location: "Extrema - MG",
       };
 
       // Salva o perfil do usuário no armazenamento local (apenas para testes)

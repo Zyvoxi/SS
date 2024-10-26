@@ -190,7 +190,7 @@ export default function Profile() {
                     {<CakeOutlinedIcon />}: {userDOB}
                   </Typography>
                   <Typography variant="h6" mt={2} align="left">
-                    {<RoomOutlinedIcon />}: {userLocation}
+                    {<RoomOutlinedIcon />}: Brasil, {userLocation}
                   </Typography>
                   <Divider
                     sx={{
