@@ -1,7 +1,16 @@
 body {
+  background: #fff ; /* radial-gradient(circle, #f0f8fb, #f6fbff, #ffffff)  */
+  color: rgb(0, 0, 0);
+  height: 100vh;
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@media (max-width: 450px) {
+  body {
+    height: 90vh;
+  }
 }
 
 code {

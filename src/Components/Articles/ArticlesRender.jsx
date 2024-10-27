@@ -10,7 +10,6 @@ import {
   Avatar,
 } from "@mui/material";
 import PropTypes from "prop-types";
-import "./ArticlesRender.css";
 import { useNavigate } from "react-router-dom";
 
 // Modal para Exibir Informações do Artigo

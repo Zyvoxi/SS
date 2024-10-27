@@ -2,9 +2,26 @@
   display: none;
 }
 
-body {
-  background-color: rgb(240, 240, 240);
-  color: rgb(0, 0, 0);
+main {
+  background-color: #fff; /* radial-gradient(circle at center -150%, #d0edff, #e7f5fb, #ffffff) */
+  display: flex;
+  justify-content: center;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+}
+
+.Main-Section {
+  margin-top: 100px;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 20px;
+  align-items: flex-start;
+  align-content: flex-start;
 }
 
 .App {

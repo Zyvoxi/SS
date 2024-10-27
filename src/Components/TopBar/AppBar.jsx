@@ -14,6 +14,7 @@ import {
   Avatar,
   Menu,
 } from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
@@ -39,6 +40,26 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   boxShadow: theme.shadows[1],
   padding: "2px 12px", // Ajuste do padding para controlar o espaçamento
 }));
+
+const theme = createTheme({
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          fontWeight: 700,
+          transition: "500ms ease !important", // Força a transição para o hover
+          backgroundImage: "linear-gradient(to bottom, #666, #000)",
+          "&:hover": {
+            background: "linear-gradient(to bottom, #666, #222)",
+          },
+          "&:focus": {
+            outline: "none !important", // Remove contorno ao focar
+          },
+        },
+      },
+    },
+  },
+});
 
 /**
  * Gera uma cor hexadecimal única para uma string fornecida.
@@ -185,6 +206,10 @@ export default function AppAppBar() {
       handleSignOutClick(); // Realiza logout
     } else if (option === "inicio") {
       navigate("/SS/"); // Redireciona para a página inicial
+    } else if (option === "contratos") {
+      navigate("/SS/contract");
+    } else if (option === "blog") {
+      navigate("/SS/blog");
     }
     handleCloseMenu(); // Fecha o menu
   };
@@ -216,9 +241,11 @@ export default function AppAppBar() {
         bgcolor: "transparent",
         backgroundImage: "none",
         mt: 2,
+        paddingLeft: "24px",
+        paddingRight: "24px",
       }}
     >
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" sx={{ padding: "0 !important" }}>
         <StyledToolbar variant="dense" disableGutters={true}>
           <Box
             sx={{ flexGrow: 1, display: "flex", alignItems: "center", px: 0 }}
@@ -229,14 +256,28 @@ export default function AppAppBar() {
               className="rotating-logo"
               style={{ width: "50px", height: "40px", marginRight: "0px" }}
             />
-            <Typography color="#6c8cf6" variant="h5" fontWeight={700} mr={5}>
+            <Typography
+              variant="h5"
+              fontWeight={700}
+              mr={5}
+              sx={{
+                background: "linear-gradient(90deg, #00c6ff, #0072ff)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                letterSpacing: ".2rem",
+                fontWeight: 700,
+                fontFamily: "monospace",
+              }}
+            >
               STOPSKILL
             </Typography>
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
               <Button
                 variant="text"
                 size="small"
-                onClick={() => navigate("/SS/")}
+                onClick={() => {
+                  handleMenuClick("inicio");
+                }}
                 sx={{ fontWeight: "600", color: "#888" }}
               >
                 Início
@@ -244,6 +285,9 @@ export default function AppAppBar() {
               <Button
                 variant="text"
                 size="small"
+                onClick={() => {
+                  handleMenuClick("contratos");
+                }}
                 sx={{ fontWeight: "600", color: "#888" }}
               >
                 Contratos
@@ -258,6 +302,9 @@ export default function AppAppBar() {
               <Button
                 variant="text"
                 size="small"
+                onClick={() => {
+                  handleMenuClick("blog");
+                }}
                 sx={{ fontWeight: "600", color: "#888" }}
               >
                 Blog
@@ -332,24 +379,11 @@ export default function AppAppBar() {
                 >
                   Entrar
                 </Button>
-                <Button
-                  color="primary"
-                  variant="contained"
-                  size="small"
-                  sx={{
-                    transition: "500ms ease !important",
-                    backgroundColor: "#333 !important",
-                    backgroundImage: "linear-gradient(to bottom, #333, #000)",
-                    "&:hover": {
-                      background: "linear-gradient(to bottom, #333, #333)",
-                      backgroundImage:
-                        "linear-gradient(to bottom, #00000000, #00000000)",
-                    },
-                    "&:focus": { outline: "none !important" },
-                  }}
-                >
-                  Registrar-se
-                </Button>
+                <ThemeProvider theme={theme}>
+                  <Button color="primary" variant="contained" size="small">
+                    Registrar-se
+                  </Button>
+                </ThemeProvider>
               </>
             )}
           </Box>
@@ -379,9 +413,21 @@ export default function AppAppBar() {
                 >
                   Início
                 </MenuItem>
-                <MenuItem>Contratos</MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    handleMenuClick("contratos");
+                  }}
+                >
+                  Contratos
+                </MenuItem>
                 <MenuItem>FAQ</MenuItem>
-                <MenuItem>Blog</MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    handleMenuClick("blog");
+                  }}
+                >
+                  Blog
+                </MenuItem>
                 {isUserLoggedIn && (
                   <>
                     <Divider sx={{ my: 1 }} />
@@ -395,8 +441,11 @@ export default function AppAppBar() {
                       {<Avatar alt={userName} src={userPicture} />}
                       {userName}
                     </MenuItem>
-                    <MenuItem>{<SettingsOutlinedIcon />}Configurações</MenuItem>
+                    <MenuItem sx={{ gap: "5px" }}>
+                      {<SettingsOutlinedIcon />}Configurações
+                    </MenuItem>
                     <MenuItem
+                      sx={{ gap: "5px" }}
                       onClick={() => {
                         setOpen(false); // Fechar o Drawer
                         handleSignOutClick();
@@ -409,7 +458,14 @@ export default function AppAppBar() {
                 {!isUserLoggedIn && (
                   <>
                     <Divider sx={{ my: 1 }} />
-                    <MenuItem sx={{ mt: 2 }}>
+                    <MenuItem
+                      sx={{
+                        mt: 2,
+                        "&:hover": {
+                          backgroundColor: "#00000000 !important",
+                        },
+                      }}
+                    >
                       <Button
                         color="primary"
                         variant="outlined"
@@ -426,26 +482,11 @@ export default function AppAppBar() {
                       </Button>
                     </MenuItem>
                     <MenuItem>
-                      <Button
-                        variant="contained"
-                        fullWidth={true}
-                        sx={{
-                          transition: "500ms ease !important",
-                          color: "white",
-                          backgroundColor: "#333 !important",
-                          backgroundImage:
-                            "linear-gradient(to bottom, #333, #000)",
-                          "&:hover": {
-                            background:
-                              "linear-gradient(to bottom, #333, #333)",
-                            backgroundImage:
-                              "linear-gradient(to bottom, #00000000, #00000000)",
-                          },
-                          "&:focus": { outline: "none !important" },
-                        }}
-                      >
-                        Registrar-se
-                      </Button>
+                      <ThemeProvider theme={theme}>
+                        <Button variant="contained" fullWidth={true}>
+                          Registrar-se
+                        </Button>
+                      </ThemeProvider>
                     </MenuItem>
                   </>
                 )}

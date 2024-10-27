@@ -85,8 +85,80 @@ const skills = [
   "Automação de Processos Robóticos (RPA) - UiPath, Blue Prism, automação de tarefas manuais",
 ];
 
-// Configuração do logger para debug ou produção
-// const logger = console.log()
+// Estilização personalizada para o ícone do checkbox
+const BpIcon = styled("span")(({ theme }) => ({
+  borderRadius: 3,
+  width: 16,
+  height: 16,
+  boxShadow:
+    "inset 0 0 0 1px rgba(16,22,26,.2), inset 0 -1px 0 rgba(16,22,26,.1)",
+  backgroundColor: "#f5f8fa",
+  backgroundImage:
+    "linear-gradient(180deg,hsla(0,0%,100%,.8),hsla(0,0%,100%,0))",
+  ".Mui-focusVisible &": {
+    outline: "2px auto rgba(19,124,189,.6)",
+    outlineOffset: 2,
+  },
+  "input:hover ~ &": {
+    backgroundColor: "#ebf1f5",
+    ...theme.applyStyles("dark", {
+      backgroundColor: "#30404d",
+    }),
+  },
+  "input:disabled ~ &": {
+    boxShadow: "none",
+    background: "rgba(206,217,224,.5)",
+    ...theme.applyStyles("dark", {
+      background: "rgba(57,75,89,.5)",
+    }),
+  },
+  ...theme.applyStyles("dark", {
+    boxShadow: "0 0 0 1px rgb(16 22 26 / 40%)",
+    backgroundColor: "#394b59",
+    backgroundImage:
+      "linear-gradient(180deg,hsla(0,0%,100%,.05),hsla(0,0%,100%,0))",
+  }),
+}));
+
+// Estilização personalizada para o ícone do checkbox quando está selecionado
+const BpCheckedIcon = styled(BpIcon)({
+  backgroundColor: "#137cbd",
+  backgroundImage:
+    "linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))",
+  "&::before": {
+    display: "block",
+    width: 16,
+    height: 16,
+    backgroundImage:
+      "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath" +
+      " fill-rule='evenodd' clip-rule='evenodd' d='M12 5c-.28 0-.53.11-.71.29L7 9.59l-2.29-2.3a1.003 " +
+      "1.003 0 00-1.42 1.42l3 3c.18.18.43.29.71.29s.53-.11.71-.29l5-5A1.003 1.003 0 0012 5z' fill='%23fff'/%3E%3C/svg%3E\")",
+    content: "''",
+  },
+  "input:hover ~ &": {
+    backgroundColor: "#106ba3",
+  },
+});
+
+// Criação do tema do botão
+const theme = createTheme({
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          transition: "500ms ease !important", // Força a transição para o hover
+          backgroundImage: "linear-gradient(to bottom, #666, #000)",
+          "&:hover": {
+            background: "linear-gradient(to bottom, #666, #222)",
+          },
+          "&:focus": {
+            outline: "none !important", // Remove contorno ao focar
+          },
+        },
+      },
+    },
+  },
+});
 
 /**
  * Função para validar se o input é um nome de usuário (aceita espaços) ou e-mail válido.
@@ -256,82 +328,6 @@ export default function SignIn() {
     // );
   };
 
-  // Estilização personalizada para o ícone do checkbox
-  const BpIcon = styled("span")(({ theme }) => ({
-    borderRadius: 3,
-    width: 16,
-    height: 16,
-    boxShadow:
-      "inset 0 0 0 1px rgba(16,22,26,.2), inset 0 -1px 0 rgba(16,22,26,.1)",
-    backgroundColor: "#f5f8fa",
-    backgroundImage:
-      "linear-gradient(180deg,hsla(0,0%,100%,.8),hsla(0,0%,100%,0))",
-    ".Mui-focusVisible &": {
-      outline: "2px auto rgba(19,124,189,.6)",
-      outlineOffset: 2,
-    },
-    "input:hover ~ &": {
-      backgroundColor: "#ebf1f5",
-      ...theme.applyStyles("dark", {
-        backgroundColor: "#30404d",
-      }),
-    },
-    "input:disabled ~ &": {
-      boxShadow: "none",
-      background: "rgba(206,217,224,.5)",
-      ...theme.applyStyles("dark", {
-        background: "rgba(57,75,89,.5)",
-      }),
-    },
-    ...theme.applyStyles("dark", {
-      boxShadow: "0 0 0 1px rgb(16 22 26 / 40%)",
-      backgroundColor: "#394b59",
-      backgroundImage:
-        "linear-gradient(180deg,hsla(0,0%,100%,.05),hsla(0,0%,100%,0))",
-    }),
-  }));
-
-  // Estilização personalizada para o ícone do checkbox quando está selecionado
-  const BpCheckedIcon = styled(BpIcon)({
-    backgroundColor: "#137cbd",
-    backgroundImage:
-      "linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))",
-    "&::before": {
-      display: "block",
-      width: 16,
-      height: 16,
-      backgroundImage:
-        "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath" +
-        " fill-rule='evenodd' clip-rule='evenodd' d='M12 5c-.28 0-.53.11-.71.29L7 9.59l-2.29-2.3a1.003 " +
-        "1.003 0 00-1.42 1.42l3 3c.18.18.43.29.71.29s.53-.11.71-.29l5-5A1.003 1.003 0 0012 5z' fill='%23fff'/%3E%3C/svg%3E\")",
-      content: "''",
-    },
-    "input:hover ~ &": {
-      backgroundColor: "#106ba3",
-    },
-  });
-
-  // Criação do tema do botão
-  const theme = createTheme({
-    components: {
-      MuiButton: {
-        styleOverrides: {
-          root: {
-            transition: "500ms ease !important", // Força a transição para o hover
-            backgroundColor: "#333 !important", // Cor padrão
-            backgroundImage: "linear-gradient(to bottom, #333, #000)",
-            "&:hover": {
-              background: "linear-gradient(to bottom, #333, #333)",
-            },
-            "&:focus": {
-              outline: "none !important", // Remove contorno ao focar
-            },
-          },
-        },
-      },
-    },
-  });
-
   // Renderização do componente
   return (
     <Container
@@ -366,6 +362,9 @@ export default function SignIn() {
           <Typography
             variant="h6"
             sx={{
+              background: "linear-gradient(90deg, #00c6ff, #0072ff)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".2rem",
@@ -386,7 +385,7 @@ export default function SignIn() {
         {/* Campo de Nome de Usuário ou Email */}
         <Box mb={1}>
           <FormControl fullWidth={true} sx={{ textAlign: "left" }}>
-            <FormLabel htmlFor="email">Usuário:</FormLabel>
+            <FormLabel htmlFor="username">Usuário:</FormLabel>
             <TextField
               fullWidth={true}
               variant="outlined"
@@ -396,7 +395,7 @@ export default function SignIn() {
               onChange={(e) => setEmailOrUsername(e.target.value)}
               error={!!emailOrUsernameError}
               helperText={emailOrUsernameError}
-              InputProps={{
+              slotProps={{
                 sx: {
                   height: "40px",
                   borderRadius: "8px",
@@ -451,7 +450,7 @@ export default function SignIn() {
               onChange={(e) => setPassword(e.target.value)}
               error={!!passwordError}
               helperText={passwordError}
-              InputProps={{
+              slotProps={{
                 sx: {
                   height: "40px",
                   borderRadius: "8px",

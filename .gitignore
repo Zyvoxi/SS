@@ -21,6 +21,7 @@ dist-ssr
 *-key.pem
 *.ignore.*
 *-lock.json
+*.lock
 *.suo
 *.ntvs*
 *.njsproj

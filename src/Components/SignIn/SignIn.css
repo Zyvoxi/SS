@@ -10,15 +10,3 @@
     transform: rotate(360deg);
   }
 }
-
-body {
-  background: radial-gradient(circle, #f0f8fb, #f6fbff, #ffffff);
-  height: 100vh;
-  margin: 0;
-}
-
-@media (max-width: 450px) {
-  body {
-    height: 90vh;
-  }
-}
