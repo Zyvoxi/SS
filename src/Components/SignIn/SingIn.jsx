@@ -1,5 +1,5 @@
 import * as React from "react";
-import logo from "../../Assets/Logo/logo-alt.svg";
+import logo from "../../Assets/Logo/SSLogoIcon.svg";
 import {
   Divider,
   Container,
@@ -183,6 +183,17 @@ export default function SignIn() {
   const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate(); // Hook para navegação programática
 
+  React.useEffect(() => {
+    // Muda a cor do body para preto
+    document.body.style.background =
+      "radial-gradient(circle, #f0f8fb, #f6fbff, #ffffff)";
+
+    // Função de limpeza para restaurar a cor original
+    return () => {
+      document.body.style.background = ""; // Restaura a cor original
+    };
+  }, []);
+
   /**
    * Função de callback para lidar com a resposta de credenciais do Google.
    * @param {Object} response - Resposta do login do Google.
@@ -357,7 +368,7 @@ export default function SignIn() {
             src={logo}
             alt="logo"
             className="rotating-logo"
-            style={{ width: "30px", height: "30px", marginRight: "8px" }}
+            style={{ width: "20px", height: "20px", marginRight: "5px" }}
           />
           <Typography
             variant="h6"

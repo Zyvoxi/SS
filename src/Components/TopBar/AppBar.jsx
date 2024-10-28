@@ -20,7 +20,7 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import logo from "../../Assets/Logo/logo-alt.svg";
+import logo from "../../Assets/Logo/SSLogoIcon.svg";
 import { useNavigate } from "react-router-dom";
 import "./AppBar.css";
 
@@ -254,8 +254,9 @@ export default function AppAppBar() {
               src={logo}
               alt="logo"
               className="rotating-logo"
-              style={{ width: "50px", height: "40px", marginRight: "0px" }}
+              style={{ width: "30px", height: "30px", marginRight: "0px" }}
             />
+            &nbsp;&nbsp;
             <Typography
               variant="h5"
               fontWeight={700}

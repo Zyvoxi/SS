@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { GitHub } from "@mui/icons-material";
-import LogoIcon from "../../Assets/Logo/LogoIcon";
+import logo from "../../Assets/Logo/SSLogoIcon.svg";
 import { useNavigate } from "react-router-dom";
 
 const theme = createTheme({
@@ -114,7 +114,13 @@ export default function Footer() {
                 alignItems={"center"}
                 display={"flex"}
               >
-                <LogoIcon /> STOPSKILL
+                <img
+                  src={logo}
+                  alt="logo"
+                  className="rotating-logo"
+                  style={{ width: "20px", height: "20px", marginRight: "5px" }}
+                />
+                STOPSKILL
               </Typography>
               <Typography
                 variant="body2"
