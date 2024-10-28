@@ -160,22 +160,6 @@ export default function AppAppBar() {
   };
 
   /**
-   * Redireciona o usuário para a página de login ao clicar no botão de login.
-   */
-  const handleSignInClick = () => {
-    navigate("/SS/signin");
-  };
-
-  /**
-   * Realiza logout do usuário, limpando o estado e os dados do perfil local armazenados.
-   */
-  const handleSignOutClick = () => {
-    setIsUserLoggedIn(false); // Marca o usuário como deslogado
-    localStorage.removeItem("userProfile"); // Remove dados do perfil do localStorage
-    navigate("/SS/signin"); // Redireciona para a página de login
-  };
-
-  /**
    * Abre o menu de opções do avatar, definindo o elemento de âncora.
    *
    * @param {object} event - Evento de clique que aciona a exibição do menu.
@@ -203,13 +187,19 @@ export default function AppAppBar() {
     } else if (option === "config") {
       // logger.debug("Redirecionar para a página de configurações "); // Log de debug
     } else if (option === "sair") {
-      handleSignOutClick(); // Realiza logout
+      setIsUserLoggedIn(false); // Marca o usuário como deslogado
+      localStorage.removeItem("userProfile"); // Remove dados do perfil do localStorage
+      navigate("/SS/signin"); // Redireciona para a página de login
     } else if (option === "inicio") {
       navigate("/SS/"); // Redireciona para a página inicial
     } else if (option === "contratos") {
       navigate("/SS/contract");
     } else if (option === "blog") {
       navigate("/SS/blog");
+    } else if (option === "entrar") {
+      navigate("/SS/signin");
+    } else if (option === "registrar-se") {
+      navigate("/SS/signup");
     }
     handleCloseMenu(); // Fecha o menu
   };
@@ -375,13 +365,22 @@ export default function AppAppBar() {
                 <Button
                   variant="text"
                   size="small"
-                  onClick={handleSignInClick}
+                  onClick={() => {
+                    handleMenuClick("entrar");
+                  }}
                   sx={{ fontWeight: "600", color: "#888" }}
                 >
                   Entrar
                 </Button>
                 <ThemeProvider theme={theme}>
-                  <Button color="primary" variant="contained" size="small">
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    size="small"
+                    onClick={() => {
+                      handleMenuClick("registrar-se");
+                    }}
+                  >
                     Registrar-se
                   </Button>
                 </ThemeProvider>
@@ -408,7 +407,7 @@ export default function AppAppBar() {
                 <Divider sx={{ my: 1 }} />
                 <MenuItem
                   onClick={() => {
-                    navigate("/SS/");
+                    handleMenuClick("inicio");
                     setOpen(false); // Fechar o Drawer
                   }}
                 >
@@ -449,7 +448,7 @@ export default function AppAppBar() {
                       sx={{ gap: "5px" }}
                       onClick={() => {
                         setOpen(false); // Fechar o Drawer
-                        handleSignOutClick();
+                        handleMenuClick("sair");
                       }}
                     >
                       {<LogoutOutlinedIcon />}Sair
@@ -471,7 +470,9 @@ export default function AppAppBar() {
                         color="primary"
                         variant="outlined"
                         fullWidth={true}
-                        onClick={handleSignInClick}
+                        onClick={() => {
+                          handleMenuClick("entrar");
+                        }}
                         sx={{
                           color: "black",
                           backgroundColor: "transparent",
@@ -484,7 +485,13 @@ export default function AppAppBar() {
                     </MenuItem>
                     <MenuItem>
                       <ThemeProvider theme={theme}>
-                        <Button variant="contained" fullWidth={true}>
+                        <Button
+                          variant="contained"
+                          fullWidth={true}
+                          onClick={() => {
+                            handleMenuClick("registrar-se");
+                          }}
+                        >
                           Registrar-se
                         </Button>
                       </ThemeProvider>
