@@ -19,6 +19,7 @@ export default [
         google: "readonly",
         process: "readonly",
         require: "readonly",
+        __dirname: "readonly",
       },
       parserOptions: {
         ecmaFeatures: { jsx: true },

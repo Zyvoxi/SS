@@ -1,7 +1,7 @@
 import * as React from "react";
-import MainContent from "./Extras/MainContent";
-import Latest from "./Extras/Latest";
 import { Box, Container } from "@mui/material";
+const MainContent = React.lazy(() => import("./Extras/MainContent"));
+const Latest = React.lazy(() => import("./Extras/Latest"));
 
 export default function Blog() {
   return (

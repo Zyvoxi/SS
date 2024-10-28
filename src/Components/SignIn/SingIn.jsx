@@ -19,7 +19,6 @@ import { GoogleIcon } from "../../Assets/Icons/CustomIcons";
 import { useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-import "./SignIn.css";
 
 // Listas de empresas e habilidades para seleção aleatória no perfil do usuário
 const companies = [
@@ -407,9 +406,11 @@ export default function SignIn() {
               error={!!emailOrUsernameError}
               helperText={emailOrUsernameError}
               slotProps={{
-                sx: {
-                  height: "40px",
-                  borderRadius: "8px",
+                input: {
+                  sx: {
+                    height: "40px",
+                    borderRadius: "8px",
+                  },
                 },
               }}
             />
@@ -462,9 +463,11 @@ export default function SignIn() {
               error={!!passwordError}
               helperText={passwordError}
               slotProps={{
-                sx: {
-                  height: "40px",
-                  borderRadius: "8px",
+                input: {
+                  sx: {
+                    height: "40px",
+                    borderRadius: "8px",
+                  },
                 },
               }}
             />
