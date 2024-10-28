@@ -12,6 +12,7 @@ import { Box, Container, Divider } from "@mui/material";
 // Importação dinâmica dos componentes
 const AR = React.lazy(() => import("./Components/Articles/ArticlesRender"));
 const SignIn = React.lazy(() => import("./Components/SignIn/SingIn"));
+const SignUp = React.lazy(() => import("./Components/SignUp/SignUp"));
 const Profile = React.lazy(() => import("./Components/Profile/Profile"));
 const Blog = React.lazy(() => import("./Components/Blog/Blog"));
 
@@ -32,6 +33,14 @@ const router = createBrowserRouter([
     element: (
       <React.Suspense fallback={<LoadingFallback />}>
         <SignIn />
+      </React.Suspense>
+    ),
+  },
+  {
+    path: "/SS/signup",
+    element: (
+      <React.Suspense fallback={<LoadingFallback />}>
+        <SignUp />
       </React.Suspense>
     ),
   },

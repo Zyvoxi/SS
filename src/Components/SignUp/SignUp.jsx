@@ -164,21 +164,27 @@ const theme = createTheme({
  * @param {string} input - O valor a ser validado.
  * @returns {boolean} - Retorna true se o input for válido, caso contrário false.
  */
-const validateEmailOrUsername = (input) => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const validateUsername = (input) => {
   const usernameRegex = /^[a-zA-Z0-9._ -]{3,}$/;
-  return emailRegex.test(input) || usernameRegex.test(input);
+  return usernameRegex.test(input);
+};
+
+const validateEmail = (input) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(input);
 };
 
 /**
  * Componente SignIn que gerencia o processo de login do usuário.
  * O componente permite login via Google ou através de credenciais (nome de usuário/e-mail e senha).
  */
-export default function SignIn() {
+export default function SignUp() {
   // Estados para gerenciar as credenciais e erros de validação
-  const [emailOrUsername, setEmailOrUsername] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [emailOrUsernameError, setEmailOrUsernameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate(); // Hook para navegação programática
 
@@ -280,16 +286,26 @@ export default function SignIn() {
     let isValid = true;
 
     // Validação do campo de nome de usuário ou e-mail
-    if (!emailOrUsername) {
-      setEmailOrUsernameError("O campo é obrigatório.");
+    if (!username) {
+      setUsernameError("O campo é obrigatório.");
       isValid = false;
-    } else if (!validateEmailOrUsername(emailOrUsername)) {
-      setEmailOrUsernameError(
+    } else if (!validateUsername(username)) {
+      setUsernameError(
         "Por favor, insira um nome de usuário ou e-mail válido.",
       );
       isValid = false;
     } else {
-      setEmailOrUsernameError("");
+      setUsernameError("");
+    }
+
+    if (!email) {
+      setEmailError("O campo é obrigatório.");
+      isValid = false;
+    } else if (!validateEmail(email)) {
+      setEmailError("Por favor, insira um nome de usuário ou e-mail válido.");
+      isValid = false;
+    } else {
+      setEmailError("");
     }
 
     // Validação da senha
@@ -314,7 +330,7 @@ export default function SignIn() {
       // Cria um objeto de perfil do usuário
       const userProfile = {
         id: userId,
-        name: emailOrUsername,
+        name: username,
         dob: "27/07/1997",
         location: "Extrema - MG",
         company: randomCompany,
@@ -326,16 +342,6 @@ export default function SignIn() {
 
       navigate("/SS"); // Redireciona para a página principal
     }
-  };
-
-  /**
-   * Função para lidar com a ação de recuperação de senha.
-   */
-  const handleForgotPassword = () => {
-    /* Redirecionar para recuperação de senha (função não implementada) */
-    // logger.debug(
-    // "Redirecionar para recuperação de senha (função não implementada)",
-    // );
   };
 
   // Renderização do componente
@@ -388,23 +394,48 @@ export default function SignIn() {
         {/* Seção de Login */}
         <Box mt={5} mb={3}>
           <Typography variant="h4" align="left" fontWeight={550}>
-            Entrar
+            Registrar-se
           </Typography>
         </Box>
 
-        {/* Campo de Nome de Usuário ou Email */}
+        {/* Campo de Nome de Usuário */}
         <Box mb={1}>
           <FormControl fullWidth={true} sx={{ textAlign: "left" }}>
             <FormLabel htmlFor="username">Usuário:</FormLabel>
             <TextField
               fullWidth={true}
               variant="outlined"
-              placeholder="User1234"
+              placeholder="John Doe"
               type="text"
-              value={emailOrUsername}
-              onChange={(e) => setEmailOrUsername(e.target.value)}
-              error={!!emailOrUsernameError}
-              helperText={emailOrUsernameError}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              error={!!usernameError}
+              helperText={usernameError}
+              slotProps={{
+                input: {
+                  sx: {
+                    height: "40px",
+                    borderRadius: "8px",
+                  },
+                },
+              }}
+            />
+          </FormControl>
+        </Box>
+
+        {/* Campo de email  */}
+        <Box mb={1}>
+          <FormControl fullWidth={true} sx={{ textAlign: "left" }}>
+            <FormLabel htmlFor="email">E-Mail:</FormLabel>
+            <TextField
+              fullWidth={true}
+              variant="outlined"
+              placeholder="john.doe@email.com"
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              error={!!emailError}
+              helperText={emailError}
               slotProps={{
                 input: {
                   sx: {
@@ -422,36 +453,6 @@ export default function SignIn() {
           <FormControl fullWidth={true} sx={{ textAlign: "left" }}>
             <Box display="flex" justifyContent="space-between" mt={1}>
               <FormLabel htmlFor="password">Senha:</FormLabel>
-              <Link
-                component="button"
-                type="button"
-                onClick={handleForgotPassword}
-                variant="body2"
-                underline="none"
-                sx={{
-                  alignSelf: "baseline",
-                  color: "black",
-                  position: "relative", // Necessário para o posicionamento do ::after
-                  overflow: "hidden",
-                  "&::after": {
-                    content: "''",
-                    position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "0.1em",
-                    backgroundColor: "#aaa",
-                    opacity: 1,
-                    transform: "translate3d(0, 0, 0)",
-                    transition: "ease-out 400ms",
-                  },
-                  "&:hover::after, &:focus::after": {
-                    transform: "translate3d(-100%, 0, 0)",
-                  },
-                }}
-              >
-                Esqueceu a Senha?
-              </Link>
             </Box>
             <TextField
               fullWidth={true}
@@ -492,23 +493,23 @@ export default function SignIn() {
                 inputProps={{ "aria-label": "Checkbox demo" }}
               />
             }
-            label="Lembre-me"
+            label="Quero receber atualizações por e-mail"
           />
         </Box>
         {/* Botão Entrar */}
         <Box mb={2}>
           <ThemeProvider theme={theme}>
             <Button fullWidth={true} variant="contained" onClick={handleLogin}>
-              Entrar
+              Registrar-se
             </Button>
           </ThemeProvider>
           <Typography sx={{ textAlign: "center" }} mt={2}>
-            Não possui uma conta?{" "}
+            Já possui uma conta?{" "}
             <Link
               component="button"
               type="button"
               onClick={() => {
-                navigate("/SS/signup");
+                navigate("/SS/signin");
               }}
               underline="none"
               sx={{
@@ -534,7 +535,7 @@ export default function SignIn() {
                 },
               }}
             >
-              Registre-se
+              Entrar
             </Link>
           </Typography>
         </Box>
@@ -560,7 +561,7 @@ export default function SignIn() {
               },
             }}
           >
-            Entrar com Google
+            Registrar-se com Google
           </Button>
         </Box>
       </Paper>
