@@ -22,7 +22,7 @@ function generateAndSaveCertificate() {
 generateAndSaveCertificate();
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react({ plugins: [["@swc/plugin-styled-components", {}]] })],
   base: "/SS",
   server: {
     https: {
@@ -31,11 +31,15 @@ export default defineConfig({
     },
   },
   build: {
+    chunkSizeWarningLimit: 1024,
     rollupOptions: {
       output: {
         manualChunks(id) {
           if (id.includes("node_modules")) {
             return "vendor";
+          }
+          if (id.includes("src/Extras/users.json")) {
+            return "users";
           }
         },
       },

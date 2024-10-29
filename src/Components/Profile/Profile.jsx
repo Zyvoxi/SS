@@ -12,6 +12,7 @@ import RoomOutlinedIcon from "@mui/icons-material/RoomOutlined";
 import BusinessIcon from "@mui/icons-material/Business";
 import "./Profile.css";
 import { useParams, useNavigate } from "react-router-dom";
+import data from "../../Extras/Jsons/users.json";
 
 /**
  * Componente Profile que exibe as informações do perfil do usuário.
@@ -69,42 +70,24 @@ export default function Profile() {
         setLoading(false); // Atualiza o estado de carregamento
       }
     } else {
-      // Função assíncrona para buscar dados do usuário de uma API externa
-      const fetchUserData = async () => {
-        try {
-          const response = await fetch(
-            "https://raw.githubusercontent.com/Zyvoxi/SS/refs/heads/main/users.json",
-          );
-          const data = await response.json(); // Converte a resposta da API em JSON
+      // Encontra o usuário correspondente ao UUID na lista de usuários
+      const user = data.results.find((user) => user.login.uuid === uuid);
 
-          // Encontra o usuário correspondente ao UUID na lista de usuários
-          const user = data.results.find((user) => user.login.uuid === uuid);
-
-          if (user) {
-            // Se o usuário for encontrado, atualiza o estado com os dados do usuário
-            setUserName(`${user.name.first} ${user.name.last}`);
-            setUserPicture(user.picture.large);
-            setUserDOB(formatDate(user.dob.date));
-            setUserLocation(`${user.location.city} - ${user.location.state}`);
-            setUserCompany(user.company);
-            setUserSkill(user.skill);
-            setLoading(false);
-          } else if (!signedUserUUID) {
-            // Se o UUID do usuário conectado não estiver disponível, redireciona para a página de login
-            navigate("/SS/signin");
-          } else {
-            // Se o usuário não for encontrado, redireciona para o perfil do usuário conectado
-            navigate(`/SS/user/${signedUserUUID}`);
-          }
-          // eslint-disable-next-line no-unused-vars
-        } catch (error) {
-          // Captura e exibe erros de busca de dados
-          // logger.error("Erro ao buscar dados:", error);
-        }
-      };
-
-      if (uuid) {
-        fetchUserData(); // Chama a função de busca de dados se o UUID estiver disponível
+      if (user) {
+        // Se o usuário for encontrado, atualiza o estado com os dados do usuário
+        setUserName(`${user.name.first} ${user.name.last}`);
+        setUserPicture(user.picture.large);
+        setUserDOB(formatDate(user.dob.date));
+        setUserLocation(`${user.location.city} - ${user.location.state}`);
+        setUserCompany(user.company);
+        setUserSkill(user.skill);
+        setLoading(false);
+      } else if (!signedUserUUID) {
+        // Se o UUID do usuário conectado não estiver disponível, redireciona para a página de login
+        navigate("/SS/signin");
+      } else {
+        // Se o usuário não for encontrado, redireciona para o perfil do usuário conectado
+        navigate(`/SS/user/${signedUserUUID}`);
       }
     }
   }, [uuid, signedUserUUID, navigate, ready, profileData]); // Dependências que disparam o efeito

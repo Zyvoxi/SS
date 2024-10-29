@@ -5,11 +5,13 @@ import {
   Navigate,
   useParams,
 } from "react-router-dom";
-import AppBar from "./Components/TopBar/AppBar";
-import Footer from "./Components/Footer/Footer";
 import { Box, Container, Divider } from "@mui/material";
+import logger from "./Extras/Debug/debug";
+// import { log } from "./Extras/Debug/debug";
 
 // Importação dinâmica dos componentes
+const AppBar = React.lazy(() => import("./Components/TopBar/AppBar"));
+const Footer = React.lazy(() => import("./Components/Footer/Footer"));
 const AR = React.lazy(() => import("./Components/Articles/ArticlesRender"));
 const SignIn = React.lazy(() => import("./Components/SignIn/SingIn"));
 const SignUp = React.lazy(() => import("./Components/SignUp/SignUp"));
@@ -21,7 +23,11 @@ const RedirectToProfile = () => {
   return <Navigate to={`/SS/user/${uuid}/profile`} replace={true} />;
 };
 
-const LoadingFallback = () => <div></div>;
+const LoadingFallback = () => (
+  <div>
+    <div></div>
+  </div>
+);
 
 const router = createBrowserRouter([
   {
@@ -47,23 +53,21 @@ const router = createBrowserRouter([
   {
     path: "/SS/",
     element: (
-      <>
+      <React.Suspense fallback={<LoadingFallback />}>
         <AppBar />
         <main></main>
-      </>
+      </React.Suspense>
     ),
   },
   {
     path: "/SS/contract",
     element: (
-      <>
+      <React.Suspense fallback={<LoadingFallback />}>
         <AppBar />
         <main>
-          <React.Suspense fallback={<LoadingFallback />}>
-            <AR />
-          </React.Suspense>
+          <AR />
         </main>
-      </>
+      </React.Suspense>
     ),
   },
   {
@@ -101,19 +105,21 @@ const router = createBrowserRouter([
   {
     path: "/SS/user/:uuid/profile",
     element: (
-      <>
+      <React.Suspense fallback={<LoadingFallback />}>
         <AppBar />
         <main>
-          <React.Suspense fallback={<LoadingFallback />}>
-            <Profile />
-          </React.Suspense>
+          <Profile />
         </main>
-      </>
+      </React.Suspense>
     ),
   },
 ]);
 
 export default function App() {
+  React.useEffect(() => {
+    logger.debug("Versão de desenvolvimento.");
+  }, []);
+
   return (
     <div className="App">
       <RouterProvider router={router} />

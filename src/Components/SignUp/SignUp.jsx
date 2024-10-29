@@ -19,70 +19,9 @@ import { GoogleIcon } from "../../Assets/Icons/CustomIcons";
 import { useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-
-// Listas de empresas e habilidades para seleção aleatória no perfil do usuário
-const companies = [
-  "none",
-  "Tech Solutions Inc.",
-  "Innovatech Ltda.",
-  "Global FinTech",
-  "Eco Solutions",
-  "Bright Future Corp.",
-  "HealthTech Innovators",
-  "Green Energy Partners",
-  "Skyline Technologies",
-  "QuickDelivery Services",
-  "EduPrime Learning",
-  "NextGen Robotics",
-  "Quantum Computing Co.",
-  "Virtual Reality Innovations",
-  "Sustainable Resources Corp.",
-  "Smart Home Solutions",
-  "Cybersecurity Experts",
-  "AI Development Labs",
-  "Digital Marketing Agency",
-  "E-Commerce Hub",
-  "Data Analytics Inc.",
-  "none",
-];
-const skills = [
-  "Desenvolvimento Frontend - React, Vue.js, Angular, HTML, CSS, JavaScript, TypeScript",
-  "Desenvolvimento Backend - Node.js, Express, Django, Ruby on Rails, PHP, Go, Java, Python",
-  "Desenvolvimento Full-Stack - Integração frontend e backend, arquitetura MVC, RESTful APIs",
-  "Desenvolvimento Mobile - Flutter, React Native, Kotlin, Swift",
-  "Desenvolvimento de Jogos - Unity, Unreal Engine, C#, Godot",
-  "Machine Learning e Inteligência Artificial - Python, TensorFlow, Keras, PyTorch, OpenCV",
-  "Data Science e Análise de Dados - Pandas, NumPy, SQL, R, Data Mining, BI Tools (Tableau, Power BI)",
-  "Desenvolvimento de APIs - RESTful, GraphQL, documentação com Swagger, Postman",
-  "Testes e Qualidade de Software - Selenium, JUnit, Cypress, TDD, BDD",
-  "DevOps e Infraestrutura - Docker, Kubernetes, AWS, Azure, CI/CD, Terraform",
-  "Blockchain e Criptografia - Solidity, contratos inteligentes, criptomoedas, segurança de redes",
-  "Engenharia de Software - Arquitetura de software, design patterns, engenharia de requisitos",
-  "Desenvolvimento de Scripts e Automação - Bash, PowerShell, automação de tarefas",
-  "Design de Interface (UI) - Figma, Adobe XD, Sketch, design responsivo, design para mobile",
-  "Experiência do Usuário (UX) - Pesquisa de usuários, prototipagem, testes de usabilidade, user journey",
-  "Design Gráfico - Adobe Photoshop, Illustrator, InDesign, branding, tipografia",
-  "Design de Animação - After Effects, Blender, animações para web, motion graphics",
-  "Design de Produtos Digitais - Prototipagem, wireframes, design thinking, storytelling",
-  "Design de Interação - Transições, feedback do usuário, microinterações",
-  "Marketing Digital - SEO, SEM, Google Ads, estratégias de conteúdo",
-  "Gestão de Redes Sociais - Instagram, Twitter, LinkedIn, estratégia de postagens",
-  "Copywriting e Redação Publicitária - Escrita persuasiva, call to action, storytelling",
-  "E-mail Marketing - Campanhas de e-mail, automação de e-mails, Mailchimp, ActiveCampaign",
-  "Gestão de Projetos - Metodologias ágeis (Scrum, Kanban), Jira, Trello, MS Project",
-  "Análise de Métricas e KPIs - Google Analytics, relatórios de conversão, análise de público",
-  "Publicidade Paga - PPC, campanhas de anúncios, Facebook Ads, LinkedIn Ads",
-  "Desenvolvimento de Marca - Posicionamento, criação de identidade, design de logotipo",
-  "Growth Hacking - Estratégias de crescimento rápido, experimentação, otimização de conversão",
-  "Cibersegurança - Ethical hacking, pentesting, auditoria de segurança, criptografia",
-  "Big Data - Hadoop, Spark, processamento de dados em larga escala, NoSQL",
-  "Engenharia de Dados - ETL, bancos de dados relacionais e não relacionais, pipelines de dados",
-  "Arquitetura de Cloud Computing - AWS, Azure, GCP, cloud-native, multicloud",
-  "Internet das Coisas (IoT) - MQTT, sensores, comunicação máquina-a-máquina",
-  "Banco de Dados - SQL, NoSQL, MongoDB, PostgreSQL, otimização de consultas",
-  "Realidade Aumentada (AR) e Realidade Virtual (VR) - Desenvolvimento AR/VR, Unity, 3D Modeling",
-  "Automação de Processos Robóticos (RPA) - UiPath, Blue Prism, automação de tarefas manuais",
-];
+import logger from "../../Extras/Debug/debug";
+import companiesData from "../../Extras/Jsons/Companies.json";
+import skillsData from "../../Extras/Jsons/Skills.json";
 
 // Estilização personalizada para o ícone do checkbox
 const BpIcon = styled("span")(({ theme }) => ({
@@ -206,7 +145,7 @@ export default function SignUp() {
   const handleCredentialResponse = (response) => {
     const token = response.credential; // Obtém o token de acesso
 
-    console.debug("TOKEN: ", token);
+    logger.debug("TOKEN: ", token);
 
     try {
       const userData = jwtDecode(token); // Decodifica o token JWT para obter as informações do usuário
@@ -214,8 +153,11 @@ export default function SignUp() {
 
       // Seleciona uma empresa e uma habilidade aleatoriamente
       const randomCompany =
-        companies[Math.floor(Math.random() * companies.length)];
-      const randomSkill = skills[Math.floor(Math.random() * skills.length)];
+        companiesData.companies[
+          Math.floor(Math.random() * companiesData.companies.length)
+        ];
+      const randomSkill =
+        skillsData.skills[Math.floor(Math.random() * skillsData.skills.length)];
 
       // Cria um objeto de perfil do usuário (apenas informações "não-pessoais")
       const userProfile = {
@@ -241,7 +183,7 @@ export default function SignUp() {
    * Função para iniciar o login via Google.
    */
   const handleGoogleLogin = () => {
-    console.debug("login via google");
+    logger.debug("login via google");
     if (google && google.accounts) {
       google.accounts.id.prompt(); // Verifica se google.accounts está disponível
     } else {
@@ -298,6 +240,7 @@ export default function SignUp() {
       setUsernameError("");
     }
 
+    // Validação do campo de e-mail
     if (!email) {
       setEmailError("O campo é obrigatório.");
       isValid = false;
@@ -324,8 +267,11 @@ export default function SignUp() {
 
       // Seleciona uma empresa e uma habilidade aleatoriamente
       const randomCompany =
-        companies[Math.floor(Math.random() * companies.length)];
-      const randomSkill = skills[Math.floor(Math.random() * skills.length)];
+        companiesData.companies[
+          Math.floor(Math.random() * companiesData.companies.length)
+        ];
+      const randomSkill =
+        skillsData.skills[Math.floor(Math.random() * skillsData.skills.length)];
 
       // Cria um objeto de perfil do usuário
       const userProfile = {
@@ -391,7 +337,7 @@ export default function SignUp() {
           </Typography>
         </Box>
 
-        {/* Seção de Login */}
+        {/* Seção de Registro */}
         <Box mt={5} mb={3}>
           <Typography variant="h4" align="left" fontWeight={550}>
             Registrar-se
@@ -401,7 +347,7 @@ export default function SignUp() {
         {/* Campo de Nome de Usuário */}
         <Box mb={1}>
           <FormControl fullWidth={true} sx={{ textAlign: "left" }}>
-            <FormLabel htmlFor="username">Usuário:</FormLabel>
+            <FormLabel htmlFor="username">Nome completo</FormLabel>
             <TextField
               fullWidth={true}
               variant="outlined"
@@ -426,7 +372,7 @@ export default function SignUp() {
         {/* Campo de email  */}
         <Box mb={1}>
           <FormControl fullWidth={true} sx={{ textAlign: "left" }}>
-            <FormLabel htmlFor="email">E-Mail:</FormLabel>
+            <FormLabel htmlFor="email">Email</FormLabel>
             <TextField
               fullWidth={true}
               variant="outlined"
@@ -452,7 +398,7 @@ export default function SignUp() {
         <Box mb={2}>
           <FormControl fullWidth={true} sx={{ textAlign: "left" }}>
             <Box display="flex" justifyContent="space-between" mt={1}>
-              <FormLabel htmlFor="password">Senha:</FormLabel>
+              <FormLabel htmlFor="password">Senha</FormLabel>
             </Box>
             <TextField
               fullWidth={true}
@@ -493,7 +439,7 @@ export default function SignUp() {
                 inputProps={{ "aria-label": "Checkbox demo" }}
               />
             }
-            label="Quero receber atualizações por e-mail"
+            label="Quero receber atualizações por e-mail."
           />
         </Box>
         {/* Botão Entrar */}

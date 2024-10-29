@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import data from "../../Extras/Jsons/users.json";
 
 // Modal para Exibir Informações do Artigo
 const ModalRender = ({ show, onClose, article }) => {
@@ -121,38 +122,25 @@ export default function Main() {
     React.useState(VISIBLE_ARTICLES);
 
   React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "https://raw.githubusercontent.com/Zyvoxi/SS/refs/heads/main/users.json",
-        );
-        const data = await response.json();
-        const articles = data.results.map((user) => {
-          const RANDOM_RATING_MAX = 6;
-          return {
-            title: `${user.name.first} ${user.name.last}`,
-            email: user.email,
-            phone: user.phone,
-            uuid: user.login.uuid,
-            location: {
-              state: user.location.state,
-              city: user.location.city,
-              country: user.location.country,
-            },
-            text: `Generated user from ${user.location.city}, ${user.location.country}.`,
-            imgSrc: user.picture.large,
-            rating: Math.floor(Math.random() * RANDOM_RATING_MAX),
-          };
-        });
-        setArticlesData(articles);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
+    const articles = data.results.map((user) => {
+      const RANDOM_RATING_MAX = 6;
+      return {
+        title: `${user.name.first} ${user.name.last}`,
+        email: user.email,
+        phone: user.phone,
+        uuid: user.login.uuid,
+        location: {
+          state: user.location.state,
+          city: user.location.city,
+          country: user.location.country,
+        },
+        text: `Generated user from ${user.location.city}, ${user.location.country}.`,
+        imgSrc: user.picture.large,
+        rating: Math.floor(Math.random() * RANDOM_RATING_MAX),
+      };
+    });
+    setArticlesData(articles);
+    setLoading(false);
   }, []);
 
   const handleArticleClick = (article) => {

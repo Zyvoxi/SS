@@ -22,6 +22,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import logo from "../../Assets/Logo/SSLogoIcon.svg";
 import { useNavigate } from "react-router-dom";
+import logger from "../../Extras/Debug/debug";
 import "./AppBar.css";
 
 // Constante para definir a opacidade do fundo
@@ -185,7 +186,7 @@ export default function AppAppBar() {
     if (option === "perfil") {
       navigate(`/SS/user/${userUUID}/profile`);
     } else if (option === "config") {
-      // logger.debug("Redirecionar para a página de configurações "); // Log de debug
+      logger.debug("Redirecionar para a página de configurações");
     } else if (option === "sair") {
       setIsUserLoggedIn(false); // Marca o usuário como deslogado
       localStorage.removeItem("userProfile"); // Remove dados do perfil do localStorage
@@ -441,7 +442,12 @@ export default function AppAppBar() {
                       {<Avatar alt={userName} src={userPicture} />}
                       {userName}
                     </MenuItem>
-                    <MenuItem sx={{ gap: "5px" }}>
+                    <MenuItem
+                      sx={{ gap: "5px" }}
+                      onClick={() => {
+                        handleMenuClick("config");
+                      }}
+                    >
                       {<SettingsOutlinedIcon />}Configurações
                     </MenuItem>
                     <MenuItem

@@ -33,7 +33,7 @@ export default [
     },
     plugins: {
       react: pluginReact,
-      "react-hooks": pluginReactHooks, // Ajuste no nome do plugin
+      "react-hooks": pluginReactHooks,
       prettier: pluginPrettier,
       security: pluginSecurity,
       "react-refresh": reactRefresh,
@@ -54,6 +54,7 @@ export default [
       "no-useless-concat": "warn",
       "prefer-template": "warn",
       "no-loop-func": "warn",
+      "no-console": ["warn", { allow: ["warn", "error"] }],
 
       // Regras recomendadas do JavaScript
       ...pluginJs.configs.recommended.rules,

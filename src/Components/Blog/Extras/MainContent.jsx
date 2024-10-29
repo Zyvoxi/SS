@@ -21,6 +21,7 @@ import {
   SearchRounded as SearchRoundedIcon,
   RssFeedRounded as RssFeedRoundedIcon,
 } from "@mui/icons-material";
+import logger from "../../../Extras/Debug/debug";
 
 const cardData = [
   {
@@ -231,7 +232,7 @@ export default function MainContent() {
   };
 
   const handleClick = () => {
-    console.info("You clicked the filter chip.");
+    logger.debug("Você cliclou no botão de filtro! \\('O')/");
   };
 
   return (
