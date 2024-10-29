@@ -12,7 +12,8 @@ import {
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { GitHub } from "@mui/icons-material";
-import logo from "../../Assets/Logo/SSLogoIcon.svg";
+import logger from "../../../Extras/Debug/debug";
+import logo from "../../../Assets/Logo/SSLogoIcon.svg";
 import { useNavigate } from "react-router-dom";
 
 const theme = createTheme({
@@ -79,6 +80,10 @@ export default function Footer() {
     }
   };
 
+  React.useEffect(() => {
+    logger.debug("O componente 'Footer' foi carregado.");
+  });
+
   return (
     <React.Fragment>
       <Container
@@ -117,7 +122,6 @@ export default function Footer() {
                 <img
                   src={logo}
                   alt="logo"
-                  className="rotating-logo"
                   style={{ width: "20px", height: "20px", marginRight: "5px" }}
                 />
                 STOPSKILL

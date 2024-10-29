@@ -23,7 +23,7 @@ import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import logo from "../../Assets/Logo/SSLogoIcon.svg";
 import { useNavigate } from "react-router-dom";
 import logger from "../../Extras/Debug/debug";
-import "./AppBar.css";
+import "./Styles/AppBar.css";
 
 // Constante para definir a opacidade do fundo
 const BGC_ALPHA = 0.4;
@@ -184,22 +184,29 @@ export default function AppAppBar() {
   const handleMenuClick = (option) => {
     // Verifica a opção selecionada e realiza a ação correspondente
     if (option === "perfil") {
+      logger.debug("AppBar - Redirecionando para o perfil: ", userUUID);
       navigate(`/SS/user/${userUUID}/profile`);
     } else if (option === "config") {
-      logger.debug("Redirecionar para a página de configurações");
+      logger.debug("AppBar - Redirecionar para a página de configurações");
     } else if (option === "sair") {
+      logger.debug("AppBar - Logout do usuário: ", userUUID);
       setIsUserLoggedIn(false); // Marca o usuário como deslogado
       localStorage.removeItem("userProfile"); // Remove dados do perfil do localStorage
       navigate("/SS/signin"); // Redireciona para a página de login
     } else if (option === "inicio") {
+      logger.debug("AppBar - Redirecionando para a página inicial.");
       navigate("/SS/"); // Redireciona para a página inicial
     } else if (option === "contratos") {
+      logger.debug("AppBar - Redirecionando para Contratos.");
       navigate("/SS/contract");
     } else if (option === "blog") {
+      logger.debug("AppBar - Redirecionando para o Blog");
       navigate("/SS/blog");
     } else if (option === "entrar") {
+      logger.debug("AppBar - Redirecionando para a página de Login.");
       navigate("/SS/signin");
     } else if (option === "registrar-se") {
+      logger.debug("AppBar - Redirecionando para a página de Registro");
       navigate("/SS/signup");
     }
     handleCloseMenu(); // Fecha o menu
@@ -210,6 +217,8 @@ export default function AppAppBar() {
    * Executado apenas na primeira renderização do componente.
    */
   React.useEffect(() => {
+    logger.debug("Carregando o componente 'AppBar'.");
+
     // Recupera dados do perfil do usuário no localStorage
     const userProfile = localStorage.getItem("userProfile");
 
@@ -220,7 +229,10 @@ export default function AppAppBar() {
       setUserPicture(profile.picture);
       setUserUUID(profile.id);
       setIsUserLoggedIn(true); // Marca o usuário como logado
+      logger.debug("AppBar - Conectado como: ", profile.name);
     }
+
+    logger.debug("Componente 'AppBar' carregado.");
   }, []);
 
   // Renderização do componente

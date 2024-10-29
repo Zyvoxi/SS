@@ -1,9 +1,15 @@
 import * as React from "react";
 import { Box, Container } from "@mui/material";
+import logger from "../../Extras/Debug/debug";
+
 const MainContent = React.lazy(() => import("./Extras/MainContent"));
 const Latest = React.lazy(() => import("./Extras/Latest"));
 
 export default function Blog() {
+  React.useEffect(() => {
+    logger.debug("O componente 'Blog' foi carregado.");
+  });
+
   return (
     <>
       <Box

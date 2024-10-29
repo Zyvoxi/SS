@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
+import compression from "vite-plugin-compression";
 import selfsigned from "selfsigned";
 import fs from "fs";
 import path from "path";
@@ -22,7 +23,10 @@ function generateAndSaveCertificate() {
 generateAndSaveCertificate();
 
 export default defineConfig({
-  plugins: [react({ plugins: [["@swc/plugin-styled-components", {}]] })],
+  plugins: [
+    react({ plugins: [["@swc/plugin-styled-components", {}]] }),
+    compression({ algorithm: "brotliCompress" }),
+  ],
   base: "/SS",
   server: {
     https: {
@@ -35,11 +39,18 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (id.includes("node_modules")) {
-            return "vendor";
-          }
           if (id.includes("src/Extras/users.json")) {
             return "users";
+          }
+          if (id.includes("node_modules")) {
+            if (
+              id.includes("react-router-dom") ||
+              id.includes("@remix-run") ||
+              id.includes("react-router")
+            ) {
+              return "@react-router";
+            }
+            return "vendor"; // all other package goes here
           }
         },
       },

@@ -120,17 +120,6 @@ export default function SignIn() {
   const [passwordError, setPasswordError] = React.useState("");
   const navigate = useNavigate(); // Hook para navegação programática
 
-  React.useEffect(() => {
-    // Muda a cor do body para preto
-    document.body.style.background =
-      "radial-gradient(circle, #f0f8fb, #f6fbff, #ffffff)";
-
-    // Função de limpeza para restaurar a cor original
-    return () => {
-      document.body.style.background = ""; // Restaura a cor original
-    };
-  }, []);
-
   /**
    * Função de callback para lidar com a resposta de credenciais do Google.
    * @param {Object} response - Resposta do login do Google.
@@ -162,6 +151,10 @@ export default function SignIn() {
         company: randomCompany,
         skill: randomSkill,
       };
+
+      logger.debug(
+        `SignIn - Sucesso!\nSignIn - Nome: ${userProfile.name}\nSignIn - ID: ${userProfile.id}\nSignIn - Foto de Perfil: ${userProfile.picture}\nSignIn - Redirecionando para a página inicial.`,
+      );
 
       // Salva o perfil do usuário no armazenamento local (apenas para testes, nenhuma informação é enviada a servidores)
       localStorage.setItem("userProfile", JSON.stringify(userProfile));
@@ -265,6 +258,10 @@ export default function SignIn() {
         skill: randomSkill,
       };
 
+      logger.debug(
+        `SignIn - Sucesso!\nSignIn - Nome: ${userProfile.name}\nSignIn - ID: ${userProfile.id}\nSignIn - Foto de Perfil: N/A\nSignIn - Redirecionando para a página inicial.`,
+      );
+
       // Salva o perfil do usuário no armazenamento local (apenas para testes)
       localStorage.setItem("userProfile", JSON.stringify(userProfile));
 
@@ -281,6 +278,19 @@ export default function SignIn() {
       "Redirecionar para recuperação de senha (função não implementada)",
     );
   };
+
+  React.useEffect(() => {
+    // Muda a cor do body para preto
+    document.body.style.background =
+      "radial-gradient(circle, #f0f8fb, #f6fbff, #ffffff)";
+
+    logger.debug("O componente 'SignIn' foi carregado.");
+
+    // Função de limpeza para restaurar a cor original
+    return () => {
+      document.body.style.background = ""; // Restaura a cor original
+    };
+  });
 
   // Renderização do componente
   return (

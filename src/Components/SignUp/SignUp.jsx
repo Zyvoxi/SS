@@ -127,17 +127,6 @@ export default function SignUp() {
   const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate(); // Hook para navegação programática
 
-  React.useEffect(() => {
-    // Muda a cor do body para preto
-    document.body.style.background =
-      "radial-gradient(circle, #f0f8fb, #f6fbff, #ffffff)";
-
-    // Função de limpeza para restaurar a cor original
-    return () => {
-      document.body.style.background = ""; // Restaura a cor original
-    };
-  }, []);
-
   /**
    * Função de callback para lidar com a resposta de credenciais do Google.
    * @param {Object} response - Resposta do login do Google.
@@ -169,6 +158,10 @@ export default function SignUp() {
         company: randomCompany,
         skill: randomSkill,
       };
+
+      logger.debug(
+        `SignUp - Sucesso!\nSignUp - Nome: ${userProfile.name}\nSignUp - ID: ${userProfile.id}\nSignUp - Foto de Perfil: ${userProfile.picture}\nSignUp - Redirecionando para a página inicial.`,
+      );
 
       // Salva o perfil do usuário no armazenamento local (apenas para testes, nenhuma informação é enviada a servidores)
       localStorage.setItem("userProfile", JSON.stringify(userProfile));
@@ -283,12 +276,29 @@ export default function SignUp() {
         skill: randomSkill,
       };
 
+      logger.debug(
+        `SignUp - Sucesso!\nSignUp - Nome: ${userProfile.name}\nSignUp - ID: ${userProfile.id}\nSignUp - Foto de Perfil: N/A\nSignUp - Redirecionando para a página inicial.`,
+      );
+
       // Salva o perfil do usuário no armazenamento local (apenas para testes)
       localStorage.setItem("userProfile", JSON.stringify(userProfile));
 
       navigate("/SS"); // Redireciona para a página principal
     }
   };
+
+  React.useEffect(() => {
+    // Muda a cor do body para preto
+    document.body.style.background =
+      "radial-gradient(circle, #f0f8fb, #f6fbff, #ffffff)";
+
+    logger.debug("O componente 'SignUp' foi carregado.");
+
+    // Função de limpeza para restaurar a cor original
+    return () => {
+      document.body.style.background = ""; // Restaura a cor original
+    };
+  });
 
   // Renderização do componente
   return (

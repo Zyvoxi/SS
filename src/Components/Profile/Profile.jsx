@@ -10,9 +10,10 @@ import {
 import CakeOutlinedIcon from "@mui/icons-material/CakeOutlined";
 import RoomOutlinedIcon from "@mui/icons-material/RoomOutlined";
 import BusinessIcon from "@mui/icons-material/Business";
-import "./Profile.css";
+import "./Styles/Profile.css";
 import { useParams, useNavigate } from "react-router-dom";
 import data from "../../Extras/Jsons/users.json";
+import logger from "../../Extras/Debug/debug";
 
 /**
  * Componente Profile que exibe as informações do perfil do usuário.
@@ -57,6 +58,8 @@ export default function Profile() {
       return;
     }
 
+    logger.debug("Carregando o componente 'Profile'...");
+
     // Verifica se o UUID do usuário na URL corresponde ao UUID do usuário conectado
     if (uuid === signedUserUUID) {
       if (profileData) {
@@ -84,12 +87,22 @@ export default function Profile() {
         setLoading(false);
       } else if (!signedUserUUID) {
         // Se o UUID do usuário conectado não estiver disponível, redireciona para a página de login
+        logger.debug(
+          // eslint-disable-next-line prettier/prettier
+          "Profile - Nenhum usuário encontrado & Nenhum usuário \"Logado\".\nProfile - Redirecionando para a página de Login. ",
+        );
         navigate("/SS/signin");
       } else {
         // Se o usuário não for encontrado, redireciona para o perfil do usuário conectado
+        logger.debug(
+          "Profile - Nenhum usuário encontrado, redirecionando para o perfil: ",
+          signedUserUUID,
+        );
         navigate(`/SS/user/${signedUserUUID}`);
       }
     }
+
+    logger.debug("Componente 'Profile' carregado.");
   }, [uuid, signedUserUUID, navigate, ready, profileData]); // Dependências que disparam o efeito
 
   return (
@@ -102,6 +115,7 @@ export default function Profile() {
           mr: "20px",
           paddingLeft: "0 !important",
           paddingRight: "0 !important",
+          justifySelf: "center",
         }}
       >
         {!loading && (
@@ -159,7 +173,7 @@ export default function Profile() {
                       },
                     }}
                   />
-                  <Typography variant="h4" fontWeight={600}>
+                  <Typography variant="h4" fontWeight={600} align="center">
                     {userName}
                   </Typography>
                 </Box>
@@ -204,7 +218,7 @@ export default function Profile() {
                   )}
                   <Divider
                     sx={{
-                      mt: "30px",
+                      mt: "28px",
                       mb: "30px",
                       color: "gray",
                     }}

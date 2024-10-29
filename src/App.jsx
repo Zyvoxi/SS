@@ -7,11 +7,13 @@ import {
 } from "react-router-dom";
 import { Box, Container, Divider } from "@mui/material";
 import logger from "./Extras/Debug/debug";
-// import { log } from "./Extras/Debug/debug";
 
 // Importação dinâmica dos componentes
 const AppBar = React.lazy(() => import("./Components/TopBar/AppBar"));
-const Footer = React.lazy(() => import("./Components/Footer/Footer"));
+const Footer = React.lazy(() => import("./Components/Footer/Normal/Footer"));
+const MinimalistFooter = React.lazy(
+  () => import("./Components/Footer/Minimalist/Footer"),
+);
 const AR = React.lazy(() => import("./Components/Articles/ArticlesRender"));
 const SignIn = React.lazy(() => import("./Components/SignIn/SingIn"));
 const SignUp = React.lazy(() => import("./Components/SignUp/SignUp"));
@@ -62,36 +64,44 @@ const router = createBrowserRouter([
   {
     path: "/SS/contract",
     element: (
-      <React.Suspense fallback={<LoadingFallback />}>
-        <AppBar />
-        <main>
-          <AR />
-        </main>
-      </React.Suspense>
+      <>
+        <React.Suspense>
+          <AppBar />
+        </React.Suspense>
+        <React.Suspense fallback={<LoadingFallback />}>
+          <main>
+            <AR />
+          </main>
+        </React.Suspense>
+      </>
     ),
   },
   {
     path: "/SS/blog",
     element: (
-      <React.Suspense fallback={<LoadingFallback />}>
-        <Container
-          maxWidth="true"
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            textAlign: "left",
-            margin: 0,
-            padding: "0 !important",
-          }}
-        >
+      <>
+        <React.Suspense>
           <AppBar />
-          <Box maxWidth={true}>
-            <Blog />
-            <Divider />
-            <Footer />
-          </Box>
-        </Container>
-      </React.Suspense>
+        </React.Suspense>
+        <React.Suspense fallback={<LoadingFallback />}>
+          <Container
+            maxWidth="true"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              textAlign: "left",
+              margin: 0,
+              padding: "0 !important",
+            }}
+          >
+            <Box maxWidth={true}>
+              <Blog />
+              <Divider />
+              <Footer />
+            </Box>
+          </Container>
+        </React.Suspense>
+      </>
     ),
   },
   {
@@ -105,12 +115,28 @@ const router = createBrowserRouter([
   {
     path: "/SS/user/:uuid/profile",
     element: (
-      <React.Suspense fallback={<LoadingFallback />}>
-        <AppBar />
-        <main>
-          <Profile />
-        </main>
-      </React.Suspense>
+      <>
+        <React.Suspense>
+          <AppBar />
+        </React.Suspense>
+        <React.Suspense fallback={<LoadingFallback />}>
+          <Container
+            maxWidth="true"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              textAlign: "left",
+              margin: 0,
+              padding: "0 24px 0 24px !important",
+            }}
+          >
+            <Box maxWidth={true}>
+              <Profile />
+              <MinimalistFooter />
+            </Box>
+          </Container>
+        </React.Suspense>
+      </>
     ),
   },
 ]);
