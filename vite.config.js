@@ -43,17 +43,15 @@ export default defineConfig({
             return "users";
           }
           if (id.includes("node_modules")) {
-            if (id.includes("@mui")) {
-              return "@mui-vendor";
-            }
-            if (
-              id.includes("react-router-dom") ||
-              id.includes("@remix-run") ||
-              id.includes("react-router")
-            ) {
-              return "@react-router";
-            }
-            return "vendor"; // all other package goes here
+            return id
+              .toString()
+              .split("node_modules/")[1]
+              .split("/")[0]
+              .toString();
+          }
+          // eslint-disable-next-line no-magic-numbers
+          if (id.indexOf("react") !== -1) {
+            return;
           }
         },
       },
