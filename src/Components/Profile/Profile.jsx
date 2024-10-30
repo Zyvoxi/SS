@@ -12,7 +12,6 @@ import RoomOutlinedIcon from "@mui/icons-material/RoomOutlined";
 import BusinessIcon from "@mui/icons-material/Business";
 import "./Styles/Profile.css";
 import { useParams, useNavigate } from "react-router-dom";
-import data from "../../Extras/Jsons/users.json";
 import logger from "../../Extras/Debug/debug";
 
 /**
@@ -73,6 +72,10 @@ export default function Profile() {
         setLoading(false); // Atualiza o estado de carregamento
       }
     } else {
+      const fetchUserData = async (uuid) => {
+        try {
+        const response = await fetch("https://pub-2f68c1db324345bb8d0fd40f4f1887c8.r2.dev/Jsons/users.json");
+        const data = await response.json();
       // Encontra o usuário correspondente ao UUID na lista de usuários
       const user = data.results.find((user) => user.login.uuid === uuid);
 
@@ -85,6 +88,10 @@ export default function Profile() {
         setUserCompany(user.company);
         setUserSkill(user.skill);
         setLoading(false);
+        } catch (error) {
+          logger.debug("Erro ao encontrar os dados");
+        }
+        }
       } else if (!signedUserUUID) {
         // Se o UUID do usuário conectado não estiver disponível, redireciona para a página de login
         logger.debug(
