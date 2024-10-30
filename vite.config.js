@@ -25,7 +25,10 @@ generateAndSaveCertificate();
 export default defineConfig({
   plugins: [
     react({ plugins: [["@swc/plugin-styled-components", {}]] }),
-    compression({ algorithm: "brotliCompress" }),
+    compression({
+      algorithm: "brotliCompress",
+      deleteOriginAssets: true, // Adiciona esta linha para remover arquivos de origem
+    }),
   ],
   base: "/",
   server: {
