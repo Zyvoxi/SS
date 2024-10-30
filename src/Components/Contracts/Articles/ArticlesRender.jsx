@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
-import data from "../../Extras/Jsons/users.json";
+import data from "../../../Extras/Jsons/users.json";
 
 // Modal para Exibir Informações do Artigo
 const ModalRender = ({ show, onClose, article }) => {
@@ -112,7 +112,7 @@ Article.propTypes = {
 };
 
 // Componente Principal com Infinite Scroll
-export default function Main() {
+export default function ArticlesRender() {
   const VISIBLE_ARTICLES = 20;
   const [articlesData, setArticlesData] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
@@ -173,7 +173,7 @@ export default function Main() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  if (loading) {
+  if (!loading) {
     return (
       <Box component="section" className="Main-Section">
         {Array.from({ length: 20 }).map((_, index) => (
