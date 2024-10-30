@@ -111,8 +111,6 @@ export default function Profile() {
         maxWidth="lg"
         sx={{
           mt: "100px",
-          ml: "20px",
-          mr: "20px",
           paddingLeft: "0 !important",
           paddingRight: "0 !important",
           justifySelf: "center",
