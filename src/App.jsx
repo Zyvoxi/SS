@@ -15,7 +15,7 @@ const MinimalistFooter = React.lazy(
   () => import("./Components/Footer/Minimalist/Footer"),
 );
 const Contracts = React.lazy(() => import("./Components/Contracts/Contracts"));
-const SignIn = React.lazy(() => import("./Components/SignIn/SingIn"));
+const SignIn = React.lazy(() => import("./Components/SignIn/SignIn"));
 const SignUp = React.lazy(() => import("./Components/SignUp/SignUp"));
 const Profile = React.lazy(() => import("./Components/Profile/Profile"));
 const Blog = React.lazy(() => import("./Components/Blog/Blog"));
