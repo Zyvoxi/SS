@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import {
@@ -183,37 +184,58 @@ export default function AppAppBar() {
    */
   const handleMenuClick = (option) => {
     // Verifica a opção selecionada e realiza a ação correspondente
-    if (option === "perfil") {
-      logger.debug("AppBar - Redirecionando para o perfil: ", userUUID);
-      navigate(`/users/${userUUID}/profile`);
-    } else if (option === "config") {
-      logger.debug(
-        "AppBar - Redirecionar para a página de configurações(não implementado)",
-      );
-    } else if (option === "sair") {
-      logger.debug("AppBar - Logout do usuário: ", userUUID);
-      setIsUserLoggedIn(false); // Marca o usuário como deslogado
-      localStorage.removeItem("userProfile"); // Remove dados do perfil do localStorage
-      navigate("/signin"); // Redireciona para a página de login
-    } else if (option === "inicio") {
-      logger.debug("AppBar - Redirecionando para a página inicial.");
-      navigate("/home"); // Redireciona para a página inicial
-    } else if (option === "contratos") {
-      logger.debug("AppBar - Redirecionando para Contratos.");
-      navigate("/contract");
-    } else if (option === "blog") {
-      logger.debug("AppBar - Redirecionando para o Blog");
-      navigate("/blog");
-    } else if (option === "entrar") {
-      logger.debug("AppBar - Redirecionando para a página de Login.");
-      navigate("/signin");
-    } else if (option === "registrar-se") {
-      logger.debug("AppBar - Redirecionando para a página de Registro");
-      navigate("/signup");
-    } else if (option === "faq") {
-      logger.debug(
-        "AppBar - Redirecionar para a página de faq(não implementado)",
-      );
+    switch (option) {
+      case "perfil":
+        logger.debug("AppBar - Redirecionando para o perfil: ", userUUID);
+        navigate(`/users/${userUUID}/profile`);
+        break;
+
+      case "config":
+        logger.debug(
+          "AppBar - Redirecionar para a página de configurações (não implementado)",
+        );
+        break;
+
+      case "sair":
+        logger.debug("AppBar - Logout do usuário: ", userUUID);
+        setIsUserLoggedIn(false); // Marca o usuário como deslogado
+        localStorage.removeItem("userProfile"); // Remove dados do perfil do localStorage
+        navigate("/signin"); // Redireciona para a página de login
+        break;
+
+      case "inicio":
+        logger.debug("AppBar - Redirecionando para a página inicial.");
+        navigate("/home"); // Redireciona para a página inicial
+        break;
+
+      case "contratos":
+        logger.debug("AppBar - Redirecionando para Contratos.");
+        navigate("/contract");
+        break;
+
+      case "blog":
+        logger.debug("AppBar - Redirecionando para o Blog");
+        navigate("/blog");
+        break;
+
+      case "entrar":
+        logger.debug("AppBar - Redirecionando para a página de Login.");
+        navigate("/signin");
+        break;
+
+      case "registrar-se":
+        logger.debug("AppBar - Redirecionando para a página de Registro");
+        navigate("/signup");
+        break;
+
+      case "faq":
+        logger.debug(
+          "AppBar - Redirecionar para a página de faq (não implementado)",
+        );
+        break;
+
+      default:
+        break;
     }
     handleCloseMenu(); // Fecha o menu
   };

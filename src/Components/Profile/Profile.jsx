@@ -72,41 +72,52 @@ export default function Profile() {
         setLoading(false); // Atualiza o estado de carregamento
       }
     } else {
-      const fetchUserData = async (uuid) => {
+      const fetchUserData = async () => {
         try {
-        const response = await fetch("https://pub-2f68c1db324345bb8d0fd40f4f1887c8.r2.dev/Jsons/users.json");
-        const data = await response.json();
-      // Encontra o usuário correspondente ao UUID na lista de usuários
-      const user = data.results.find((user) => user.login.uuid === uuid);
+          const response = await fetch(
+            "https://pub-2f68c1db324345bb8d0fd40f4f1887c8.r2.dev/Jsons/users.json",
+          );
 
-      if (user) {
-        // Se o usuário for encontrado, atualiza o estado com os dados do usuário
-        setUserName(`${user.name.first} ${user.name.last}`);
-        setUserPicture(user.picture.large);
-        setUserDOB(formatDate(user.dob.date));
-        setUserLocation(`${user.location.city} - ${user.location.state}`);
-        setUserCompany(user.company);
-        setUserSkill(user.skill);
-        setLoading(false);
+          if (!response.ok) {
+            throw new Error(`Profile - HTTP error! status: ${response.status}`);
+          }
+
+          const data = await response.json();
+
+          // Encontra o usuário correspondente ao UUID na lista de usuários
+          const user = await data.results.find(
+            (user) => user.login.uuid === uuid,
+          );
+
+          if (user) {
+            // Se o usuário for encontrado, atualiza o estado com os dados do usuário
+            setUserName(`${user.name.first} ${user.name.last}`);
+            setUserPicture(user.picture.large);
+            setUserDOB(formatDate(user.dob.date));
+            setUserLocation(`${user.location.city} - ${user.location.state}`);
+            setUserCompany(user.company);
+            setUserSkill(user.skill);
+            setLoading(false);
+          } else if (!signedUserUUID) {
+            // Se o UUID do usuário conectado não estiver disponível, redireciona para a página de login
+            logger.debug(
+              // eslint-disable-next-line prettier/prettier
+              "Profile - Nenhum usuário encontrado & Nenhum usuário \"Logado\".\nProfile - Redirecionando para a página de Login. ",
+            );
+            navigate("/signin");
+          } else {
+            // Se o usuário não for encontrado, redireciona para o perfil do usuário conectado
+            logger.debug(
+              "Profile - Nenhum usuário encontrado, redirecionando para o perfil: ",
+              signedUserUUID,
+            );
+            navigate(`/users/${signedUserUUID}`);
+          }
         } catch (error) {
-          logger.debug("Erro ao encontrar os dados");
+          console.error(error);
         }
-        }
-      } else if (!signedUserUUID) {
-        // Se o UUID do usuário conectado não estiver disponível, redireciona para a página de login
-        logger.debug(
-          // eslint-disable-next-line prettier/prettier
-          "Profile - Nenhum usuário encontrado & Nenhum usuário \"Logado\".\nProfile - Redirecionando para a página de Login. ",
-        );
-        navigate("/signin");
-      } else {
-        // Se o usuário não for encontrado, redireciona para o perfil do usuário conectado
-        logger.debug(
-          "Profile - Nenhum usuário encontrado, redirecionando para o perfil: ",
-          signedUserUUID,
-        );
-        navigate(`/users/${signedUserUUID}`);
-      }
+      };
+      fetchUserData();
     }
 
     logger.debug("Componente 'Profile' carregado.");

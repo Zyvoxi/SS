@@ -20,8 +20,6 @@ import { useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import logger from "../../Extras/Debug/debug";
-import companiesData from "../../Extras/Jsons/Companies.json";
-import skillsData from "../../Extras/Jsons/Skills.json";
 
 // Estilização personalizada para o ícone do checkbox
 const BpIcon = styled("span")(({ theme }) => ({
@@ -131,7 +129,7 @@ export default function SignUp() {
    * Função de callback para lidar com a resposta de credenciais do Google.
    * @param {Object} response - Resposta do login do Google.
    */
-  const handleCredentialResponse = (response) => {
+  const handleCredentialResponse = async (response) => {
     const token = response.credential; // Obtém o token de acesso
 
     logger.debug("TOKEN: ", token);
@@ -139,6 +137,18 @@ export default function SignUp() {
     try {
       const userData = jwtDecode(token); // Decodifica o token JWT para obter as informações do usuário
       const userId = crypto.randomUUID(); // Gera um UUID único para o usuário
+
+      const companiesResponse = await fetch(
+        "https://pub-2f68c1db324345bb8d0fd40f4f1887c8.r2.dev/Jsons/Companies.json",
+      );
+
+      const skillsResponse = await fetch(
+        "https://pub-2f68c1db324345bb8d0fd40f4f1887c8.r2.dev/Jsons/Skills.json",
+      );
+
+      const companiesData = await companiesResponse.json();
+
+      const skillsData = await skillsResponse.json();
 
       // Seleciona uma empresa e uma habilidade aleatoriamente
       const randomCompany =
@@ -160,7 +170,7 @@ export default function SignUp() {
       };
 
       logger.debug(
-        `SignUp - Sucesso!\nSignUp - Nome: ${userProfile.name}\nSignUp - ID: ${userProfile.id}\nSignUp - Foto de Perfil: ${userProfile.picture}\nSignUp - Redirecionando para a página inicial.`,
+        `SignIn - Sucesso!\nSignIn - Nome: ${userProfile.name}\nSignIn - ID: ${userProfile.id}\nSignIn - Foto de Perfil: ${userProfile.picture}\nSignIn - Redirecionando para a página inicial.`,
       );
 
       // Salva o perfil do usuário no armazenamento local (apenas para testes, nenhuma informação é enviada a servidores)
@@ -256,34 +266,53 @@ export default function SignUp() {
     }
 
     if (isValid) {
-      const userId = crypto.randomUUID(); // Gera um UUID único para o usuário
+      const handleLoginResponse = async () => {
+        const userId = crypto.randomUUID(); // Gera um UUID único para o usuário
 
-      // Seleciona uma empresa e uma habilidade aleatoriamente
-      const randomCompany =
-        companiesData.companies[
-          Math.floor(Math.random() * companiesData.companies.length)
-        ];
-      const randomSkill =
-        skillsData.skills[Math.floor(Math.random() * skillsData.skills.length)];
+        try {
+          const companiesResponse = await fetch(
+            "https://pub-2f68c1db324345bb8d0fd40f4f1887c8.r2.dev/Jsons/Companies.json",
+          );
+          const companiesData = await companiesResponse.json();
 
-      // Cria um objeto de perfil do usuário
-      const userProfile = {
-        id: userId,
-        name: username,
-        dob: "27/07/1997",
-        location: "Extrema - MG",
-        company: randomCompany,
-        skill: randomSkill,
+          const skillsResponse = await fetch(
+            "https://pub-2f68c1db324345bb8d0fd40f4f1887c8.r2.dev/Jsons/Skills.json",
+          );
+          const skillsData = await skillsResponse.json();
+
+          // Seleciona uma empresa e uma habilidade aleatoriamente
+          const randomCompany =
+            companiesData.companies[
+              Math.floor(Math.random() * companiesData.companies.length)
+            ];
+          const randomSkill =
+            skillsData.skills[
+              Math.floor(Math.random() * skillsData.skills.length)
+            ];
+
+          // Cria um objeto de perfil do usuário
+          const userProfile = {
+            id: userId,
+            name: username,
+            dob: "27/07/1997",
+            location: "Extrema - MG",
+            company: randomCompany,
+            skill: randomSkill,
+          };
+
+          logger.debug(
+            `SignIn - Sucesso!\nSignIn - Nome: ${userProfile.name}\nSignIn - ID: ${userProfile.id}\nSignIn - Foto de Perfil: N/A\nSignIn - Redirecionando para a página inicial.`,
+          );
+
+          // Salva o perfil do usuário no armazenamento local (apenas para testes)
+          localStorage.setItem("userProfile", JSON.stringify(userProfile));
+
+          navigate("/home"); // Redireciona para a página principal
+        } catch (error) {
+          console.error(error);
+        }
       };
-
-      logger.debug(
-        `SignUp - Sucesso!\nSignUp - Nome: ${userProfile.name}\nSignUp - ID: ${userProfile.id}\nSignUp - Foto de Perfil: N/A\nSignUp - Redirecionando para a página inicial.`,
-      );
-
-      // Salva o perfil do usuário no armazenamento local (apenas para testes)
-      localStorage.setItem("userProfile", JSON.stringify(userProfile));
-
-      navigate("/home"); // Redireciona para a página principal
+      handleLoginResponse();
     }
   };
 

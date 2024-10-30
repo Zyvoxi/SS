@@ -5,7 +5,7 @@ import ArticlesRender from "./Articles/ArticlesRender";
 export default function Contracts() {
   return (
     <Container
-      maxWidth={true}
+      maxWidth="true"
       sx={{
         display: "grid",
       }}
