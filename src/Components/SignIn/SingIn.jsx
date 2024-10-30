@@ -346,86 +346,90 @@ export default function SignIn() {
           </Typography>
         </Box>
 
-        {/* Campo de Nome de Usuário ou Email */}
-        <Box mb={1}>
-          <FormControl fullWidth={true} sx={{ textAlign: "left" }}>
-            <FormLabel htmlFor="username">Usuário</FormLabel>
-            <TextField
-              fullWidth={true}
-              variant="outlined"
-              placeholder="John Doe"
-              type="text"
-              value={emailOrUsername}
-              onChange={(e) => setEmailOrUsername(e.target.value)}
-              error={!!emailOrUsernameError}
-              helperText={emailOrUsernameError}
-              slotProps={{
-                input: {
-                  sx: {
-                    height: "40px",
-                    borderRadius: "8px",
-                  },
-                },
-              }}
-            />
-          </FormControl>
-        </Box>
-
-        {/* Campo de Senha */}
-        <Box mb={2}>
-          <FormControl fullWidth={true} sx={{ textAlign: "left" }}>
-            <Box display="flex" justifyContent="space-between" mt={1}>
-              <FormLabel htmlFor="password">Senha</FormLabel>
-              <Link
-                component="button"
-                type="button"
-                onClick={handleForgotPassword}
-                variant="body2"
-                underline="none"
-                sx={{
-                  alignSelf: "baseline",
-                  color: "black",
-                  position: "relative", // Necessário para o posicionamento do ::after
-                  overflow: "hidden",
-                  "&::after": {
-                    content: "''",
-                    position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "0.1em",
-                    backgroundColor: "#aaa",
-                    opacity: 1,
-                    transform: "translate3d(0, 0, 0)",
-                    transition: "ease-out 400ms",
-                  },
-                  "&:hover::after, &:focus::after": {
-                    transform: "translate3d(-100%, 0, 0)",
+        <Box mb={1} component={"form"}>
+          {/* Campo de Nome de Usuário ou Email */}
+          <Box>
+            <FormControl fullWidth={true} sx={{ textAlign: "left" }}>
+              <FormLabel htmlFor="username">Usuário</FormLabel>
+              <TextField
+                fullWidth={true}
+                variant="outlined"
+                placeholder="John Doe"
+                autoComplete="username"
+                type="text"
+                value={emailOrUsername}
+                onChange={(e) => setEmailOrUsername(e.target.value)}
+                error={!!emailOrUsernameError}
+                helperText={emailOrUsernameError}
+                slotProps={{
+                  input: {
+                    sx: {
+                      height: "40px",
+                      borderRadius: "8px",
+                    },
                   },
                 }}
-              >
-                Esqueceu a Senha?
-              </Link>
-            </Box>
-            <TextField
-              fullWidth={true}
-              variant="outlined"
-              placeholder="••••••"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              error={!!passwordError}
-              helperText={passwordError}
-              slotProps={{
-                input: {
-                  sx: {
-                    height: "40px",
-                    borderRadius: "8px",
+              />
+            </FormControl>
+          </Box>
+
+          {/* Campo de Senha */}
+          <Box mb={2}>
+            <FormControl fullWidth={true} sx={{ textAlign: "left" }}>
+              <Box display="flex" justifyContent="space-between" mt={1}>
+                <FormLabel htmlFor="password">Senha</FormLabel>
+                <Link
+                  component="button"
+                  type="button"
+                  onClick={handleForgotPassword}
+                  variant="body2"
+                  underline="none"
+                  sx={{
+                    alignSelf: "baseline",
+                    color: "black",
+                    position: "relative", // Necessário para o posicionamento do ::after
+                    overflow: "hidden",
+                    "&::after": {
+                      content: "''",
+                      position: "absolute",
+                      bottom: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "0.1em",
+                      backgroundColor: "#aaa",
+                      opacity: 1,
+                      transform: "translate3d(0, 0, 0)",
+                      transition: "ease-out 400ms",
+                    },
+                    "&:hover::after, &:focus::after": {
+                      transform: "translate3d(-100%, 0, 0)",
+                    },
+                  }}
+                >
+                  Esqueceu a Senha?
+                </Link>
+              </Box>
+              <TextField
+                fullWidth={true}
+                variant="outlined"
+                placeholder="••••••"
+                type="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                error={!!passwordError}
+                helperText={passwordError}
+                slotProps={{
+                  input: {
+                    sx: {
+                      height: "40px",
+                      borderRadius: "8px",
+                    },
                   },
-                },
-              }}
-            />
-          </FormControl>
+                }}
+              />
+            </FormControl>
+          </Box>
         </Box>
         <Box
           mb={2}

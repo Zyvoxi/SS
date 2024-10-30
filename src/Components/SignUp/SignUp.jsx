@@ -354,81 +354,86 @@ export default function SignUp() {
           </Typography>
         </Box>
 
-        {/* Campo de Nome de Usuário */}
-        <Box mb={1}>
-          <FormControl fullWidth={true} sx={{ textAlign: "left" }}>
-            <FormLabel htmlFor="username">Nome completo</FormLabel>
-            <TextField
-              fullWidth={true}
-              variant="outlined"
-              placeholder="John Doe"
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              error={!!usernameError}
-              helperText={usernameError}
-              slotProps={{
-                input: {
-                  sx: {
-                    height: "40px",
-                    borderRadius: "8px",
+        <Box mb={1} component={"form"}>
+          {/* Campo de Nome de Usuário */}
+          <Box mb={1}>
+            <FormControl fullWidth={true} sx={{ textAlign: "left" }}>
+              <FormLabel htmlFor="username">Nome completo</FormLabel>
+              <TextField
+                fullWidth={true}
+                variant="outlined"
+                placeholder="John Doe"
+                autoComplete="username"
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                error={!!usernameError}
+                helperText={usernameError}
+                slotProps={{
+                  input: {
+                    sx: {
+                      height: "40px",
+                      borderRadius: "8px",
+                    },
                   },
-                },
-              }}
-            />
-          </FormControl>
-        </Box>
+                }}
+              />
+            </FormControl>
+          </Box>
 
-        {/* Campo de email  */}
-        <Box mb={1}>
-          <FormControl fullWidth={true} sx={{ textAlign: "left" }}>
-            <FormLabel htmlFor="email">Email</FormLabel>
-            <TextField
-              fullWidth={true}
-              variant="outlined"
-              placeholder="john.doe@email.com"
-              type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              error={!!emailError}
-              helperText={emailError}
-              slotProps={{
-                input: {
-                  sx: {
-                    height: "40px",
-                    borderRadius: "8px",
+          {/* Campo de email  */}
+          <Box mb={1}>
+            <FormControl fullWidth={true} sx={{ textAlign: "left" }}>
+              <FormLabel htmlFor="email">Email</FormLabel>
+              <TextField
+                fullWidth={true}
+                variant="outlined"
+                placeholder="john.doe@email.com"
+                autoComplete="email"
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                error={!!emailError}
+                helperText={emailError}
+                slotProps={{
+                  input: {
+                    sx: {
+                      height: "40px",
+                      borderRadius: "8px",
+                    },
                   },
-                },
-              }}
-            />
-          </FormControl>
-        </Box>
+                }}
+              />
+            </FormControl>
+          </Box>
 
-        {/* Campo de Senha */}
-        <Box mb={2}>
-          <FormControl fullWidth={true} sx={{ textAlign: "left" }}>
-            <Box display="flex" justifyContent="space-between" mt={1}>
-              <FormLabel htmlFor="password">Senha</FormLabel>
-            </Box>
-            <TextField
-              fullWidth={true}
-              variant="outlined"
-              placeholder="••••••"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              error={!!passwordError}
-              helperText={passwordError}
-              slotProps={{
-                input: {
-                  sx: {
-                    height: "40px",
-                    borderRadius: "8px",
+          {/* Campo de Senha */}
+          <Box mb={2}>
+            <FormControl fullWidth={true} sx={{ textAlign: "left" }}>
+              <Box display="flex" justifyContent="space-between" mt={1}>
+                <FormLabel htmlFor="password">Senha</FormLabel>
+              </Box>
+              <TextField
+                fullWidth={true}
+                variant="outlined"
+                placeholder="••••••"
+                type="password"
+                autoComplete="new-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                error={!!passwordError}
+                helperText={passwordError}
+                slotProps={{
+                  input: {
+                    sx: {
+                      height: "40px",
+                      borderRadius: "8px",
+                    },
                   },
-                },
-              }}
-            />
-          </FormControl>
+                }}
+              />
+            </FormControl>
+          </Box>
         </Box>
         <Box
           mb={2}

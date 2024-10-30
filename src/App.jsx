@@ -5,7 +5,7 @@ import {
   Navigate,
   useParams,
 } from "react-router-dom";
-import { Box, Container, Divider } from "@mui/material";
+import { Box, Container, Divider, CircularProgress } from "@mui/material";
 import logger from "./Extras/Debug/debug";
 
 // Importação dinâmica dos componentes
@@ -26,9 +26,24 @@ const RedirectToProfile = () => {
 };
 
 const LoadingFallback = () => (
-  <div>
-    <div></div>
-  </div>
+  <Container
+    maxWidth={"xl"}
+    sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}
+  >
+    <Box>
+      <svg width={0} height={0}>
+        <defs>
+          <linearGradient id="my_gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#00c6ff" />
+            <stop offset="100%" stopColor="#0072ff" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <CircularProgress
+        sx={{ "svg circle": { stroke: "url(#my_gradient)" } }}
+      />
+    </Box>
+  </Container>
 );
 
 const router = createBrowserRouter([
@@ -57,7 +72,6 @@ const router = createBrowserRouter([
     element: (
       <React.Suspense fallback={<LoadingFallback />}>
         <AppBar />
-        <main></main>
       </React.Suspense>
     ),
   },
