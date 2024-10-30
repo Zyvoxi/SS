@@ -43,6 +43,9 @@ export default defineConfig({
             return "users";
           }
           if (id.includes("node_modules")) {
+            if (id.includes("@mui")) {
+              return "@mui-vendor";
+            }
             if (
               id.includes("react-router-dom") ||
               id.includes("@remix-run") ||
