@@ -48,6 +48,10 @@ const LoadingFallback = () => (
 
 const router = createBrowserRouter([
   {
+    path: "/",
+    element: <Navigate to={"/home"} replace={true} />,
+  },
+  {
     path: "/signin",
     element: (
       <React.Suspense fallback={<LoadingFallback />}>
