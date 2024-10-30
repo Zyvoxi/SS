@@ -27,7 +27,7 @@ export default defineConfig({
     react({ plugins: [["@swc/plugin-styled-components", {}]] }),
     compression({ algorithm: "brotliCompress" }),
   ],
-  base: "/SS",
+  base: "/",
   server: {
     https: {
       key: fs.readFileSync(keyPath),
