@@ -166,7 +166,7 @@ export default function SignUp() {
       // Salva o perfil do usuário no armazenamento local (apenas para testes, nenhuma informação é enviada a servidores)
       localStorage.setItem("userProfile", JSON.stringify(userProfile));
 
-      navigate("/SS"); // Redireciona para a página principal
+      navigate("/home"); // Redireciona para a página principal
     } catch (error) {
       console.error("Erro ao decodificar o token:", error);
     }
@@ -283,7 +283,7 @@ export default function SignUp() {
       // Salva o perfil do usuário no armazenamento local (apenas para testes)
       localStorage.setItem("userProfile", JSON.stringify(userProfile));
 
-      navigate("/SS"); // Redireciona para a página principal
+      navigate("/home"); // Redireciona para a página principal
     }
   };
 
@@ -470,7 +470,7 @@ export default function SignUp() {
               component="button"
               type="button"
               onClick={() => {
-                navigate("/SS/signin");
+                navigate("/signin");
               }}
               underline="none"
               sx={{

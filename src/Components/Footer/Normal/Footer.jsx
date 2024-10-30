@@ -74,9 +74,11 @@ export default function Footer() {
   const handleFooterClick = (option) => {
     // Verifica a opção selecionada e realiza a ação correspondente
     if (option === "inicio") {
-      navigate("/SS/"); // Redireciona para a página inicial
+      navigate("/home"); // Redireciona para a página inicial
     } else if (option === "contratos") {
-      navigate("/SS/contract");
+      navigate("/contract");
+    } else if (option === "blog") {
+      navigate("/blog");
     }
   };
 
@@ -213,6 +215,20 @@ export default function Footer() {
               }}
             >
               FAQs
+            </Link>
+            <Link
+              color="text.secondary"
+              variant="body2"
+              onClick={() => {
+                handleFooterClick("blog");
+              }}
+              sx={{
+                "&:hover": {
+                  cursor: "pointer",
+                },
+              }}
+            >
+              Blog
             </Link>
           </Box>
           <Box

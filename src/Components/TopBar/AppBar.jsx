@@ -185,29 +185,29 @@ export default function AppAppBar() {
     // Verifica a opção selecionada e realiza a ação correspondente
     if (option === "perfil") {
       logger.debug("AppBar - Redirecionando para o perfil: ", userUUID);
-      navigate(`/SS/user/${userUUID}/profile`);
+      navigate(`/users/${userUUID}/profile`);
     } else if (option === "config") {
       logger.debug("AppBar - Redirecionar para a página de configurações");
     } else if (option === "sair") {
       logger.debug("AppBar - Logout do usuário: ", userUUID);
       setIsUserLoggedIn(false); // Marca o usuário como deslogado
       localStorage.removeItem("userProfile"); // Remove dados do perfil do localStorage
-      navigate("/SS/signin"); // Redireciona para a página de login
+      navigate("/signin"); // Redireciona para a página de login
     } else if (option === "inicio") {
       logger.debug("AppBar - Redirecionando para a página inicial.");
-      navigate("/SS/"); // Redireciona para a página inicial
+      navigate("/home"); // Redireciona para a página inicial
     } else if (option === "contratos") {
       logger.debug("AppBar - Redirecionando para Contratos.");
-      navigate("/SS/contract");
+      navigate("/contract");
     } else if (option === "blog") {
       logger.debug("AppBar - Redirecionando para o Blog");
-      navigate("/SS/blog");
+      navigate("/blog");
     } else if (option === "entrar") {
       logger.debug("AppBar - Redirecionando para a página de Login.");
-      navigate("/SS/signin");
+      navigate("/signin");
     } else if (option === "registrar-se") {
       logger.debug("AppBar - Redirecionando para a página de Registro");
-      navigate("/SS/signup");
+      navigate("/signup");
     }
     handleCloseMenu(); // Fecha o menu
   };

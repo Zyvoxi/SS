@@ -46,7 +46,7 @@ const ModalRender = ({ show, onClose, article }) => {
           <Typography variant="h6">{article.title}</Typography>
           <Typography
             sx={{ mt: 2, cursor: "pointer" }}
-            onClick={() => navigate(`/SS/user/${article.uuid}`)}
+            onClick={() => navigate(`/users/${article.uuid}`)}
           >
             {article.uuid}
           </Typography>

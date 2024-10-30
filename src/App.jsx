@@ -22,7 +22,7 @@ const Blog = React.lazy(() => import("./Components/Blog/Blog"));
 
 const RedirectToProfile = () => {
   const { uuid } = useParams();
-  return <Navigate to={`/SS/user/${uuid}/profile`} replace={true} />;
+  return <Navigate to={`/users/${uuid}/profile`} replace={true} />;
 };
 
 const LoadingFallback = () => (
@@ -48,11 +48,7 @@ const LoadingFallback = () => (
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <Navigate to="/SS" replace={true} />,
-  },
-  {
-    path: "/SS/signin",
+    path: "/signin",
     element: (
       <React.Suspense fallback={<LoadingFallback />}>
         <SignIn />
@@ -60,7 +56,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/SS/signup",
+    path: "/signup",
     element: (
       <React.Suspense fallback={<LoadingFallback />}>
         <SignUp />
@@ -68,7 +64,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/SS/",
+    path: "/home",
     element: (
       <React.Suspense fallback={<LoadingFallback />}>
         <AppBar />
@@ -76,7 +72,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/SS/contract",
+    path: "/contract",
     element: (
       <>
         <React.Suspense>
@@ -91,7 +87,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/SS/blog",
+    path: "/blog",
     element: (
       <>
         <React.Suspense>
@@ -119,7 +115,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/SS/user/:uuid", // Redireciona para o perfil usando RedirectToProfile
+    path: "/users/:uuid", // Redireciona para o perfil usando RedirectToProfile
     element: (
       <React.Suspense fallback={<LoadingFallback />}>
         <RedirectToProfile />
@@ -127,7 +123,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/SS/user/:uuid/profile",
+    path: "/users/:uuid/profile",
     element: (
       <>
         <React.Suspense>

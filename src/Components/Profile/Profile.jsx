@@ -91,14 +91,14 @@ export default function Profile() {
           // eslint-disable-next-line prettier/prettier
           "Profile - Nenhum usuário encontrado & Nenhum usuário \"Logado\".\nProfile - Redirecionando para a página de Login. ",
         );
-        navigate("/SS/signin");
+        navigate("/signin");
       } else {
         // Se o usuário não for encontrado, redireciona para o perfil do usuário conectado
         logger.debug(
           "Profile - Nenhum usuário encontrado, redirecionando para o perfil: ",
           signedUserUUID,
         );
-        navigate(`/SS/user/${signedUserUUID}`);
+        navigate(`/users/${signedUserUUID}`);
       }
     }
 
