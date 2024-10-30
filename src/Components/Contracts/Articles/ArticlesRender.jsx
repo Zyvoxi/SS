@@ -175,7 +175,22 @@ export default function ArticlesRender() {
 
   if (!loading) {
     return (
-      <Box component="section" className="Main-Section">
+      <Box
+        component="section"
+        sx={{
+          marginTop: "100px",
+          padding: "15px",
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "row",
+          flexWrap: "wrap",
+          width: "100%",
+          maxWidth: "1450px",
+          gap: "20px",
+          alignItems: "flex-start",
+          alignContent: "flex-start",
+        }}
+      >
         {Array.from({ length: 20 }).map((_, index) => (
           <Paper
             key={index}
@@ -215,7 +230,21 @@ export default function ArticlesRender() {
 
   return (
     <>
-      <Box component="section" className="Main-Section">
+      <Box
+        component="section"
+        sx={{
+          marginTop: "100px",
+          padding: "15px",
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "row",
+          flexWrap: "wrap",
+          width: "100%",
+          gap: "20px",
+          alignItems: "flex-start",
+          alignContent: "flex-start",
+        }}
+      >
         {articlesData.slice(0, visibleArticles).map((article, index) => (
           <Article
             key={index}

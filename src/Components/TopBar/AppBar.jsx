@@ -187,7 +187,9 @@ export default function AppAppBar() {
       logger.debug("AppBar - Redirecionando para o perfil: ", userUUID);
       navigate(`/users/${userUUID}/profile`);
     } else if (option === "config") {
-      logger.debug("AppBar - Redirecionar para a página de configurações(não implementado)");
+      logger.debug(
+        "AppBar - Redirecionar para a página de configurações(não implementado)",
+      );
     } else if (option === "sair") {
       logger.debug("AppBar - Logout do usuário: ", userUUID);
       setIsUserLoggedIn(false); // Marca o usuário como deslogado
@@ -209,7 +211,9 @@ export default function AppAppBar() {
       logger.debug("AppBar - Redirecionando para a página de Registro");
       navigate("/signup");
     } else if (option === "faq") {
-      logger.debug("AppBar - Redirecionar para a página de faq(não implementado)");
+      logger.debug(
+        "AppBar - Redirecionar para a página de faq(não implementado)",
+      );
     }
     handleCloseMenu(); // Fecha o menu
   };

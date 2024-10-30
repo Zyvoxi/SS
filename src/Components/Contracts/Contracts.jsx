@@ -7,8 +7,7 @@ export default function Contracts() {
     <Container
       maxWidth={true}
       sx={{
-        display: "flex",
-        flexDirection: "row",
+        display: "grid",
       }}
     >
       <Box
@@ -24,9 +23,15 @@ export default function Contracts() {
           justifySelf: "start",
           backgroundImage:
             "linear-gradient(to right, #fefefe, #f8f8f8, #fafafa)",
+          position: "fixed",
         }}
       ></Box>
-      <Box>
+      <Box
+        sx={{
+          justifySelf: "flex-end",
+          alignSelf: "end",
+        }}
+      >
         <ArticlesRender />
       </Box>
     </Container>
