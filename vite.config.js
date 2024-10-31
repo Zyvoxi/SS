@@ -37,6 +37,7 @@ export default defineConfig({
     },
   },
   build: {
+    target: "ES2022",
     rollupOptions: {
       output: {
         manualChunks(id) {
