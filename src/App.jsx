@@ -72,6 +72,7 @@ const router = createBrowserRouter([
     element: (
       <React.Suspense fallback={<LoadingFallback />}>
         <AppBar />
+        <LoadingFallback />
       </React.Suspense>
     ),
   },

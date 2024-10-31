@@ -209,7 +209,7 @@ export default function ArticlesRender() {
           alignContent: "flex-start",
         }}
       >
-        {Array.from({ length: 20 }).map((_, index) => (
+        {Array.from({ length: 200 }).map((_, index) => (
           <Paper
             key={index}
             sx={{
@@ -258,9 +258,12 @@ export default function ArticlesRender() {
           flexDirection: "row",
           flexWrap: "wrap",
           width: "100%",
+          maxWidth: "1450px",
           gap: "20px",
           alignItems: "flex-start",
           alignContent: "flex-start",
+          position: "absolute",
+          top: "-1.5%",
         }}
       >
         {articlesData.slice(0, visibleArticles).map((article, index) => (

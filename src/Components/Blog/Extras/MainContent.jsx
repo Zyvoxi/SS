@@ -23,96 +23,10 @@ import {
 } from "@mui/icons-material";
 import logger from "../../../Extras/Debug/debug";
 
-const cardData = [
-  {
-    img: "https://picsum.photos/800/450?random=1",
-    tag: "Engenharia",
-    title:
-      "Revolucionando o desenvolvimento de software com ferramentas de ponta",
-    description:
-      "Nossas mais recentes ferramentas de engenharia foram projetadas para otimizar fluxos de trabalho e aumentar a produtividade. Descubra como essas inovações estão transformando o cenário do desenvolvimento de software.",
-    authors: [
-      {
-        name: "Remy Sharp",
-        avatar: "https://randomuser.me/api/portraits/thumb/men/32.jpg",
-      },
-      {
-        name: "Travis Howard",
-        avatar: "https://randomuser.me/api/portraits/thumb/men/36.jpg",
-      },
-    ],
-  },
-  {
-    img: "https://picsum.photos/800/450?random=2",
-    tag: "Produto",
-    title: "Recursos inovadores de produtos que impulsionam o sucesso",
-    description:
-      "Explore os principais recursos de nossa mais recente versão de produto que estão ajudando empresas a alcançar seus objetivos. De interfaces amigáveis a funcionalidades robustas, descubra por que nosso produto se destaca.",
-    authors: [
-      {
-        name: "Erica Johns",
-        avatar: "https://randomuser.me/api/portraits/thumb/women/74.jpg",
-      },
-    ],
-  },
-  {
-    img: "https://picsum.photos/800/450?random=3",
-    tag: "Design",
-    title: "Design para o futuro: tendências e insights",
-    description:
-      "Mantenha-se à frente com as últimas tendências e insights de design. Nossa equipe de design compartilha sua experiência em criar experiências de usuário intuitivas e visualmente impressionantes.",
-    authors: [
-      {
-        name: "Kate Morrison",
-        avatar: "https://randomuser.me/api/portraits/thumb/women/67.jpg",
-      },
-    ],
-  },
-  {
-    img: "https://picsum.photos/800/450?random=4",
-    tag: "Empresa",
-    title: "Nossa jornada como empresa: marcos e conquistas",
-    description:
-      "Dê uma olhada em nossa trajetória como empresa e os marcos que conquistamos ao longo do caminho. De começos humildes a líder do setor, descubra nossa história de crescimento e sucesso.",
-    authors: [
-      {
-        name: "Cindy Baker",
-        avatar: "https://randomuser.me/api/portraits/thumb/women/36.jpg",
-      },
-    ],
-  },
-  {
-    img: "https://picsum.photos/800/450?random=45",
-    tag: "Engenharia",
-    title: "Pioneirismo em soluções de engenharia sustentável",
-    description:
-      "Saiba mais sobre nosso compromisso com a sustentabilidade e as soluções de engenharia inovadoras que estamos implementando para criar um futuro mais verde. Descubra o impacto de nossas iniciativas ecológicas.",
-    authors: [
-      {
-        name: "Agnes Walker",
-        avatar: "https://randomuser.me/api/portraits/thumb/women/11.jpg",
-      },
-      {
-        name: "Trevor Henderson",
-        avatar: "https://randomuser.me/api/portraits/thumb/men/58.jpg",
-      },
-    ],
-  },
-  {
-    img: "https://picsum.photos/800/450?random=6",
-    tag: "Produto",
-    title:
-      "Maximizando a eficiência com as atualizações mais recentes de nossos produtos",
-    description:
-      "Nossas recentes atualizações de produtos foram projetadas para ajudar você a maximizar a eficiência e alcançar mais. Veja uma visão detalhada dos novos recursos e melhorias que podem elevar seu fluxo de trabalho.",
-    authors: [
-      {
-        name: "Travis Howard",
-        avatar: "https://randomuser.me/api/portraits/thumb/men/36.jpg",
-      },
-    ],
-  },
-];
+const cardResponse = await fetch(
+  "https://pub-2f68c1db324345bb8d0fd40f4f1887c8.r2.dev/Jsons/CardData.json",
+);
+const card = await cardResponse.json();
 
 const SyledCard = styled(Card)(() => ({
   display: "flex",
@@ -347,7 +261,7 @@ export default function MainContent() {
             <CardMedia
               component="img"
               alt="green iguana"
-              image={cardData[0].img}
+              image={card.cardData[0].img}
               sx={{
                 aspectRatio: "16 / 9",
                 borderBottom: "1px solid",
@@ -356,20 +270,20 @@ export default function MainContent() {
             />
             <SyledCardContent>
               <Typography gutterBottom={true} variant="caption" component="div">
-                {cardData[0].tag}
+                {card.cardData[0].tag}
               </Typography>
               <Typography gutterBottom={true} variant="h6" component="div">
-                {cardData[0].title}
+                {card.cardData[0].title}
               </Typography>
               <StyledTypography
                 variant="body2"
                 color="text.secondary"
                 gutterBottom={true}
               >
-                {cardData[0].description}
+                {card.cardData[0].description}
               </StyledTypography>
             </SyledCardContent>
-            <Author authors={cardData[0].authors} />
+            <Author authors={card.cardData[0].authors} />
           </SyledCard>
         </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
@@ -383,7 +297,7 @@ export default function MainContent() {
             <CardMedia
               component="img"
               alt="green iguana"
-              image={cardData[1].img}
+              image={card.cardData[1].img}
               aspect-ratio="16 / 9"
               sx={{
                 borderBottom: "1px solid",
@@ -392,20 +306,20 @@ export default function MainContent() {
             />
             <SyledCardContent>
               <Typography gutterBottom={true} variant="caption" component="div">
-                {cardData[1].tag}
+                {card.cardData[1].tag}
               </Typography>
               <Typography gutterBottom={true} variant="h6" component="div">
-                {cardData[1].title}
+                {card.cardData[1].title}
               </Typography>
               <StyledTypography
                 variant="body2"
                 color="text.secondary"
                 gutterBottom={true}
               >
-                {cardData[1].description}
+                {card.cardData[1].description}
               </StyledTypography>
             </SyledCardContent>
-            <Author authors={cardData[1].authors} />
+            <Author authors={card.cardData[1].authors} />
           </SyledCard>
         </Grid>
         <Grid size={{ xs: 12, md: 4 }}>
@@ -420,7 +334,7 @@ export default function MainContent() {
             <CardMedia
               component="img"
               alt="green iguana"
-              image={cardData[2].img}
+              image={card.cardData[2].img}
               sx={{
                 height: { sm: "auto", md: "50%" },
                 aspectRatio: { sm: "16 / 9", md: "" },
@@ -428,20 +342,20 @@ export default function MainContent() {
             />
             <SyledCardContent>
               <Typography gutterBottom={true} variant="caption" component="div">
-                {cardData[2].tag}
+                {card.cardData[2].tag}
               </Typography>
               <Typography gutterBottom={true} variant="h6" component="div">
-                {cardData[2].title}
+                {card.cardData[2].title}
               </Typography>
               <StyledTypography
                 variant="body2"
                 color="text.secondary"
                 gutterBottom={true}
               >
-                {cardData[2].description}
+                {card.cardData[2].description}
               </StyledTypography>
             </SyledCardContent>
-            <Author authors={cardData[2].authors} />
+            <Author authors={card.cardData[2].authors} />
           </SyledCard>
         </Grid>
         <Grid size={{ xs: 12, md: 4 }}>
@@ -475,21 +389,21 @@ export default function MainContent() {
                     variant="caption"
                     component="div"
                   >
-                    {cardData[3].tag}
+                    {card.cardData[3].tag}
                   </Typography>
                   <Typography gutterBottom={true} variant="h6" component="div">
-                    {cardData[3].title}
+                    {card.cardData[3].title}
                   </Typography>
                   <StyledTypography
                     variant="body2"
                     color="text.secondary"
                     gutterBottom={true}
                   >
-                    {cardData[3].description}
+                    {card.cardData[3].description}
                   </StyledTypography>
                 </div>
               </SyledCardContent>
-              <Author authors={cardData[3].authors} />
+              <Author authors={card.cardData[3].authors} />
             </SyledCard>
             <SyledCard
               variant="outlined"
@@ -513,21 +427,21 @@ export default function MainContent() {
                     variant="caption"
                     component="div"
                   >
-                    {cardData[4].tag}
+                    {card.cardData[4].tag}
                   </Typography>
                   <Typography gutterBottom={true} variant="h6" component="div">
-                    {cardData[4].title}
+                    {card.cardData[4].title}
                   </Typography>
                   <StyledTypography
                     variant="body2"
                     color="text.secondary"
                     gutterBottom={true}
                   >
-                    {cardData[4].description}
+                    {card.cardData[4].description}
                   </StyledTypography>
                 </div>
               </SyledCardContent>
-              <Author authors={cardData[4].authors} />
+              <Author authors={card.cardData[4].authors} />
             </SyledCard>
           </Box>
         </Grid>
@@ -543,7 +457,7 @@ export default function MainContent() {
             <CardMedia
               component="img"
               alt="green iguana"
-              image={cardData[5].img}
+              image={card.cardData[5].img}
               sx={{
                 height: { sm: "auto", md: "50%" },
                 aspectRatio: { sm: "16 / 9", md: "" },
@@ -551,20 +465,20 @@ export default function MainContent() {
             />
             <SyledCardContent>
               <Typography gutterBottom={true} variant="caption" component="div">
-                {cardData[5].tag}
+                {card.cardData[5].tag}
               </Typography>
               <Typography gutterBottom={true} variant="h6" component="div">
-                {cardData[5].title}
+                {card.cardData[5].title}
               </Typography>
               <StyledTypography
                 variant="body2"
                 color="text.secondary"
                 gutterBottom={true}
               >
-                {cardData[5].description}
+                {card.cardData[5].description}
               </StyledTypography>
             </SyledCardContent>
-            <Author authors={cardData[5].authors} />
+            <Author authors={card.cardData[5].authors} />
           </SyledCard>
         </Grid>
       </Grid>
