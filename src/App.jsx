@@ -84,9 +84,9 @@ const router = createBrowserRouter([
           <AppBar />
         </React.Suspense>
         <React.Suspense fallback={<LoadingFallback />}>
-          <main>
+          <Box maxWidth={"100vw"} width={"100%"}>
             <Contracts />
-          </main>
+          </Box>
         </React.Suspense>
       </>
     ),
