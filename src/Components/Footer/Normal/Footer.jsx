@@ -13,7 +13,7 @@ import {
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { GitHub } from "@mui/icons-material";
 import logger from "../../../Extras/Debug/debug";
-import logo from "../../../Assets/Logo/SSLogoIcon.svg";
+import logo from "../../../Assets/Logo/TSLogoIcon.svg";
 import { useNavigate } from "react-router-dom";
 
 const theme = createTheme({
@@ -40,7 +40,7 @@ function Copyright() {
   return (
     <div style={{ textAlign: "left" }}>
       <Typography variant="body2" sx={{ color: "text.secondary", mt: 1 }}>
-        {"SS © "}
+        {"T.S. © "}
         {new Date().getFullYear()}
         &nbsp;
         <Link
@@ -126,7 +126,7 @@ export default function Footer() {
                   alt="logo"
                   style={{ width: "20px", height: "20px", marginRight: "5px" }}
                 />
-                STOPSKILL
+                TOPSKILL
               </Typography>
               <Typography
                 variant="body2"

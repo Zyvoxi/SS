@@ -10,6 +10,7 @@ import {
   Avatar,
   Container,
 } from "@mui/material";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
@@ -118,6 +119,7 @@ export default function Contracts() {
   const [selectedArticle, setSelectedArticle] = React.useState(null);
   const [visibleArticles, setVisibleArticles] =
     React.useState(VISIBLE_ARTICLES);
+  const [showMenu, setShowMenu] = React.useState(false);
 
   React.useEffect(() => {
     const fetchUsersData = async () => {
@@ -209,14 +211,19 @@ export default function Contracts() {
         <Box
           sx={{
             width: "100%",
-            maxWidth: { xs: "450px", sm: "300px" },
+            maxWidth: { xs: "calc(85vw - 10px)", sm: "300px" },
             height: "100%",
-            maxHeight: "85vh",
+            maxHeight: { xs: "73vh", lg: "85vh" },
             border: "1px solid rgba(0, 0, 0, 0.12)",
             borderRadius: 3,
             boxShadow:
               "0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12)",
-            left: { xs: "-300px", lg: "24px" },
+            transform: {
+              xs: showMenu ? "translateX(10px)" : "translateX(-104%)",
+              sm: showMenu ? "translateX(0)" : "translateX(-108%)",
+              lg: "translateX(0)",
+            },
+            transition: "ease 400ms",
             backgroundColor: {
               xs: "rgba(255, 255, 255, 0.4)",
               lg: "#f3f4f9",
@@ -225,6 +232,24 @@ export default function Contracts() {
             position: "fixed",
           }}
         >
+          <Box
+            sx={{
+              display: { xs: "block", lg: "none" },
+              position: "fixed",
+              top: "50%",
+              left: "102%",
+              transition: "ease 400ms",
+              transform: showMenu ? "rotate(-180deg)" : "rotate(0deg)",
+              "&:hover": {
+                cursor: "pointer",
+              },
+            }}
+            onClick={() => {
+              setShowMenu(!showMenu);
+            }}
+          >
+            <ArrowForwardIosIcon />
+          </Box>
           <Typography variant="h4" color="initial" sx={{ padding: "16px" }}>
             Menu
           </Typography>
@@ -237,7 +262,7 @@ export default function Contracts() {
           display: "flex",
           flexDirection: "column",
           overflowY: "auto",
-          maxHeight: { xs: "90vh", sm: "100vh" },
+          maxHeight: "100vh",
           padding: "16px",
         }}
       >
@@ -267,6 +292,7 @@ export default function Contracts() {
           <Box
             component="section"
             sx={{
+              paddingTop: "85px",
               display: "flex",
               justifyContent: "center",
               flexDirection: "row",
@@ -279,11 +305,11 @@ export default function Contracts() {
                 key={index}
                 sx={{
                   padding: "10px",
-                  backgroundColor: "#fefefe41",
                   width: "100%",
                   maxWidth: "402px",
-                  height: "150px",
                   borderRadius: "25px",
+                  height: "150px",
+                  backgroundColor: "#fefefe41",
                   display: "flex",
                   flexDirection: "row",
                 }}

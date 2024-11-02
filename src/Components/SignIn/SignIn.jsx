@@ -1,5 +1,5 @@
 import * as React from "react";
-import logo from "../../Assets/Logo/SSLogoIcon.svg";
+import logo from "../../Assets/Logo/TSLogoIcon.svg";
 import {
   Divider,
   Container,
@@ -364,7 +364,7 @@ export default function SignIn() {
               fontSize: "14px",
             }}
           >
-            STOPSKILL
+            TOPSKILL
           </Typography>
         </Box>
 

@@ -21,7 +21,7 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import logo from "../../Assets/Logo/SSLogoIcon.svg";
+import logo from "../../Assets/Logo/TSLogoIcon.svg";
 import { useNavigate } from "react-router-dom";
 import logger from "../../Extras/Debug/debug";
 import "./Styles/AppBar.css";
@@ -301,7 +301,7 @@ export default function AppAppBar() {
                 fontFamily: "monospace",
               }}
             >
-              STOPSKILL
+              TOPSKILL
             </Typography>
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
               <Button

@@ -8,14 +8,14 @@ import {
   Typography,
 } from "@mui/material";
 import { GitHub } from "@mui/icons-material";
-import logo from "../../../Assets/Logo/SSLogoIcon.svg";
+import logo from "../../../Assets/Logo/TSLogoIcon.svg";
 import logger from "../../../Extras/Debug/debug";
 
 function Copyright() {
   return (
     <div style={{ textAlign: "left" }}>
       <Typography variant="body2" sx={{ color: "text.secondary", mt: 1 }}>
-        {"SS © "}
+        {"T.S. © "}
         {new Date().getFullYear()}
         &nbsp;
         <Link
@@ -80,7 +80,7 @@ export default function Footer() {
                 alt="logo"
                 style={{ width: "20px", height: "20px", marginRight: "5px" }}
               />
-              STOPSKILL
+              TOPSKILL
             </Typography>
             <Link color="text.secondary" variant="body2">
               Política de Privacidade
