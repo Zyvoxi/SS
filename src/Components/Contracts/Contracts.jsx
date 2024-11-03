@@ -9,12 +9,17 @@ import {
   Fade,
   Avatar,
   Container,
+  FormControl,
+  InputAdornment,
+  OutlinedInput,
 } from "@mui/material";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import {
+  SearchRounded as SearchRoundedIcon,
+  ArrowForwardIos as ArrowForwardIosIcon,
+} from "@mui/icons-material";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
-// Modal para Exibir Informações do Artigo
 const ModalRender = ({ show, onClose, article }) => {
   const navigate = useNavigate();
 
@@ -62,11 +67,12 @@ ModalRender.propTypes = {
   onClose: PropTypes.func.isRequired,
   article: PropTypes.shape({
     title: PropTypes.string.isRequired,
+    text: PropTypes.string,
+    imgSrc: PropTypes.string,
     uuid: PropTypes.string.isRequired,
-  }),
+  }).isRequired,
 };
 
-// Componente de Artigo Individual
 const Article = ({ title, text, imgSrc, onClick }) => {
   const DEFAULT_ELEVATION = 2;
   const HOVERED_ELEVATION = 15;
@@ -112,7 +118,7 @@ Article.propTypes = {
 };
 
 export default function Contracts() {
-  const VISIBLE_ARTICLES = 20;
+  const VISIBLE_ARTICLES = 25;
   const [articlesData, setArticlesData] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [showModal, setShowModal] = React.useState(false);
@@ -120,8 +126,27 @@ export default function Contracts() {
   const [visibleArticles, setVisibleArticles] =
     React.useState(VISIBLE_ARTICLES);
   const [showMenu, setShowMenu] = React.useState(false);
+  const [searchTerm, setSearchTerm] = React.useState("");
+
+  const sectionRef = React.useRef(null);
 
   React.useEffect(() => {
+    const handleScroll = () => {
+      const SCROLL_OFFSET_THRESHOLD = 1000;
+      if (
+        sectionRef.current &&
+        sectionRef.current.scrollTop + sectionRef.current.clientHeight >=
+          sectionRef.current.scrollHeight - SCROLL_OFFSET_THRESHOLD
+      ) {
+        loadMoreArticles();
+      }
+    };
+
+    const sectionElement = sectionRef.current;
+    sectionElement.addEventListener("scroll", handleScroll);
+
+    loadMoreArticles();
+
     const fetchUsersData = async () => {
       try {
         const response = await fetch(
@@ -155,6 +180,10 @@ export default function Contracts() {
       }
     };
     fetchUsersData();
+
+    return () => {
+      sectionElement.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   const handleArticleClick = (article) => {
@@ -167,23 +196,13 @@ export default function Contracts() {
   };
 
   const loadMoreArticles = () => {
-    const LOAD_MORE_ARTICLES_COUNT = 20;
+    const LOAD_MORE_ARTICLES_COUNT = 30;
     setVisibleArticles((prev) => prev + LOAD_MORE_ARTICLES_COUNT);
   };
 
-  React.useEffect(() => {
-    const handleScroll = () => {
-      const SCROLL_OFFSET_THRESHOLD = 50;
-      if (
-        window.innerHeight + document.documentElement.scrollTop >=
-        document.documentElement.offsetHeight - SCROLL_OFFSET_THRESHOLD
-      ) {
-        loadMoreArticles();
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const filteredArticles = articlesData.filter((article) =>
+    article.title.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
 
   return (
     <Container
@@ -193,6 +212,8 @@ export default function Contracts() {
         margin: 0,
         display: "flex",
         flexDirection: "row",
+        overflowY: "auto",
+        maxHeight: "100vh",
       }}
     >
       <Box
@@ -201,7 +222,7 @@ export default function Contracts() {
           width: "100%",
           maxWidth: "300px",
           height: "100%",
-          maxHeight: "85vh",
+          maxHeight: "5vh",
           display: "inline-flex",
           flexDirection: "column",
           position: { xs: "absolute", lg: "static" },
@@ -262,15 +283,55 @@ export default function Contracts() {
           display: "flex",
           flexDirection: "column",
           overflowY: "auto",
+          overflowX: "hidden", // adicionado essa linha para evitar rolação horizontal
           maxHeight: "100vh",
-          padding: "16px",
+          paddingTop: "150px",
         }}
+        ref={sectionRef}
       >
+        <Box
+          sx={{
+            width: { xs: "calc(100% - 6vh)", md: "25ch" },
+            marginBottom: "16px",
+            position: "fixed",
+            marginRight: { xs: "10px", sm: "60px" },
+            right: { xs: "calc(18vw - 15%)", lg: "calc(18vw - 10%)" },
+            top: { xs: "12%", lg: "9%" },
+            zIndex: 400,
+          }}
+        >
+          <FormControl
+            sx={{ width: { xs: "100%", md: "25ch" } }}
+            variant="outlined"
+          >
+            <OutlinedInput
+              size="small"
+              id="search"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Buscar…"
+              sx={{
+                flexGrow: 1,
+                boxShadow:
+                  "0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12)",
+                backgroundColor: "rgba(255, 255, 255, 0.4)",
+                backdropFilter: "blur(24px)",
+              }}
+              startAdornment={
+                <InputAdornment position="start" sx={{ color: "text.primary" }}>
+                  <SearchRoundedIcon fontSize="small" />
+                </InputAdornment>
+              }
+              inputProps={{
+                "aria-label": "search",
+              }}
+            />
+          </FormControl>
+        </Box>
         {!loading ? (
           <Box
             component="section"
             sx={{
-              paddingTop: "85px",
               display: "flex",
               justifyContent: "center",
               flexDirection: "row",
@@ -278,9 +339,9 @@ export default function Contracts() {
               gap: "20px",
             }}
           >
-            {articlesData.slice(0, visibleArticles).map((article, index) => (
+            {filteredArticles.slice(0, visibleArticles).map((article) => (
               <Article
-                key={index}
+                key={article.id} // Utiliza um identificador único
                 title={article.title}
                 text={article.text}
                 imgSrc={article.imgSrc}
