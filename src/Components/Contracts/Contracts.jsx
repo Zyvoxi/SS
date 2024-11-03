@@ -214,11 +214,20 @@ export default function Contracts() {
         flexDirection: "row",
         overflowY: "auto",
         maxHeight: "100vh",
+        padding: "0 !important",
       }}
     >
+      <Backdrop
+        open={showMenu}
+        onClick={() => setShowMenu(false)}
+        sx={{
+          position: "fixed",
+          zIndex: 500,
+        }}
+      />
       <Box
         sx={{
-          marginTop: "100px",
+          margin: { xs: "100px 0 0 16px", sm: "100px 0 0 24px" },
           width: "100%",
           maxWidth: "300px",
           height: "100%",
@@ -232,9 +241,9 @@ export default function Contracts() {
         <Box
           sx={{
             width: "100%",
-            maxWidth: { xs: "calc(85vw - 10px)", sm: "300px" },
+            maxWidth: { xs: "calc(90vw - 15px)", sm: "300px" },
             height: "100%",
-            maxHeight: { xs: "73vh", lg: "85vh" },
+            maxHeight: { xs: "calc(100vh - 35vw)", sm: "85vh" },
             border: "1px solid rgba(0, 0, 0, 0.12)",
             borderRadius: 3,
             boxShadow:
@@ -244,12 +253,13 @@ export default function Contracts() {
               sm: showMenu ? "translateX(0)" : "translateX(-108%)",
               lg: "translateX(0)",
             },
-            transition: "ease 400ms",
+            transition: "ease 600ms",
             backgroundColor: {
-              xs: "rgba(255, 255, 255, 0.4)",
+              xs: "rgba(255, 255, 255, 0.8)",
               lg: "#f3f4f9",
             },
             backdropFilter: "blur(24px)",
+            top: { sm: "20px", lg: "100px" },
             position: "fixed",
           }}
         >
@@ -258,8 +268,8 @@ export default function Contracts() {
               display: { xs: "block", lg: "none" },
               position: "fixed",
               top: "50%",
-              left: "102%",
-              transition: "ease 400ms",
+              left: showMenu ? "90%" : "102%",
+              transition: "ease 600ms",
               transform: showMenu ? "rotate(-180deg)" : "rotate(0deg)",
               "&:hover": {
                 cursor: "pointer",
@@ -283,51 +293,12 @@ export default function Contracts() {
           display: "flex",
           flexDirection: "column",
           overflowY: "auto",
-          overflowX: "hidden", // adicionado essa linha para evitar rolação horizontal
+          overflowX: "hidden", // Adicionado o overfloX para evitar rolagem horizontal
           maxHeight: "100vh",
-          paddingTop: "150px",
+          padding: "150px 24px 0 24px",
         }}
         ref={sectionRef}
       >
-        <Box
-          sx={{
-            width: { xs: "calc(100% - 6vh)", md: "25ch" },
-            marginBottom: "16px",
-            position: "fixed",
-            marginRight: { xs: "10px", sm: "60px" },
-            right: { xs: "calc(18vw - 15%)", lg: "calc(18vw - 10%)" },
-            top: { xs: "12%", lg: "9%" },
-            zIndex: 400,
-          }}
-        >
-          <FormControl
-            sx={{ width: { xs: "100%", md: "25ch" } }}
-            variant="outlined"
-          >
-            <OutlinedInput
-              size="small"
-              id="search"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Buscar…"
-              sx={{
-                flexGrow: 1,
-                boxShadow:
-                  "0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12)",
-                backgroundColor: "rgba(255, 255, 255, 0.4)",
-                backdropFilter: "blur(24px)",
-              }}
-              startAdornment={
-                <InputAdornment position="start" sx={{ color: "text.primary" }}>
-                  <SearchRoundedIcon fontSize="small" />
-                </InputAdornment>
-              }
-              inputProps={{
-                "aria-label": "search",
-              }}
-            />
-          </FormControl>
-        </Box>
         {!loading ? (
           <Box
             component="section"
@@ -339,6 +310,48 @@ export default function Contracts() {
               gap: "20px",
             }}
           >
+            <Box
+              sx={{
+                width: { xs: "calc(100% - 6vh)", md: "25ch" },
+                marginBottom: "16px",
+                position: "absolute",
+                top: { xs: "calc(10vh)", sm: "90px" },
+                right: { xs: "3vw", sm: "3vw", lg: "calc(5vw + 24px)" },
+                marginRight: { xs: "11.5px", sm: "8.5px", lg: "" },
+                zIndex: 400,
+              }}
+            >
+              <FormControl
+                sx={{ width: { xs: "100%", md: "25ch" } }}
+                variant="outlined"
+              >
+                <OutlinedInput
+                  size="small"
+                  id="search"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Buscar…"
+                  sx={{
+                    flexGrow: 1,
+                    boxShadow:
+                      "0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12)",
+                    backgroundColor: "rgba(255, 255, 255, 0.4)",
+                    backdropFilter: "blur(24px)",
+                  }}
+                  startAdornment={
+                    <InputAdornment
+                      position="start"
+                      sx={{ color: "text.primary" }}
+                    >
+                      <SearchRoundedIcon fontSize="small" />
+                    </InputAdornment>
+                  }
+                  inputProps={{
+                    "aria-label": "search",
+                  }}
+                />
+              </FormControl>
+            </Box>
             {filteredArticles.slice(0, visibleArticles).map((article) => (
               <Article
                 key={article.id} // Utiliza um identificador único
@@ -358,7 +371,7 @@ export default function Contracts() {
               justifyContent: "center",
               flexDirection: "row",
               flexWrap: "wrap",
-              gap: "20px",
+              gap: "25px",
             }}
           >
             {Array.from({ length: 200 }).map((_, index) => (

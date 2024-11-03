@@ -101,14 +101,14 @@ const theme = createTheme({
  * @param {string} input - O valor a ser validado.
  * @returns {boolean} - Retorna true se o input for válido, caso contrário false.
  */
-const validateUsername = (input) => {
-  const usernameRegex = /^[a-zA-Z0-9._ -]{3,}$/;
-  return usernameRegex.test(input);
+const validateEmail = (email) => {
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  return emailRegex.test(email);
 };
 
-const validateEmail = (input) => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(input);
+const validateUsername = (username) => {
+  const usernameRegex = /^[a-zA-Z0-9._ -]{3,}$/;
+  return usernameRegex.test(username);
 };
 
 /**
@@ -125,74 +125,79 @@ export default function SignUp() {
   const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate(); // Hook para navegação programática
 
+  const fetchAndProcessData = async (url) => {
+    const response = await fetch(url);
+    return await response.json();
+  };
+
   /**
    * Função de callback para lidar com a resposta de credenciais do Google.
    * @param {Object} response - Resposta do login do Google.
    */
-  const handleCredentialResponse = async (response) => {
-    const token = response.credential; // Obtém o token de acesso
+  const handleCredentialResponse = React.useCallback(
+    async (response) => {
+      const token = response.credential; // Obtém o token de acesso
 
-    logger.debug("TOKEN: ", token);
+      logger.debug("TOKEN: ", token);
 
-    try {
-      const userData = jwtDecode(token); // Decodifica o token JWT para obter as informações do usuário
-      const userId = crypto.randomUUID(); // Gera um UUID único para o usuário
+      try {
+        const userData = jwtDecode(token); // Decodifica o token JWT para obter as informações do usuário
+        const userId = crypto.randomUUID(); // Gera um UUID único para o usuário
 
-      const companiesResponse = await fetch(
-        "https://pub-2f68c1db324345bb8d0fd40f4f1887c8.r2.dev/Jsons/Companies.json",
-      );
+        const companiesData = await fetchAndProcessData(
+          "https://pub-2f68c1db324345bb8d0fd40f4f1887c8.r2.dev/Jsons/Companies.json",
+        );
+        const skillsData = await fetchAndProcessData(
+          "https://pub-2f68c1db324345bb8d0fd40f4f1887c8.r2.dev/Jsons/Skills.json",
+        );
 
-      const skillsResponse = await fetch(
-        "https://pub-2f68c1db324345bb8d0fd40f4f1887c8.r2.dev/Jsons/Skills.json",
-      );
+        // Seleciona uma empresa e uma habilidade aleatoriamente
+        const randomCompany =
+          companiesData.companies[
+            Math.floor(Math.random() * companiesData.companies.length)
+          ];
+        const randomSkill =
+          skillsData.skills[
+            Math.floor(Math.random() * skillsData.skills.length)
+          ];
 
-      const companiesData = await companiesResponse.json();
+        // Cria um objeto de perfil do usuário (apenas informações "não-pessoais")
+        const userProfile = {
+          id: userId,
+          name: userData.name,
+          picture: userData.picture,
+          dob: userData.birthday || "27/07/1997",
+          location: "Extrema - MG",
+          company: randomCompany,
+          skill: randomSkill,
+        };
 
-      const skillsData = await skillsResponse.json();
+        logger.debug(
+          `SignIn - Sucesso!\nSignIn - Nome: ${userProfile.name}\nSignIn - ID: ${userProfile.id}\nSignIn - Foto de Perfil: ${userProfile.picture}\nSignIn - Redirecionando para a página inicial.`,
+        );
 
-      // Seleciona uma empresa e uma habilidade aleatoriamente
-      const randomCompany =
-        companiesData.companies[
-          Math.floor(Math.random() * companiesData.companies.length)
-        ];
-      const randomSkill =
-        skillsData.skills[Math.floor(Math.random() * skillsData.skills.length)];
+        // Salva o perfil do usuário no armazenamento local (apenas para testes, nenhuma informação é enviada a servidores)
+        localStorage.setItem("userProfile", JSON.stringify(userProfile));
 
-      // Cria um objeto de perfil do usuário (apenas informações "não-pessoais")
-      const userProfile = {
-        id: userId,
-        name: userData.name,
-        picture: userData.picture,
-        dob: userData.birthday || "27/07/1997",
-        location: "Extrema - MG",
-        company: randomCompany,
-        skill: randomSkill,
-      };
-
-      logger.debug(
-        `SignIn - Sucesso!\nSignIn - Nome: ${userProfile.name}\nSignIn - ID: ${userProfile.id}\nSignIn - Foto de Perfil: ${userProfile.picture}\nSignIn - Redirecionando para a página inicial.`,
-      );
-
-      // Salva o perfil do usuário no armazenamento local (apenas para testes, nenhuma informação é enviada a servidores)
-      localStorage.setItem("userProfile", JSON.stringify(userProfile));
-
-      navigate("/home"); // Redireciona para a página principal
-    } catch (error) {
-      console.error("Erro ao decodificar o token:", error);
-    }
-  };
+        navigate("/home"); // Redireciona para a página principal
+      } catch (error) {
+        console.error("Erro ao decodificar o token:", error);
+      }
+    },
+    [navigate],
+  );
 
   /**
    * Função para iniciar o login via Google.
    */
-  const handleGoogleLogin = () => {
+  const handleGoogleLogin = React.useCallback(() => {
     logger.debug("login via google");
     if (google && google.accounts) {
       google.accounts.id.prompt(); // Verifica se google.accounts está disponível
     } else {
       console.error("google.accounts não está disponível");
     }
-  };
+  }, []);
 
   // Efeito para carregar o script do Google Identity Services
   React.useEffect(() => {
@@ -221,12 +226,12 @@ export default function SignUp() {
         google.accounts.id.cancel();
       }
     };
-  }); // O efeito é executado apenas uma vez na montagem
+  }, [handleCredentialResponse]); // O efeito é executado apenas uma vez na montagem
 
   /**
    * Função que valida as credenciais inseridas pelo usuário.
    */
-  const handleLogin = () => {
+  const handleLogin = React.useCallback(() => {
     const minPWLength = 6;
     let isValid = true;
 
@@ -269,16 +274,18 @@ export default function SignUp() {
       const handleLoginResponse = async () => {
         const userId = crypto.randomUUID(); // Gera um UUID único para o usuário
 
+        const handleFetchError = (error) => {
+          console.error("Error fetching data:", error);
+          // Adiciona uma mensagem de erro ao usuário
+        }; // Função para lidar com erros de fetch
+
         try {
-          const companiesResponse = await fetch(
+          const companiesData = await fetchAndProcessData(
             "https://pub-2f68c1db324345bb8d0fd40f4f1887c8.r2.dev/Jsons/Companies.json",
           );
-          const companiesData = await companiesResponse.json();
-
-          const skillsResponse = await fetch(
+          const skillsData = await fetchAndProcessData(
             "https://pub-2f68c1db324345bb8d0fd40f4f1887c8.r2.dev/Jsons/Skills.json",
           );
-          const skillsData = await skillsResponse.json();
 
           // Seleciona uma empresa e uma habilidade aleatoriamente
           const randomCompany =
@@ -309,12 +316,12 @@ export default function SignUp() {
 
           navigate("/home"); // Redireciona para a página principal
         } catch (error) {
-          console.error(error);
+          handleFetchError(error);
         }
       };
       handleLoginResponse();
     }
-  };
+  }, [username, email, password, navigate]); // O efeito é executado apenas uma vez na montagem
 
   React.useEffect(() => {
     // Muda a cor do body para preto

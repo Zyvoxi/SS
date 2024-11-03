@@ -274,6 +274,7 @@ export default function AppAppBar() {
         mt: 2,
         paddingLeft: "24px",
         paddingRight: "24px",
+        zIndex: 500,
       }}
     >
       <Container maxWidth="lg" sx={{ padding: "0 !important" }}>
