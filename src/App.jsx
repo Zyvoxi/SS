@@ -14,6 +14,8 @@ const Footer = React.lazy(() => import("./Components/Footer/Normal/Footer"));
 const MinimalistFooter = React.lazy(
   () => import("./Components/Footer/Minimalist/Footer"),
 );
+const Home = React.lazy(() => import("./Components/Home/Home"));
+const Land = React.lazy(() => import("./Components/Land/Land"));
 const Contracts = React.lazy(() => import("./Components/Contracts/Contracts"));
 const SignIn = React.lazy(() => import("./Components/SignIn/SignIn"));
 const SignUp = React.lazy(() => import("./Components/SignUp/SignUp"));
@@ -70,10 +72,27 @@ const router = createBrowserRouter([
   {
     path: "/home",
     element: (
-      <React.Suspense fallback={<LoadingFallback />}>
-        <AppBar />
-        <LoadingFallback />
-      </React.Suspense>
+      <>
+        <React.Suspense>
+          <AppBar />
+        </React.Suspense>
+        <React.Suspense fallback={<LoadingFallback />}>
+          <Home />
+        </React.Suspense>
+      </>
+    ),
+  },
+  {
+    path: "/land",
+    element: (
+      <>
+        <React.Suspense>
+          <AppBar />
+        </React.Suspense>
+        <React.Suspense fallback={<LoadingFallback />}>
+          <Land />
+        </React.Suspense>
+      </>
     ),
   },
   {

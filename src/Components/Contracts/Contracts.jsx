@@ -284,6 +284,111 @@ export default function Contracts() {
           <Typography variant="h4" color="initial" sx={{ padding: "16px" }}>
             Menu
           </Typography>
+          <Typography
+            variant="h5"
+            sx={{
+              align: "left",
+              mt: 3,
+              color: "#f4f5ff",
+              "&:hover": {
+                textDecoration: "underline",
+                color: "#f3f4fa",
+                cursor: "pointer",
+              },
+            }}
+          >
+            NUll
+          </Typography>
+          <Typography
+            variant="h5"
+            sx={{
+              align: "left",
+              mt: 3,
+              color: "#f4f5ff",
+              "&:hover": {
+                textDecoration: "underline",
+                color: "#f3f4fa",
+                cursor: "pointer",
+              },
+            }}
+          >
+            NUll
+          </Typography>
+          <Typography
+            variant="h5"
+            sx={{
+              align: "left",
+              mt: 3,
+              color: "#f4f5ff",
+              "&:hover": {
+                textDecoration: "underline",
+                color: "#f3f4fa",
+                cursor: "pointer",
+              },
+            }}
+          >
+            NUll
+          </Typography>
+          <Typography
+            variant="h5"
+            sx={{
+              align: "left",
+              mt: 3,
+              color: "#f4f5ff",
+              "&:hover": {
+                textDecoration: "underline",
+                color: "#f3f4fa",
+                cursor: "pointer",
+              },
+            }}
+          >
+            NUll
+          </Typography>
+          <Typography
+            variant="h5"
+            sx={{
+              align: "left",
+              mt: 3,
+              color: "#f4f5ff",
+              "&:hover": {
+                textDecoration: "underline",
+                color: "#f3f4fa",
+                cursor: "pointer",
+              },
+            }}
+          >
+            NUll
+          </Typography>
+          <Typography
+            variant="h5"
+            sx={{
+              align: "left",
+              mt: 3,
+              color: "#f4f5ff",
+              "&:hover": {
+                textDecoration: "underline",
+                color: "#f3f4fa",
+                cursor: "pointer",
+              },
+            }}
+          >
+            NUll
+          </Typography>
+          <Typography
+            variant="h5"
+            sx={{
+              align: "left",
+              mt: 3,
+              color: "#f4f5ff",
+              "&:hover": {
+                textDecoration: "underline",
+                color: "#f3f4fa",
+                cursor: "pointer",
+              },
+            }}
+          >
+            NUll
+          </Typography>
         </Box>
       </Box>
 

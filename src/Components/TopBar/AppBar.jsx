@@ -187,7 +187,7 @@ export default function AppAppBar() {
     switch (option) {
       case "perfil":
         logger.debug("AppBar - Redirecionando para o perfil: ", userUUID);
-        navigate(`/users/${userUUID}/profile`);
+        navigate(`/users/${userUUID}/profile`); // Redireciona para o perfil do usuário conectado
         break;
 
       case "config":
@@ -210,22 +210,22 @@ export default function AppAppBar() {
 
       case "contratos":
         logger.debug("AppBar - Redirecionando para Contratos.");
-        navigate("/contract");
+        navigate("/contract"); // Redireciona para a página de contratos
         break;
 
       case "blog":
         logger.debug("AppBar - Redirecionando para o Blog");
-        navigate("/blog");
+        navigate("/blog"); // Redireciona para a página do Blog
         break;
 
       case "entrar":
         logger.debug("AppBar - Redirecionando para a página de Login.");
-        navigate("/signin");
+        navigate("/signin"); // Redireciona para a página de login
         break;
 
       case "registrar-se":
         logger.debug("AppBar - Redirecionando para a página de Registro");
-        navigate("/signup");
+        navigate("/signup"); // Redireciona para a página de registro
         break;
 
       case "faq":
@@ -263,7 +263,7 @@ export default function AppAppBar() {
     logger.debug("Componente 'AppBar' carregado.");
   }, []);
 
-  // Renderização do componente
+  // Renderização do componente AppBar
   return (
     <AppBar
       position="fixed"

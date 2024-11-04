@@ -62,7 +62,7 @@ export default function Profile() {
     // Verifica se o UUID do usuário na URL corresponde ao UUID do usuário conectado
     if (uuid === signedUserUUID) {
       if (profileData) {
-        const profile = JSON.parse(profileData);
+        const profile = JSON.parse(profileData); // Constante para guardar o "profileData" como um json
         setUserName(profile.name); // Define o nome do usuário
         setUserPicture(profile.picture); // Define a imagem do usuário
         setUserDOB(profile.dob); // Define a data de nascimento do usuário
@@ -78,6 +78,7 @@ export default function Profile() {
             "https://pub-2f68c1db324345bb8d0fd40f4f1887c8.r2.dev/Jsons/users.json",
           );
 
+          // Joga um erro se a resposta não for bem-sucedida
           if (!response.ok) {
             throw new Error(`Profile - HTTP error! status: ${response.status}`);
           }
@@ -91,38 +92,39 @@ export default function Profile() {
 
           if (user) {
             // Se o usuário for encontrado, atualiza o estado com os dados do usuário
-            setUserName(`${user.name.first} ${user.name.last}`);
-            setUserPicture(user.picture.large);
-            setUserDOB(formatDate(user.dob.date));
-            setUserLocation(`${user.location.city} - ${user.location.state}`);
-            setUserCompany(user.company);
-            setUserSkill(user.skill);
-            setLoading(false);
+            setUserName(`${user.name.first} ${user.name.last}`); // Define o nome do usuário
+            setUserPicture(user.picture.large); // Define a imagem do usuário
+            setUserDOB(formatDate(user.dob.date)); // Formata a data de nascimento e Define a data de nascimento do usuário
+            setUserLocation(`${user.location.city} - ${user.location.state}`); // Define a localização do usuário
+            setUserCompany(user.company); // Define a empresa do usuário
+            setUserSkill(user.skill); // Define a abilidade do usuário
+            setLoading(false); // Atualiza o estado de carregamento
           } else if (!signedUserUUID) {
             // Se o UUID do usuário conectado não estiver disponível, redireciona para a página de login
             logger.debug(
               // eslint-disable-next-line prettier/prettier
               "Profile - Nenhum usuário encontrado & Nenhum usuário \"Logado\".\nProfile - Redirecionando para a página de Login. ",
             );
-            navigate("/signin");
+            navigate("/signin"); // Redireciona para a página de login
           } else {
-            // Se o usuário não for encontrado, redireciona para o perfil do usuário conectado
+            // Se o usuário não for encontrado e existir um usuário conectado, redireciona para o perfil do usuário conectado
             logger.debug(
               "Profile - Nenhum usuário encontrado, redirecionando para o perfil: ",
               signedUserUUID,
             );
-            navigate(`/users/${signedUserUUID}`);
+            navigate(`/users/${signedUserUUID}`); // Redireciona para o perfil do usuário conectado
           }
         } catch (error) {
+          // Caso ocorra um erro, loga o erro no console
           console.error(error);
         }
       };
-      fetchUserData();
+      fetchUserData(); // Chama a função para buscar os dados do usuário
     }
-
     logger.debug("Componente 'Profile' carregado.");
   }, [uuid, signedUserUUID, navigate, ready, profileData]); // Dependências que disparam o efeito
 
+  // Renderiza o componente Profile
   return (
     <>
       <Container

@@ -106,6 +106,14 @@ const validateEmail = (email) => {
   return emailRegex.test(email);
 };
 
+/**
+ * Valida um nome de usuário verificando se ele atende aos critérios especificados.
+ *
+ * @param {string} username - O nome de usuário a ser validado.
+ * @returns {boolean} Retorna true se o nome de usuário for válido, caso contrário, false.
+ * O nome de usuário deve ter pelo menos 3 caracteres e pode conter letras, números,
+ * pontos, sublinhados, espaços e hífens.
+ */
 const validateUsername = (username) => {
   const usernameRegex = /^[a-zA-Z0-9._ -]{3,}$/;
   return usernameRegex.test(username);
@@ -125,6 +133,7 @@ export default function SignUp() {
   const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate(); // Hook para navegação programática
 
+  // Função para lidar com a resposta e processamento dos dados solicitados
   const fetchAndProcessData = async (url) => {
     const response = await fetch(url);
     return await response.json();
@@ -181,7 +190,7 @@ export default function SignUp() {
 
         navigate("/home"); // Redireciona para a página principal
       } catch (error) {
-        console.error("Erro ao decodificar o token:", error);
+        console.error("SignUp - Erro:", error);
       }
     },
     [navigate],
@@ -198,35 +207,6 @@ export default function SignUp() {
       console.error("google.accounts não está disponível");
     }
   }, []);
-
-  // Efeito para carregar o script do Google Identity Services
-  React.useEffect(() => {
-    const loadGoogleScript = () => {
-      const script = document.createElement("script");
-      script.src = "https://accounts.google.com/gsi/client"; // URL do script do Google
-      script.async = true; // Carrega o script de forma assíncrona
-      script.defer = true; // Atrasar a execução do script até que o documento seja analisado
-      script.onload = () => {
-        if (window.google) {
-          google.accounts.id.initialize({
-            client_id:
-              "763143041695-60bjan0591o8rbm3juj9bk004cr9ng8e.apps.googleusercontent.com",
-            callback: handleCredentialResponse, // Define a função de callback
-          });
-        }
-      };
-      document.body.appendChild(script); // Adiciona o script ao corpo do documento
-    };
-
-    loadGoogleScript(); // Carrega o script
-
-    // Função de limpeza para cancelar a autenticação
-    return () => {
-      if (window.google && google.accounts) {
-        google.accounts.id.cancel();
-      }
-    };
-  }, [handleCredentialResponse]); // O efeito é executado apenas uma vez na montagem
 
   /**
    * Função que valida as credenciais inseridas pelo usuário.
@@ -323,18 +303,42 @@ export default function SignUp() {
     }
   }, [username, email, password, navigate]); // O efeito é executado apenas uma vez na montagem
 
+  // Efeito para preparar a página de login
   React.useEffect(() => {
     // Muda a cor do body para preto
-    document.body.style.background =
+    const backgroundStyle =
       "radial-gradient(circle, #f0f8fb, #f6fbff, #ffffff)";
+    document.body.style.background = backgroundStyle;
 
-    logger.debug("O componente 'SignUp' foi carregado.");
+    const loadGoogleScript = () => {
+      const script = document.createElement("script");
+      script.src = "https://accounts.google.com/gsi/client"; // URL do script do Google
+      script.async = true; // Carrega o script de forma assíncrona
+      script.defer = true; // Atrasar a execução do script até que o documento seja analisado
+      script.onload = () => {
+        if (window.google) {
+          google.accounts.id.initialize({
+            client_id:
+              "763143041695-60bjan0591o8rbm3juj9bk004cr9ng8e.apps.googleusercontent.com",
+            callback: handleCredentialResponse, // Define a função de callback
+          });
+        }
+      };
+      document.body.appendChild(script); // Adiciona o script ao corpo do documento
+    };
 
-    // Função de limpeza para restaurar a cor original
+    loadGoogleScript(); // Carrega o script
+
+    logger.debug("O componente 'SignIn' foi carregado.");
+
+    // Função de limpeza para cancelar a autenticação
     return () => {
       document.body.style.background = ""; // Restaura a cor original
+      if (window.google && google.accounts) {
+        google.accounts.id.cancel();
+      }
     };
-  });
+  }, [handleCredentialResponse]); // O efeito é executado apenas uma vez na montagem
 
   // Renderização do componente
   return (
