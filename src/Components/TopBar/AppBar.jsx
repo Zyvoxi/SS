@@ -183,27 +183,32 @@ export default function AppAppBar() {
         break;
 
       case "inicio":
-        logger.debug("AppBar - Redirecionando para a página inicial.");
-        navigate("/home"); // Redireciona para a página inicial
+        logger.debug("AppBar - Redirecionando para a página: dashboard.");
+        navigate("/dashboard"); // Redireciona para a página inicial
+        break;
+
+      case "overview":
+        logger.debug("AppBar - Redirecionando para a página: overview.");
+        navigate("/overview"); // Redireciona para a página overview
         break;
 
       case "contratos":
-        logger.debug("AppBar - Redirecionando para Contratos.");
+        logger.debug("AppBar - Redirecionando para a página: Contratos.");
         navigate("/contract"); // Redireciona para a página de contratos
         break;
 
       case "blog":
-        logger.debug("AppBar - Redirecionando para o Blog");
+        logger.debug("AppBar - Redirecionando para a página: Blog.");
         navigate("/blog"); // Redireciona para a página do Blog
         break;
 
       case "entrar":
-        logger.debug("AppBar - Redirecionando para a página de Login.");
+        logger.debug("AppBar - Redirecionando para a página: Login.");
         navigate("/signin"); // Redireciona para a página de login
         break;
 
       case "registrar-se":
-        logger.debug("AppBar - Redirecionando para a página de Registro");
+        logger.debug("AppBar - Redirecionando para a página: Registro");
         navigate("/signup"); // Redireciona para a página de registro
         break;
 
@@ -284,29 +289,50 @@ export default function AppAppBar() {
               TOPSKILL
             </Typography>
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
-              <Button
-                variant="text"
-                size="small"
-                onClick={() => {
-                  handleMenuClick("inicio");
-                }}
-                sx={{ fontWeight: "600" }}
-              >
-                Início
-              </Button>
-              <Button
-                variant="text"
-                size="small"
-                onClick={() => {
-                  handleMenuClick("contratos");
-                }}
-                sx={{ fontWeight: "600" }}
-              >
-                Contratos
-              </Button>
-              <Button variant="text" size="small" sx={{ fontWeight: "600" }}>
-                FAQ
-              </Button>
+              {isUserLoggedIn ? (
+                <>
+                  <Button
+                    variant="text"
+                    size="small"
+                    onClick={() => {
+                      handleMenuClick("inicio");
+                    }}
+                    sx={{ fontWeight: "600" }}
+                  >
+                    Dashboard
+                  </Button>
+                  <Button
+                    variant="text"
+                    size="small"
+                    onClick={() => {
+                      handleMenuClick("contratos");
+                    }}
+                    sx={{ fontWeight: "600" }}
+                  >
+                    Contratos
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button
+                    variant="text"
+                    size="small"
+                    onClick={() => {
+                      handleMenuClick("overview");
+                    }}
+                    sx={{ fontWeight: "600" }}
+                  >
+                    Overview
+                  </Button>
+                  <Button
+                    variant="text"
+                    size="small"
+                    sx={{ fontWeight: "600" }}
+                  >
+                    FAQ
+                  </Button>
+                </>
+              )}
               <Button
                 variant="text"
                 size="small"
@@ -412,7 +438,7 @@ export default function AppAppBar() {
                   sx={{
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: "space-between",
+                    justifyContent: "end",
                   }}
                 >
                   <IconButton onClick={toggleDrawer(false)}>
@@ -420,30 +446,45 @@ export default function AppAppBar() {
                   </IconButton>
                 </Box>
                 <Divider sx={{ my: 1 }} />
-                <MenuItem
-                  onClick={() => {
-                    handleMenuClick("inicio");
-                    setOpen(false);
-                  }}
-                >
-                  Início
-                </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    handleMenuClick("contratos");
-                    setOpen(false);
-                  }}
-                >
-                  Contratos
-                </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    handleMenuClick("faq");
-                    setOpen(false);
-                  }}
-                >
-                  FAQ
-                </MenuItem>
+                {isUserLoggedIn ? (
+                  <>
+                    <MenuItem
+                      onClick={() => {
+                        handleMenuClick("inicio");
+                        setOpen(false);
+                      }}
+                    >
+                      Dashboard
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        handleMenuClick("contratos");
+                        setOpen(false);
+                      }}
+                    >
+                      Contratos
+                    </MenuItem>
+                  </>
+                ) : (
+                  <>
+                    <MenuItem
+                      onClick={() => {
+                        handleMenuClick("overview");
+                        setOpen(false);
+                      }}
+                    >
+                      Overview
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        handleMenuClick("faq");
+                        setOpen(false);
+                      }}
+                    >
+                      FAQ
+                    </MenuItem>
+                  </>
+                )}
                 <MenuItem
                   onClick={() => {
                     handleMenuClick("blog");

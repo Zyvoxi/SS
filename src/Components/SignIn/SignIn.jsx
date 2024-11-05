@@ -125,7 +125,7 @@ export default function SignIn() {
         // Salva o perfil do usuário no armazenamento local (apenas para testes, nenhuma informação é enviada a servidores)
         localStorage.setItem("userProfile", JSON.stringify(userProfile));
 
-        navigate("/home"); // Redireciona para a página principal
+        navigate("/dashboard"); // Redireciona para a página principal
       } catch (error) {
         console.error("SignIn - Erro:", error);
       }
@@ -220,7 +220,7 @@ export default function SignIn() {
           // Salva o perfil do usuário no armazenamento local (apenas para testes)
           localStorage.setItem("userProfile", JSON.stringify(userProfile));
 
-          navigate("/home"); // Redireciona para a página principal
+          navigate("/dashboard"); // Redireciona para a página principal
         } catch (error) {
           handleFetchError(error);
         }

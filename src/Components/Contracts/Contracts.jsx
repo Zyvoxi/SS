@@ -130,10 +130,15 @@ export default function Contracts() {
     React.useState(VISIBLE_ARTICLES);
   const [showMenu, setShowMenu] = React.useState(false);
   const [searchTerm, setSearchTerm] = React.useState("");
+  const navigate = useNavigate();
 
   const sectionRef = React.useRef(null);
 
   React.useEffect(() => {
+    const signedUser = localStorage.getItem("userProfile");
+    // eslint-disable-next-line curly
+    if (!signedUser) return navigate("/overview");
+
     const handleScroll = () => {
       const SCROLL_OFFSET_THRESHOLD = 1000;
       if (
@@ -187,7 +192,7 @@ export default function Contracts() {
     return () => {
       sectionElement.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [navigate]);
 
   const handleArticleClick = (article) => {
     setSelectedArticle(article);
@@ -244,9 +249,9 @@ export default function Contracts() {
         <Box
           sx={{
             width: "100%",
-            maxWidth: { xs: "calc(90vw - 15px)", sm: "300px" },
+            maxWidth: { xs: "calc(90vw - 13px)", sm: "300px" },
             height: "100%",
-            maxHeight: { xs: "calc(100vh - 40vw)", sm: "85vh" },
+            maxHeight: { xs: "calc(80vh)", lg: "85vh" },
             border: "1px solid rgba(0, 0, 0, 0.12)",
             borderRadius: 3,
             boxShadow:
@@ -271,7 +276,7 @@ export default function Contracts() {
               display: { xs: "block", lg: "none" },
               position: "fixed",
               top: "50%",
-              left: showMenu ? "90%" : "102%",
+              left: showMenu ? "90%" : "100%",
               transition: "ease 600ms",
               transform: showMenu ? "rotate(-180deg)" : "rotate(0deg)",
               "&:hover": {
