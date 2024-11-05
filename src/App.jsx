@@ -90,14 +90,14 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/land",
+    path: "/overview",
     element: (
       <>
         <React.Suspense>
           <AppBar />
         </React.Suspense>
         <React.Suspense fallback={<LoadingFallback />}>
-          <Box maxWidth={true} width={"100%"}>
+          <Box maxWidth={true} width={"100%"} textAlign={"left"}>
             <Overview />
             <Footer />
           </Box>
