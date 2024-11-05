@@ -103,7 +103,7 @@ export default function Footer() {
               color="inherit"
               size="small"
               target="_blank"
-              href="https://github.com/Zyvoxi/SS"
+              href="https://github.com/Zyvoxi/T.S."
               aria-label="GitHub"
               sx={{ alignSelf: "center" }}
             >
