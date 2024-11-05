@@ -84,7 +84,10 @@ const router = createBrowserRouter([
           <AppBar />
         </React.Suspense>
         <React.Suspense fallback={<LoadingFallback />}>
-          <Dashboard />
+          <Box maxWidth={true} width={"100%"} textAlign={"left"}>
+            <Dashboard />
+            <MinimalistFooter />
+          </Box>
         </React.Suspense>
       </>
     ),
@@ -185,11 +188,13 @@ const router = createBrowserRouter([
   },
 ]);
 
+// Função principal do componente App
 export default function App() {
   React.useEffect(() => {
     logger.debug("Versão de desenvolvimento.");
   }, []);
 
+  // Renderização do App
   return (
     <ThemeProvider theme={theme}>
       <div className="App">

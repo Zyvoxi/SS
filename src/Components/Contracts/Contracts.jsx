@@ -51,20 +51,24 @@ const ModalRender = ({ show, onClose, article }) => {
       }}
     >
       <Fade in={show}>
-        <Box sx={style}>
-          <Typography variant="h6">{article.title}</Typography>
-          <Typography
-            sx={{ mt: 2, cursor: "pointer" }}
-            onClick={() => navigate(`/users/${article.uuid}`)}
-          >
-            {article.uuid}
-          </Typography>
-        </Box>
+        <Container maxWidth={"md"}>
+          <Box sx={style}>
+            <Avatar src={article.imgSrc} alt={article.title} />
+            <Typography variant="h6">{article.title}</Typography>
+            <Typography
+              sx={{ mt: 2, cursor: "pointer" }}
+              onClick={() => navigate(`/users/${article.uuid}`)}
+            >
+              {article.text}
+            </Typography>
+          </Box>
+        </Container>
       </Fade>
     </Modal>
   );
 };
 
+// Defina o tipo das propiedades do ModalRender
 ModalRender.propTypes = {
   show: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
@@ -77,8 +81,8 @@ ModalRender.propTypes = {
 };
 
 const Article = ({ title, text, imgSrc, onClick }) => {
-  const DEFAULT_ELEVATION = 2;
-  const HOVERED_ELEVATION = 15;
+  const DEFAULT_ELEVATION = 3;
+  const HOVERED_ELEVATION = 10;
   const [elevation, setElevation] = React.useState(DEFAULT_ELEVATION);
 
   return (
@@ -94,7 +98,7 @@ const Article = ({ title, text, imgSrc, onClick }) => {
         maxWidth: "402px",
         borderRadius: "25px",
         height: "150px",
-        backgroundColor: "#fefefe41",
+        backgroundColor: "#f3f4ff40",
         display: "flex",
         flexDirection: "row",
         transition: "transform 0.25s ease, box-shadow 0.25s ease",
@@ -113,6 +117,7 @@ const Article = ({ title, text, imgSrc, onClick }) => {
   );
 };
 
+// Defina o tipo das propiedades do Article
 Article.propTypes = {
   title: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
@@ -134,8 +139,17 @@ export default function Contracts() {
 
   const sectionRef = React.useRef(null);
 
+  // Função para lidar com a resposta e processamento dos dados solicitados
+  const fetchAndProcessData = async (url) => {
+    const response = await fetch(url);
+    // eslint-disable-next-line curly, prettier/prettier
+    if (!response.ok) throw new Error(`Contracts --> ArticlesRender - HTTP error! status: ${response.status}`);
+    return await response.json();
+  };
+
   React.useEffect(() => {
     const signedUser = localStorage.getItem("userProfile");
+
     // eslint-disable-next-line curly
     if (!signedUser) return navigate("/overview");
 
@@ -151,23 +165,14 @@ export default function Contracts() {
     };
 
     const sectionElement = sectionRef.current;
-    sectionElement.addEventListener("scroll", handleScroll);
-
-    loadMoreArticles();
+    sectionElement.addEventListener("scroll", handleScroll); // Adicionado o event listener para a rolagem
 
     const fetchUsersData = async () => {
       try {
-        const response = await fetch(
+        const data = fetchAndProcessData(
           "https://pub-2f68c1db324345bb8d0fd40f4f1887c8.r2.dev/Jsons/users.json",
         );
 
-        if (!response.ok) {
-          throw new Error(
-            `Contracts --> ArticlesRender - HTTP error! status: ${response.status}`,
-          );
-        }
-
-        const data = await response.json();
         const articles = data.results.map((user) => ({
           title: `${user.name.first} ${user.name.last}`,
           email: user.email,
@@ -178,10 +183,12 @@ export default function Contracts() {
             city: user.location.city,
             country: user.location.country,
           },
-          text: `Generated user from ${user.location.city}, ${user.location.country}.`,
+          text: user.skill,
           imgSrc: user.picture.large,
         }));
         setArticlesData(articles);
+
+        // Define o loading como false
         setLoading(false);
       } catch (error) {
         console.error(error);
@@ -194,24 +201,29 @@ export default function Contracts() {
     };
   }, [navigate]);
 
+  // Função para abrir o modal com o artigo selecionado
   const handleArticleClick = (article) => {
     setSelectedArticle(article);
     setShowModal(true);
   };
 
+  // Função para fechar o modal
   const handleCloseModal = () => {
     setShowModal(false);
   };
 
+  // Função para carregar mais 30 artigos
   const loadMoreArticles = () => {
     const LOAD_MORE_ARTICLES_COUNT = 30;
     setVisibleArticles((prev) => prev + LOAD_MORE_ARTICLES_COUNT);
   };
 
+  // FIltra os Artigos baseado no termo de pesquisa
   const filteredArticles = articlesData.filter((article) =>
     article.title.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
+  // Rederizaçao do componente "Contracts"
   return (
     <Container
       maxWidth="none"

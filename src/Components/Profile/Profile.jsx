@@ -7,9 +7,11 @@ import {
   Skeleton,
   Avatar,
 } from "@mui/material";
-import CakeOutlinedIcon from "@mui/icons-material/CakeOutlined";
-import RoomOutlinedIcon from "@mui/icons-material/RoomOutlined";
-import BusinessIcon from "@mui/icons-material/Business";
+import {
+  CakeOutlined as CakeOutlinedIcon,
+  RoomOutlined as RoomOutlinedIcon,
+  Business as BusinessIcon,
+} from "@mui/icons-material";
 import "./Styles/Profile.css";
 import { useParams, useNavigate } from "react-router-dom";
 import logger from "../../Extras/Debug/debug";
@@ -40,6 +42,14 @@ export default function Profile() {
     const month = `0${date.getMonth() + 1}`.slice(sliceValue);
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
+  };
+
+  // Função para lidar com a resposta e processamento dos dados solicitados
+  const fetchAndProcessData = async (url) => {
+    const response = await fetch(url);
+    // eslint-disable-next-line curly, prettier/prettier
+    if (!response.ok) throw new Error(`Contracts --> ArticlesRender - HTTP error! status: ${response.status}`);
+    return await response.json();
   };
 
   React.useEffect(() => {
@@ -74,16 +84,9 @@ export default function Profile() {
     } else {
       const fetchUserData = async () => {
         try {
-          const response = await fetch(
+          const data = fetchAndProcessData(
             "https://pub-2f68c1db324345bb8d0fd40f4f1887c8.r2.dev/Jsons/users.json",
-          );
-
-          // Joga um erro se a resposta não for bem-sucedida
-          if (!response.ok) {
-            throw new Error(`Profile - HTTP error! status: ${response.status}`);
-          }
-
-          const data = await response.json();
+          ); // Busca os dados do usuário a partir da API externa
 
           // Encontra o usuário correspondente ao UUID na lista de usuários
           const user = await data.results.find(

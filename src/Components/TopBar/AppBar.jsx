@@ -171,7 +171,7 @@ export default function AppAppBar() {
 
       case "config":
         logger.debug(
-          "AppBar - Redirecionar para a página de configurações (não implementado)",
+          "AppBar - Redirecionar para a página: Configurações (não implementado)",
         );
         break;
 
@@ -183,12 +183,12 @@ export default function AppAppBar() {
         break;
 
       case "inicio":
-        logger.debug("AppBar - Redirecionando para a página: dashboard.");
+        logger.debug("AppBar - Redirecionando para a página: Dashboard.");
         navigate("/dashboard"); // Redireciona para a página inicial
         break;
 
       case "overview":
-        logger.debug("AppBar - Redirecionando para a página: overview.");
+        logger.debug("AppBar - Redirecionando para a página: Overview.");
         navigate("/overview"); // Redireciona para a página overview
         break;
 
@@ -214,7 +214,7 @@ export default function AppAppBar() {
 
       case "faq":
         logger.debug(
-          "AppBar - Redirecionar para a página de faq (não implementado)",
+          "AppBar - Redirecionar para a página: FAQ (não implementado)",
         );
         break;
 
@@ -237,13 +237,12 @@ export default function AppAppBar() {
     if (userProfile) {
       // Se existir, faz o parse dos dados e atualiza o estado
       const profile = JSON.parse(userProfile);
-      setUserName(profile.name);
-      setUserPicture(profile.picture);
-      setUserUUID(profile.id);
+      setUserName(profile.name); // Define o nome do usuário
+      setUserPicture(profile.picture); // Define a foto do usuário
+      setUserUUID(profile.id); // Define o UUID do usuário
       setIsUserLoggedIn(true); // Marca o usuário como logado
       logger.debug("AppBar - Conectado como: ", profile.name);
     }
-
     logger.debug("Componente 'AppBar' carregado.");
   }, []);
 
