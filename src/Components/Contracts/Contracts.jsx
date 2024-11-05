@@ -34,7 +34,7 @@ const ModalRender = ({ show, onClose, article }) => {
     transform: "translate(-50%, -50%)",
     width: 400,
     bgcolor: "background.paper",
-    border: "2px solid #000",
+    border: "1px solid lightgray",
     boxShadow: 24,
     p: 4,
   };
@@ -46,6 +46,9 @@ const ModalRender = ({ show, onClose, article }) => {
       closeAfterTransition={true}
       slots={{ backdrop: Backdrop }}
       slotProps={{ backdrop: { timeout: 500 } }}
+      sx={{
+        padding: 2,
+      }}
     >
       <Fade in={show}>
         <Box sx={style}>
@@ -96,7 +99,7 @@ const Article = ({ title, text, imgSrc, onClick }) => {
         flexDirection: "row",
         transition: "transform 0.25s ease, box-shadow 0.25s ease",
         "&:hover": {
-          transform: "scale(1.04)",
+          transform: "scale(1.01)",
           cursor: "pointer",
         },
       }}
@@ -227,7 +230,7 @@ export default function Contracts() {
       />
       <Box
         sx={{
-          margin: { xs: "100px 0 0 16px", sm: "100px 0 0 24px" },
+          margin: { xs: "45px 0 0 16px", sm: "100px 0 0 24px" },
           width: "100%",
           maxWidth: "300px",
           height: "100%",
@@ -243,7 +246,7 @@ export default function Contracts() {
             width: "100%",
             maxWidth: { xs: "calc(90vw - 15px)", sm: "300px" },
             height: "100%",
-            maxHeight: { xs: "calc(100vh - 35vw)", sm: "85vh" },
+            maxHeight: { xs: "calc(100vh - 40vw)", sm: "85vh" },
             border: "1px solid rgba(0, 0, 0, 0.12)",
             borderRadius: 3,
             boxShadow:

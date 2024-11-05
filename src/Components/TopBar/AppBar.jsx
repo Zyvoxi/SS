@@ -15,7 +15,6 @@ import {
   Avatar,
   Menu,
 } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
@@ -42,26 +41,6 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   boxShadow: theme.shadows[1],
   padding: "2px 12px", // Ajuste do padding para controlar o espaçamento
 }));
-
-const theme = createTheme({
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          fontWeight: 700,
-          transition: "500ms ease !important", // Força a transição para o hover
-          backgroundImage: "linear-gradient(to bottom, #666, #000)",
-          "&:hover": {
-            background: "linear-gradient(to bottom, #666, #222)",
-          },
-          "&:focus": {
-            outline: "none !important", // Remove contorno ao focar
-          },
-        },
-      },
-    },
-  },
-});
 
 /**
  * Gera uma cor hexadecimal única para uma string fornecida.
@@ -311,7 +290,7 @@ export default function AppAppBar() {
                 onClick={() => {
                   handleMenuClick("inicio");
                 }}
-                sx={{ fontWeight: "600", color: "#888" }}
+                sx={{ fontWeight: "600" }}
               >
                 Início
               </Button>
@@ -321,15 +300,11 @@ export default function AppAppBar() {
                 onClick={() => {
                   handleMenuClick("contratos");
                 }}
-                sx={{ fontWeight: "600", color: "#888" }}
+                sx={{ fontWeight: "600" }}
               >
                 Contratos
               </Button>
-              <Button
-                variant="text"
-                size="small"
-                sx={{ fontWeight: "600", color: "#888" }}
-              >
+              <Button variant="text" size="small" sx={{ fontWeight: "600" }}>
                 FAQ
               </Button>
               <Button
@@ -338,7 +313,7 @@ export default function AppAppBar() {
                 onClick={() => {
                   handleMenuClick("blog");
                 }}
-                sx={{ fontWeight: "600", color: "#888" }}
+                sx={{ fontWeight: "600" }}
               >
                 Blog
               </Button>
@@ -410,22 +385,20 @@ export default function AppAppBar() {
                   onClick={() => {
                     handleMenuClick("entrar");
                   }}
-                  sx={{ fontWeight: "600", color: "#888" }}
+                  sx={{ fontWeight: "600" }}
                 >
                   Entrar
                 </Button>
-                <ThemeProvider theme={theme}>
-                  <Button
-                    color="primary"
-                    variant="contained"
-                    size="small"
-                    onClick={() => {
-                      handleMenuClick("registrar-se");
-                    }}
-                  >
-                    Registrar-se
-                  </Button>
-                </ThemeProvider>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  size="small"
+                  onClick={() => {
+                    handleMenuClick("registrar-se");
+                  }}
+                >
+                  Registrar-se
+                </Button>
               </>
             )}
           </Box>
@@ -540,17 +513,15 @@ export default function AppAppBar() {
                       </Button>
                     </MenuItem>
                     <MenuItem>
-                      <ThemeProvider theme={theme}>
-                        <Button
-                          variant="contained"
-                          fullWidth={true}
-                          onClick={() => {
-                            handleMenuClick("registrar-se");
-                          }}
-                        >
-                          Registrar-se
-                        </Button>
-                      </ThemeProvider>
+                      <Button
+                        variant="contained"
+                        fullWidth={true}
+                        onClick={() => {
+                          handleMenuClick("registrar-se");
+                        }}
+                      >
+                        Registrar-se
+                      </Button>
                     </MenuItem>
                   </>
                 )}

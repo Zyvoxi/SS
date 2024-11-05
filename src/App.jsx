@@ -5,7 +5,14 @@ import {
   Navigate,
   useParams,
 } from "react-router-dom";
-import { Box, Container, Divider, CircularProgress } from "@mui/material";
+import {
+  Box,
+  Container,
+  Divider,
+  CircularProgress,
+  ThemeProvider,
+} from "@mui/material";
+import { theme } from "./Components/Theme/Theme";
 import logger from "./Extras/Debug/debug";
 
 // Importação dinâmica dos componentes
@@ -15,7 +22,7 @@ const MinimalistFooter = React.lazy(
   () => import("./Components/Footer/Minimalist/Footer"),
 );
 const Home = React.lazy(() => import("./Components/Home/Home"));
-const Land = React.lazy(() => import("./Components/Land/Land"));
+const Overview = React.lazy(() => import("./Components/Overview/Overview"));
 const Contracts = React.lazy(() => import("./Components/Contracts/Contracts"));
 const SignIn = React.lazy(() => import("./Components/SignIn/SignIn"));
 const SignUp = React.lazy(() => import("./Components/SignUp/SignUp"));
@@ -90,7 +97,10 @@ const router = createBrowserRouter([
           <AppBar />
         </React.Suspense>
         <React.Suspense fallback={<LoadingFallback />}>
-          <Land />
+          <Box maxWidth={true} width={"100%"}>
+            <Overview />
+            <Footer />
+          </Box>
         </React.Suspense>
       </>
     ),
@@ -181,8 +191,10 @@ export default function App() {
   }, []);
 
   return (
-    <div className="App">
-      <RouterProvider router={router} />
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <RouterProvider router={router} />
+      </div>
+    </ThemeProvider>
   );
 }

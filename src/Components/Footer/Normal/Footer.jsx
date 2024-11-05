@@ -10,31 +10,10 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { GitHub } from "@mui/icons-material";
 import logger from "../../../Extras/Debug/debug";
 import logo from "../../../Assets/Logo/TSLogoIcon.svg";
 import { useNavigate } from "react-router-dom";
-
-const theme = createTheme({
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          fontWeight: 700,
-          transition: "500ms ease !important", // Força a transição para o hover
-          backgroundImage: "linear-gradient(to bottom, #666, #000)",
-          "&:hover": {
-            background: "linear-gradient(to bottom, #666, #222)",
-          },
-          "&:focus": {
-            outline: "none !important", // Remove contorno ao focar
-          },
-        },
-      },
-    },
-  },
-});
 
 function Copyright() {
   return (
@@ -159,11 +138,9 @@ export default function Footer() {
                   }}
                   sx={{ width: "250px" }}
                 />
-                <ThemeProvider theme={theme}>
-                  <Button variant="contained" color="primary" size="small">
-                    Inscrever-se
-                  </Button>
-                </ThemeProvider>
+                <Button variant="contained" color="primary" size="small">
+                  Inscrever-se
+                </Button>
               </Stack>
             </Box>
           </Box>
