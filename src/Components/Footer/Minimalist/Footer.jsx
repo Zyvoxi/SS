@@ -16,8 +16,6 @@ function Copyright() {
     <div style={{ textAlign: "left" }}>
       <Typography variant="body2" sx={{ color: "text.secondary", mt: 1 }}>
         {"T.S. © "}
-        {new Date().getFullYear()}
-        &nbsp;
         <Link
           color="text.secondary"
           target="_blank"
@@ -26,6 +24,8 @@ function Copyright() {
         >
           Zyvoxi
         </Link>
+        &nbsp;
+        {new Date().getFullYear()}
       </Typography>
       <Typography variant="body2" sx={{ color: "text.secondary" }}>
         Licensed under{" "}

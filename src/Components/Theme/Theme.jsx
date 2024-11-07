@@ -16,7 +16,7 @@ import CheckBoxOutlineBlankRoundedIcon from "@mui/icons-material/CheckBoxOutline
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
 
-const brand = {
+export const brand = {
   50: "hsl(210, 100%, 95%)",
   100: "hsl(210, 100%, 92%)",
   200: "hsl(210, 100%, 80%)",
@@ -29,7 +29,7 @@ const brand = {
   900: "hsl(210, 100%, 21%)",
 };
 
-const gray = {
+export const gray = {
   50: "hsl(220, 35%, 97%)",
   100: "hsl(220, 30%, 94%)",
   200: "hsl(220, 20%, 88%)",
@@ -42,7 +42,7 @@ const gray = {
   900: "hsl(220, 35%, 3%)",
 };
 
-const green = {
+export const green = {
   50: "hsl(120, 80%, 98%)",
   100: "hsl(120, 75%, 94%)",
   200: "hsl(120, 75%, 87%)",
@@ -55,7 +55,7 @@ const green = {
   900: "hsl(120, 87%, 6%)",
 };
 
-const red = {
+export const red = {
   50: "hsl(0, 100%, 97%)",
   100: "hsl(0, 92%, 90%)",
   200: "hsl(0, 94%, 80%)",

@@ -111,6 +111,7 @@ export default function SignIn() {
         const userProfile = {
           id: userId,
           name: userData.name,
+          email: userData.email,
           picture: userData.picture,
           dob: userData.birthday || "27/07/1997",
           location: "Extrema - MG",
@@ -207,6 +208,7 @@ export default function SignIn() {
           const userProfile = {
             id: userId,
             name: emailOrUsername,
+            email: `${emailOrUsername}@mail.com`,
             dob: "27/07/1997",
             location: "Extrema - MG",
             company: randomCompany,

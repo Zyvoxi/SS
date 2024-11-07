@@ -62,7 +62,7 @@ main {
 }
 
 body {
-  background: #fff ; /* radial-gradient(circle, #f0f8fb, #f6fbff, #ffffff)  */
+  background: #fff;
   color: rgb(0, 0, 0);
   height: 100vh;
   margin: 0;

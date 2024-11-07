@@ -113,7 +113,7 @@ Author.propTypes = {
   ).isRequired,
 };
 
-export function Search() {
+function Search() {
   return (
     <FormControl sx={{ width: { xs: "100%", md: "25ch" } }} variant="outlined">
       <OutlinedInput
