@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import * as React from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
@@ -82,7 +81,6 @@ function TransitionComponent(props) {
   const style = useSpring({
     to: {
       opacity: props.in ? 1 : 0,
-      // eslint-disable-next-line no-magic-numbers
       transform: `translate3d(0,${props.in ? 0 : 20}px,0)`,
     },
   });
@@ -97,14 +95,13 @@ TransitionComponent.propTypes = {
   in: PropTypes.bool,
 };
 
-function CustomLabel({ color, expandable, children, ...other }) {
+function CustomLabel({ color, children, ...other }) {
   const theme = useTheme();
   const colors = {
     blue: (theme.vars || theme).palette.primary.main,
     green: (theme.vars || theme).palette.success.main,
   };
 
-  // eslint-disable-next-line security/detect-object-injection
   const iconColor = color ? colors[color] : null;
   return (
     <TreeItem2Label {...other} sx={{ display: "flex", alignItems: "center" }}>

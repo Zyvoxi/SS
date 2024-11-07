@@ -1,4 +1,3 @@
-/* eslint-disable no-magic-numbers */
 import { alpha } from "@mui/material/styles";
 
 import { gray, brand } from "../Theme";

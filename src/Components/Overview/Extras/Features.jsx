@@ -1,4 +1,3 @@
-/* eslint-disable security/detect-object-injection */
 /* eslint-disable prettier/prettier */
 import * as React from "react";
 import PropTypes from "prop-types";

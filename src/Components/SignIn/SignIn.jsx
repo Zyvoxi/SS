@@ -43,19 +43,16 @@ const validateUsername = (username) => {
 };
 
 /**
- * Validates the given input as either an email or a username.
+ * Valida a entrada fornecida como e-mail ou nome de usuário.
  *
- * This function first sanitizes the input by removing any characters
- * that are not alphanumeric, whitespace, dots, or hyphens. It then
- * checks if the sanitized input matches the criteria for a valid email
- * or username using the `validateEmail` and `validateUsername` functions.
+ * Esta função verifica se a entrada corresponde aos critérios de um e-mail
+ * ou nome de usuário válido, utilizando as funções `validateEmail` e `validateUsername`.
  *
- * @param {string} input - The input string to be validated.
- * @returns {boolean} - Returns true if the input is a valid email or username, false otherwise.
+ * @param {string} input - A string de entrada a ser validada.
+ * @returns {boolean} - Retorna true se a entrada for um e-mail ou nome de usuário válido, caso contrário, retorna false.
  */
 const validateEmailOrUsername = (input) => {
-  const sanitizedInput = input.replace(/[^\w\s.-]/g, "");
-  return validateEmail(sanitizedInput) || validateUsername(sanitizedInput);
+  return validateEmail(input) || validateUsername(input);
 };
 
 /**

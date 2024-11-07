@@ -1,4 +1,3 @@
-/* eslint-disable security/detect-object-injection */
 import * as React from "react";
 import {
   Card,

@@ -3,8 +3,6 @@ import pluginJs from "@eslint/js";
 import pluginReact from "eslint-plugin-react";
 import pluginReactHooks from "eslint-plugin-react-hooks";
 import pluginPrettier from "eslint-plugin-prettier";
-import pluginSecurity from "eslint-plugin-security";
-import reactRefresh from "eslint-plugin-react-refresh";
 
 const indent = 2;
 
@@ -18,8 +16,6 @@ export default [
         ...globals.browser,
         google: "readonly",
         process: "readonly",
-        require: "readonly",
-        __dirname: "readonly",
       },
       parserOptions: {
         ecmaFeatures: { jsx: true },
@@ -35,8 +31,6 @@ export default [
       react: pluginReact,
       "react-hooks": pluginReactHooks,
       prettier: pluginPrettier,
-      security: pluginSecurity,
-      "react-refresh": reactRefresh,
     },
     rules: {
       eqeqeq: ["error", "always"],
@@ -46,12 +40,10 @@ export default [
         "error",
         { vars: "all", args: "after-used", ignoreRestSiblings: false },
       ],
-      "no-magic-numbers": ["warn", { ignore: [0, 1], enforceConst: true }],
       curly: ["error", "all"],
       indent: ["error", indent],
       quotes: ["error", "double"],
       semi: ["error", "always"],
-      "no-useless-concat": "warn",
       "prefer-template": "warn",
       "no-loop-func": "warn",
       "no-console": ["warn", { allow: ["warn", "error"] }],
@@ -74,14 +66,6 @@ export default [
 
       // Regras de plugins adicionais
       "prettier/prettier": "error",
-      "security/detect-object-injection": "warn",
-      "security/detect-unsafe-regex": "warn",
-
-      // Regras do react-refresh
-      "react-refresh/only-export-components": [
-        "warn",
-        { allowConstantExport: true },
-      ],
     },
   },
 ];

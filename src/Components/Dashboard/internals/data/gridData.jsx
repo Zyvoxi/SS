@@ -1,4 +1,3 @@
-/* eslint-disable no-magic-numbers */
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Chip from "@mui/material/Chip";
@@ -53,7 +52,6 @@ function renderStatus(status) {
     Offline: "default",
   };
 
-  // eslint-disable-next-line security/detect-object-injection
   return <Chip label={status} color={colors[status]} size="small" />;
 }
 

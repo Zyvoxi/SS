@@ -1,4 +1,3 @@
-/* eslint-disable no-magic-numbers */
 import { axisClasses, legendClasses, chartsGridClasses } from "@mui/x-charts";
 
 import { gray } from "../Theme";

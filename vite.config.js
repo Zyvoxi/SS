@@ -1,3 +1,4 @@
+/* global __dirname */
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import compression from "vite-plugin-compression";
@@ -51,7 +52,6 @@ export default defineConfig({
               .split("/")[0]
               .toString();
           }
-          // eslint-disable-next-line no-magic-numbers
           if (id.indexOf("react") !== -1) {
             return;
           }

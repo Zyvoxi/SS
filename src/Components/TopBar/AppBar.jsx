@@ -25,9 +25,6 @@ import { useNavigate } from "react-router-dom";
 import logger from "../../Extras/Debug/debug";
 import "./Styles/AppBar.css";
 
-// Constante para definir a opacidade do fundo
-const BGC_ALPHA = 0.4;
-
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -37,7 +34,7 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   backdropFilter: "blur(24px)", // Cria efeito de desfoque para um fundo translúcido
   border: "1px solid",
   borderColor: theme.palette.divider,
-  backgroundColor: alpha(theme.palette.background.default, BGC_ALPHA), // Define uma cor de fundo levemente translúcida
+  backgroundColor: alpha(theme.palette.background.default, 0.4), // Define uma cor de fundo levemente translúcida
   boxShadow: theme.shadows[1],
   padding: "2px 12px", // Ajuste do padding para controlar o espaçamento
 }));
@@ -50,27 +47,19 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
  * @returns {string} - Cor hexadecimal gerada a partir do hash da string.
  */
 function stringToColor(string) {
-  const HASH_SHIFT = 5; // Constante para definir o deslocamento do hash
-  const HEX_COLOR_PARTS = 3; // Número de partes hexadecimais na cor
-  const BYTE_MASK = 0xff; // Máscara para obter o byte correto
-  const BYTE_SHIFT_MULTIPLIER = 8; // Deslocamento de byte para cada componente de cor
-  const HEX_PADDING = 2; // Padding para formatação hexadecimal
-  const HEX_BASE = 16; // Base hexadecimal
-
   let hash = 0;
 
   // Calcula um hash numérico da string
   for (let i = 0; i < string.length; i += 1) {
-    hash = string.charCodeAt(i) + ((hash << HASH_SHIFT) - hash);
+    hash = string.charCodeAt(i) + ((hash << 5) - hash);
   }
 
   let color = "#";
 
   // Gera cor hexadecimal a partir dos bits do hash
-  for (let i = 0; i < HEX_COLOR_PARTS; i += 1) {
-    const BYTE_SHIFT = i * BYTE_SHIFT_MULTIPLIER;
-    const value = (hash >> BYTE_SHIFT) & BYTE_MASK;
-    color += `00${value.toString(HEX_BASE)}`.slice(-HEX_PADDING);
+  for (let i = 0; i < 3; i += 1) {
+    const value = (hash >> (i * 8)) & 0xff;
+    color += `00${value.toString(16)}`.slice(-2);
   }
 
   return color;
@@ -243,6 +232,7 @@ export default function AppAppBar() {
       setIsUserLoggedIn(true); // Marca o usuário como logado
       logger.debug("AppBar - Conectado como: ", profile.name);
     }
+
     logger.debug("Componente 'AppBar' carregado.");
   }, []);
 

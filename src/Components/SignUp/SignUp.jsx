@@ -137,7 +137,6 @@ export default function SignUp() {
    * Função que valida as credenciais inseridas pelo usuário.
    */
   const handleLogin = React.useCallback(() => {
-    const minPWLength = 6;
     let isValid = true;
 
     // Validação do campo de nome de usuário ou e-mail
@@ -168,7 +167,7 @@ export default function SignUp() {
     if (!password) {
       setPasswordError("O campo de senha é obrigatório.");
       isValid = false;
-    } else if (password.length < minPWLength) {
+    } else if (password.length < 6) {
       setPasswordError("A senha deve ter pelo menos 6 caracteres.");
       isValid = false;
     } else {

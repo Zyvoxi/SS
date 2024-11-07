@@ -1,4 +1,3 @@
-/* eslint-disable no-magic-numbers */
 import { paperClasses } from "@mui/material/Paper";
 import { alpha } from "@mui/material/styles";
 

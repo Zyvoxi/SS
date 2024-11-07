@@ -1,9 +1,5 @@
 import pino from "pino";
 
-// Constantes para evitar "magic numbers"
-const MAX_WORDS_TO_DISPLAY = 5;
-const LOG_THROTTLE_TIME = 2000;
-
 const logger = pino({
   level: process.env.NODE_ENV === "development" ? "debug" : "warn",
   transport: {
@@ -17,15 +13,11 @@ const lastLogMessages = new Map();
 const logWithThrottle = (message, ...args) => {
   const currentTime = Date.now();
 
-  const simplifiedMessage = message
-    .split(" ")
-    .slice(0, MAX_WORDS_TO_DISPLAY)
-    .join(" ");
+  const simplifiedMessage = message.split(" ").slice(0, 5).join(" ");
 
   if (
     lastLogMessages.has(simplifiedMessage) &&
-    currentTime - lastLogMessages.get(simplifiedMessage).time <
-      LOG_THROTTLE_TIME
+    currentTime - lastLogMessages.get(simplifiedMessage).time < 2000
   ) {
     return;
   }

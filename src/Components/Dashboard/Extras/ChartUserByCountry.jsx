@@ -1,4 +1,3 @@
-/* eslint-disable no-magic-numbers */
 import * as React from "react";
 import PropTypes from "prop-types";
 import { PieChart } from "@mui/x-charts/PieChart";
