@@ -99,7 +99,7 @@ const router = createBrowserRouter([
           <AppBar />
         </React.Suspense>
         <React.Suspense fallback={<LoadingFallback />}>
-          <Box display={"flex"}>
+          <Box display={"flex"} sx={{ width: "100%", maxWidth: "100vw" }}>
             <Dashboard />
           </Box>
         </React.Suspense>

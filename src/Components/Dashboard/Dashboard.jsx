@@ -24,7 +24,7 @@ export default function Dashboard() {
       <Box
         component="main"
         sx={(theme) => ({
-          padding: "70px 0 0 0",
+          padding: { xs: "0", md: "70px 0 0 0" },
           flexGrow: 1,
           backgroundColor: theme.vars
             ? `rgba(${theme.vars.palette.background.defaultChannel} / 1)`
@@ -36,7 +36,7 @@ export default function Dashboard() {
           spacing={2}
           sx={{
             alignItems: "center",
-            mx: 3,
+            mx: 1.5,
             pb: 5,
             mt: { xs: 8, md: 0 },
           }}
