@@ -23,6 +23,7 @@ import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import logo from "../../Assets/Logo/TSLogoIcon.svg";
 import { useNavigate } from "react-router-dom";
 import logger from "../../Extras/Debug/debug";
+import PropTypes from "prop-types";
 import "./Styles/AppBar.css";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
@@ -96,7 +97,15 @@ function stringAvatar(name) {
  * @component
  * @returns {JSX.Element} - Barra de navegação com menus de perfil e login.
  */
-export default function AppAppBar() {
+export default function AppAppBar({
+  scrollToSection,
+  overviewRef,
+  featuresRef,
+  testimonialsRef,
+  highlightsRef,
+  pricingRef,
+  faqRef,
+}) {
   // Controla o estado de abertura do Drawer (menu lateral)
   const [open, setOpen] = React.useState(false);
 
@@ -308,6 +317,9 @@ export default function AppAppBar() {
                     size="small"
                     onClick={() => {
                       handleMenuClick("overview");
+                      setTimeout(() => {
+                        scrollToSection(overviewRef);
+                      }, 200);
                     }}
                     sx={{ fontWeight: "600" }}
                   >
@@ -317,6 +329,12 @@ export default function AppAppBar() {
                     variant="text"
                     size="small"
                     sx={{ fontWeight: "600" }}
+                    onClick={() => {
+                      handleMenuClick("overview");
+                      setTimeout(() => {
+                        scrollToSection(featuresRef);
+                      }, 200);
+                    }}
                   >
                     Recursos
                   </Button>
@@ -324,6 +342,12 @@ export default function AppAppBar() {
                     variant="text"
                     size="small"
                     sx={{ fontWeight: "600" }}
+                    onClick={() => {
+                      handleMenuClick("overview");
+                      setTimeout(() => {
+                        scrollToSection(testimonialsRef);
+                      }, 200);
+                    }}
                   >
                     Depoimentos
                   </Button>
@@ -331,6 +355,12 @@ export default function AppAppBar() {
                     variant="text"
                     size="small"
                     sx={{ fontWeight: "600" }}
+                    onClick={() => {
+                      handleMenuClick("overview");
+                      setTimeout(() => {
+                        scrollToSection(highlightsRef);
+                      }, 200);
+                    }}
                   >
                     Destaques
                   </Button>
@@ -338,6 +368,12 @@ export default function AppAppBar() {
                     variant="text"
                     size="small"
                     sx={{ fontWeight: "600" }}
+                    onClick={() => {
+                      handleMenuClick("overview");
+                      setTimeout(() => {
+                        scrollToSection(pricingRef);
+                      }, 200);
+                    }}
                   >
                     Preços
                   </Button>
@@ -345,6 +381,12 @@ export default function AppAppBar() {
                     variant="text"
                     size="small"
                     sx={{ fontWeight: "600" }}
+                    onClick={() => {
+                      handleMenuClick("overview");
+                      setTimeout(() => {
+                        scrollToSection(faqRef);
+                      }, 200);
+                    }}
                   >
                     FAQ
                   </Button>
@@ -487,6 +529,9 @@ export default function AppAppBar() {
                     <MenuItem
                       onClick={() => {
                         handleMenuClick("overview");
+                        setTimeout(() => {
+                          scrollToSection(overviewRef);
+                        }, 200);
                         setOpen(false);
                       }}
                     >
@@ -494,7 +539,10 @@ export default function AppAppBar() {
                     </MenuItem>
                     <MenuItem
                       onClick={() => {
-                        handleMenuClick("faq");
+                        handleMenuClick("overview");
+                        setTimeout(() => {
+                          scrollToSection(featuresRef);
+                        }, 200);
                         setOpen(false);
                       }}
                     >
@@ -502,7 +550,10 @@ export default function AppAppBar() {
                     </MenuItem>
                     <MenuItem
                       onClick={() => {
-                        handleMenuClick("faq");
+                        handleMenuClick("overview");
+                        setTimeout(() => {
+                          scrollToSection(testimonialsRef);
+                        }, 200);
                         setOpen(false);
                       }}
                     >
@@ -510,7 +561,10 @@ export default function AppAppBar() {
                     </MenuItem>
                     <MenuItem
                       onClick={() => {
-                        handleMenuClick("faq");
+                        handleMenuClick("overview");
+                        setTimeout(() => {
+                          scrollToSection(highlightsRef);
+                        }, 200);
                         setOpen(false);
                       }}
                     >
@@ -518,7 +572,10 @@ export default function AppAppBar() {
                     </MenuItem>
                     <MenuItem
                       onClick={() => {
-                        handleMenuClick("faq");
+                        handleMenuClick("overview");
+                        setTimeout(() => {
+                          scrollToSection(pricingRef);
+                        }, 200);
                         setOpen(false);
                       }}
                     >
@@ -526,7 +583,10 @@ export default function AppAppBar() {
                     </MenuItem>
                     <MenuItem
                       onClick={() => {
-                        handleMenuClick("faq");
+                        handleMenuClick("overview");
+                        setTimeout(() => {
+                          scrollToSection(faqRef);
+                        }, 200);
                         setOpen(false);
                       }}
                     >
@@ -623,3 +683,13 @@ export default function AppAppBar() {
     </AppBar>
   );
 }
+
+AppAppBar.propTypes = {
+  scrollToSection: PropTypes.func,
+  overviewRef: PropTypes.object,
+  featuresRef: PropTypes.object,
+  testimonialsRef: PropTypes.object,
+  highlightsRef: PropTypes.object,
+  pricingRef: PropTypes.object,
+  faqRef: PropTypes.object,
+};

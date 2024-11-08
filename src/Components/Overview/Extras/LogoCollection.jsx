@@ -35,10 +35,10 @@ export default function LogoCollection() {
         sx={{ justifyContent: "center", mt: 0.5, opacity: 0.6 }}
       >
         {logos.map((logo, index) => (
-          <Grid item={true} key={index}>
+          <Grid item="true" key={index}>
             <img
               src={logo}
-              alt={`Fake company number ${index + 1}`}
+              alt={`Numero da empresa falsa ${index + 1}`}
               style={logoStyle}
             />
           </Grid>

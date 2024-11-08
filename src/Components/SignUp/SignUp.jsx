@@ -106,10 +106,6 @@ export default function SignUp() {
           skill: randomSkill,
         };
 
-        logger.debug(
-          `SignIn - Sucesso!\nSignIn - Nome: ${userProfile.name}\nSignIn - ID: ${userProfile.id}\nSignIn - Foto de Perfil: ${userProfile.picture}\nSignIn - Redirecionando para a página inicial.`,
-        );
-
         // Salva o perfil do usuário no armazenamento local (apenas para testes, nenhuma informação é enviada a servidores)
         localStorage.setItem("userProfile", JSON.stringify(userProfile));
 
@@ -212,10 +208,6 @@ export default function SignUp() {
             skill: randomSkill,
           };
 
-          logger.debug(
-            `SignIn - Sucesso!\nSignIn - Nome: ${userProfile.name}\nSignIn - ID: ${userProfile.id}\nSignIn - Foto de Perfil: N/A\nSignIn - Redirecionando para a página inicial.`,
-          );
-
           // Salva o perfil do usuário no armazenamento local (apenas para testes)
           localStorage.setItem("userProfile", JSON.stringify(userProfile));
 
@@ -230,6 +222,11 @@ export default function SignUp() {
 
   // Efeito para preparar a página de login
   React.useEffect(() => {
+    const signedUser = localStorage.getItem("userProfile");
+    if (signedUser) {
+      return navigate("/dashboard");
+    }
+
     // Muda a cor do body para preto
     const backgroundStyle =
       "radial-gradient(circle, #f0f8fb, #f6fbff, #ffffff)";
@@ -254,8 +251,6 @@ export default function SignUp() {
 
     loadGoogleScript(); // Carrega o script
 
-    logger.debug("O componente 'SignIn' foi carregado.");
-
     // Função de limpeza para cancelar a autenticação
     return () => {
       document.body.style.background = ""; // Restaura a cor original
@@ -263,7 +258,7 @@ export default function SignUp() {
         google.accounts.id.cancel();
       }
     };
-  }, [handleCredentialResponse]); // O efeito é executado apenas uma vez na montagem
+  }, [handleCredentialResponse, navigate]); // O efeito é executado apenas uma vez na montagem
 
   // Renderização do componente
   return (

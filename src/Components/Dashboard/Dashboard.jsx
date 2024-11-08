@@ -1,8 +1,5 @@
 import * as React from "react";
-
-import { alpha } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
+import { Box, alpha, Stack } from "@mui/system";
 import Header from "./Extras/Header";
 import MainGrid from "./Extras/MainGrid";
 import SideMenu from "./Extras/SideMenu";
