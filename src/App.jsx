@@ -15,12 +15,6 @@ import {
 import { theme } from "./Components/Theme/Theme";
 import logger from "./Extras/Debug/debug";
 import { CssBaseline } from "@mui/material";
-import {
-  chartsCustomizations,
-  dataGridCustomizations,
-  datePickersCustomizations,
-  treeViewCustomizations,
-} from "./Components/Theme/customizations";
 
 // Importação dinâmica dos componentes
 const AppBar = React.lazy(() => import("./Components/TopBar/AppBar"));
@@ -35,14 +29,6 @@ const SignIn = React.lazy(() => import("./Components/SignIn/SignIn"));
 const SignUp = React.lazy(() => import("./Components/SignUp/SignUp"));
 const Profile = React.lazy(() => import("./Components/Profile/Profile"));
 const Blog = React.lazy(() => import("./Components/Blog/Blog"));
-
-const xThemeComponents = {
-  ...chartsCustomizations,
-  ...dataGridCustomizations,
-
-  ...datePickersCustomizations,
-  ...treeViewCustomizations,
-};
 
 const RedirectToProfile = () => {
   const { uuid } = useParams();
@@ -210,7 +196,7 @@ export default function App() {
 
   // Renderização do App
   return (
-    <ThemeProvider theme={theme} themeComponents={xThemeComponents}>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <div className="App">
         <RouterProvider router={router} />

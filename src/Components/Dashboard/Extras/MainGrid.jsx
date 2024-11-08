@@ -3,9 +3,8 @@ import Grid from "@mui/material/Grid2";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import Copyright from "../internals/components/Copyright";
-import ChartUserByCountry from "./ChartUserByCountry";
-import CustomizedTreeView from "./CustomizedTreeView";
+import Copyright from "../../Footer/Copyright";
+import ContractsByCountry from "./ContractsByCountry";
 import CustomizedDataGrid from "./CustomizedDataGrid";
 import HighlightedCard from "./HighlightedCard";
 import PageViewsBarChart from "./PageViewsBarChart";
@@ -19,24 +18,23 @@ const data = [
     interval: "Últimos 30 dias",
     trend: "up",
     data: [
-      200, 24, 220, 260, 240, 380, 100, 240, 280, 240, 300, 340, 320, 360, 340,
-      380, 360, 400, 380, 420, 400, 640, 340, 460, 440, 480, 460, 600, 880, 920,
+      1, 4, 4, 9, 3, 3, 2, 4, 6, 3, 3, 4, 4, 3, 2, 4, 2, 2, 2, 7, 2, 3, 3, 4, 4,
+      1, 3, 2, 3, 3,
     ],
   },
   {
     title: "Gastos",
-    value: "325",
+    value: "R$325",
     interval: "Últimos 30 dias",
     trend: "down",
     data: [
-      1640, 1250, 970, 1130, 1050, 900, 720, 1080, 900, 450, 920, 820, 840, 600,
-      820, 780, 800, 760, 380, 740, 660, 620, 840, 500, 520, 480, 400, 395, 378,
-      325,
+      13, 14, 15, 6, 13, 17, 9, 10, 14, 12, 10, 11, 14, 4, 12, 7, 7, 12, 10, 8,
+      9, 8, 10, 10, 8, 10, 17, 8, 18, 9,
     ],
   },
   {
     title: "Lucros",
-    value: "15,7k",
+    value: "R$15,7k",
     interval: "Últimos 30 dias",
     trend: "neutral",
     data: [
@@ -83,8 +81,7 @@ export default function MainGrid() {
         </Grid>
         <Grid size={{ xs: 12, lg: 3 }}>
           <Stack gap={2} direction={{ xs: "column", sm: "row", lg: "column" }}>
-            <CustomizedTreeView />
-            <ChartUserByCountry />
+            <ContractsByCountry />
           </Stack>
         </Grid>
       </Grid>

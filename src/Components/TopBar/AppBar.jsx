@@ -30,7 +30,7 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   alignItems: "center",
   justifyContent: "space-between",
   flexShrink: 0,
-  borderRadius: "15px",
+  borderRadius: "10px",
   backdropFilter: "blur(24px)", // Cria efeito de desfoque para um fundo translúcido
   border: "1px solid",
   borderColor: theme.palette.divider,

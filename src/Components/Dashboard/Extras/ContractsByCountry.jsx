@@ -17,7 +17,7 @@ import {
   UsaFlag,
   BrazilFlag,
   GlobeFlag,
-} from "../internals/components/CustomIcons";
+} from "../internals/Components/CustomIcons";
 
 const data = [
   { label: "Brasil", value: 63000 },

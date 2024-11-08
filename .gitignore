@@ -20,6 +20,7 @@ dist-ssr
 *.pem
 *-key.pem
 *.ignore.*
+*.py
 *-lock.json
 *.suo
 *.ntvs*

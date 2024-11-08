@@ -1,6 +1,5 @@
 import * as React from "react";
 import {
-  Skeleton,
   Backdrop,
   Paper,
   Box,
@@ -9,14 +8,14 @@ import {
   Fade,
   Avatar,
   Container,
-  FormControl,
-  InputAdornment,
-  OutlinedInput,
+  Stack,
 } from "@mui/material";
-import {
-  SearchRounded as SearchRoundedIcon,
-  ArrowForwardIos as ArrowForwardIosIcon,
-} from "@mui/icons-material";
+import { alpha } from "@mui/material";
+import SideMenu from "./Extras/SideMenu";
+import Header from "./Extras/Header";
+import SideMenuMobile from "./Extras/SideMenuMobile";
+import Copyright from "../Footer/Copyright";
+import { ArrowBackIos as ArrowBackIosIcon } from "@mui/icons-material";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
@@ -74,36 +73,34 @@ ModalRender.propTypes = {
   onClose: PropTypes.func.isRequired,
   article: PropTypes.shape({
     title: PropTypes.string.isRequired,
-    text: PropTypes.string,
-    imgSrc: PropTypes.string,
+    text: PropTypes.string.isRequired,
+    imgSrc: PropTypes.string.isRequired,
     uuid: PropTypes.string.isRequired,
-  }).isRequired,
+  }),
 };
 
 const Article = ({ title, text, imgSrc, onClick }) => {
-  const DEFAULT_ELEVATION = 3;
-  const HOVERED_ELEVATION = 10;
-  const [elevation, setElevation] = React.useState(DEFAULT_ELEVATION);
+  const [elevation, setElevation] = React.useState(3);
 
   return (
     <Paper
       onClick={onClick}
       component="article"
       elevation={elevation}
-      onMouseEnter={() => setElevation(HOVERED_ELEVATION)}
-      onMouseLeave={() => setElevation(DEFAULT_ELEVATION)}
+      onMouseEnter={() => setElevation(15)}
+      onMouseLeave={() => setElevation(3)}
       sx={{
         padding: "10px",
         width: "100%",
-        maxWidth: "402px",
+        maxWidth: "400px",
         borderRadius: "25px",
-        height: "150px",
+        height: "170px",
         backgroundColor: "#f3f4ff40",
         display: "flex",
         flexDirection: "row",
         transition: "transform 0.25s ease, box-shadow 0.25s ease",
         "&:hover": {
-          transform: "scale(1.01)",
+          transform: "scale(1.02)",
           cursor: "pointer",
         },
       }}
@@ -111,7 +108,18 @@ const Article = ({ title, text, imgSrc, onClick }) => {
       <Avatar src={imgSrc} alt={title} sx={{ width: 150, height: 150 }} />
       <Box>
         <Typography variant="h5">{title}</Typography>
-        <Typography variant="subtitle1">{text}</Typography>
+        <Typography
+          variant="subtitle1"
+          sx={{
+            display: "-webkit-box",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            WebkitLineClamp: 3, // Define o número máximo de linhas
+            WebkitBoxOrient: "vertical",
+          }}
+        >
+          {text}
+        </Typography>
       </Box>
     </Paper>
   );
@@ -128,24 +136,18 @@ Article.propTypes = {
 export default function Contracts() {
   const VISIBLE_ARTICLES = 25;
   const [articlesData, setArticlesData] = React.useState([]);
-  const [loading, setLoading] = React.useState(true);
   const [showModal, setShowModal] = React.useState(false);
   const [selectedArticle, setSelectedArticle] = React.useState(null);
   const [visibleArticles, setVisibleArticles] =
     React.useState(VISIBLE_ARTICLES);
-  const [showMenu, setShowMenu] = React.useState(false);
-  const [searchTerm, setSearchTerm] = React.useState("");
+  const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
 
-  const sectionRef = React.useRef(null);
-
-  // Função para lidar com a resposta e processamento dos dados solicitados
-  const fetchAndProcessData = async (url) => {
-    const response = await fetch(url);
-    // eslint-disable-next-line curly, prettier/prettier
-    if (!response.ok) throw new Error(`Contracts --> ArticlesRender - HTTP error! status: ${response.status}`);
-    return await response.json();
+  const showMenu = (newOpen) => () => {
+    setOpen(newOpen);
   };
+
+  const sectionRef = React.useRef(null);
 
   React.useEffect(() => {
     const signedUser = localStorage.getItem("userProfile");
@@ -169,9 +171,14 @@ export default function Contracts() {
 
     const fetchUsersData = async () => {
       try {
-        const data = fetchAndProcessData(
+        const response = await fetch(
           "https://pub-2f68c1db324345bb8d0fd40f4f1887c8.r2.dev/Jsons/users.json",
         );
+
+        // eslint-disable-next-line curly, prettier/prettier
+        if (!response.ok) throw new Error(`Contracts --> ArticlesRender - HTTP error! status: ${response.status}`);
+
+        const data = await response.json();
 
         const articles = data.results.map((user) => ({
           title: `${user.name.first} ${user.name.last}`,
@@ -187,9 +194,6 @@ export default function Contracts() {
           imgSrc: user.picture.large,
         }));
         setArticlesData(articles);
-
-        // Define o loading como false
-        setLoading(false);
       } catch (error) {
         console.error(error);
       }
@@ -218,327 +222,135 @@ export default function Contracts() {
     setVisibleArticles((prev) => prev + LOAD_MORE_ARTICLES_COUNT);
   };
 
-  // FIltra os Artigos baseado no termo de pesquisa
-  const filteredArticles = articlesData.filter((article) =>
-    article.title.toLowerCase().includes(searchTerm.toLowerCase()),
-  );
-
   // Rederizaçao do componente "Contracts"
   return (
-    <Container
-      maxWidth="none"
-      sx={{
-        width: "100%",
-        margin: 0,
-        display: "flex",
-        flexDirection: "row",
-        overflowY: "auto",
-        maxHeight: "100vh",
-        padding: "0 !important",
-      }}
-    >
-      <Backdrop
-        open={showMenu}
-        onClick={() => setShowMenu(false)}
-        sx={{
-          position: "fixed",
-          zIndex: 500,
-        }}
-      />
+    <>
+      <SideMenu />
       <Box
         sx={{
-          margin: { xs: "45px 0 0 16px", sm: "100px 0 0 24px" },
-          width: "100%",
-          maxWidth: "300px",
-          height: "100%",
-          maxHeight: "5vh",
-          display: "inline-flex",
-          flexDirection: "column",
-          position: { xs: "absolute", lg: "static" },
-          zIndex: 500,
+          display: { xs: "auto", md: "none" },
+          borderTopLeftRadius: 10,
+          borderBottomLeftRadius: 10,
+          borderTop: "1px solid lightgray",
+          borderBottom: "1px solid lightgray",
+          borderLeft: "1px solid lightgray",
+          backdropFilter: "blur(24px)",
+          height: "80px",
+          position: "fixed",
+          backgroundImage:
+            "linear-gradient(to right, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 1))",
+          top: "45%",
+          right: "-0.5%",
+          transition: "ease 190ms",
+          zIndex: "1000",
+          "&:hover": {
+            cursor: "pointer",
+          },
+        }}
+        onClick={() => {
+          showMenu(!open)();
         }}
       >
-        <Box
+        <ArrowBackIosIcon
           sx={{
-            width: "100%",
-            maxWidth: { xs: "calc(90vw - 13px)", sm: "300px" },
-            height: "100%",
-            maxHeight: { xs: "calc(80vh)", lg: "85vh" },
-            border: "1px solid rgba(0, 0, 0, 0.12)",
-            borderRadius: 3,
-            boxShadow:
-              "0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12)",
-            transform: {
-              xs: showMenu ? "translateX(10px)" : "translateX(-104%)",
-              sm: showMenu ? "translateX(0)" : "translateX(-108%)",
-              lg: "translateX(0)",
-            },
-            transition: "ease 600ms",
-            backgroundColor: {
-              xs: "rgba(255, 255, 255, 0.8)",
-              lg: "#f3f4f9",
-            },
-            backdropFilter: "blur(24px)",
-            top: { sm: "20px", lg: "100px" },
-            position: "fixed",
+            position: "relative",
+            top: "35%",
+            left: "20%",
+          }}
+        />
+      </Box>
+      <SideMenuMobile open={open} showMenu={showMenu} />
+      <Box
+        component="main"
+        sx={(theme) => ({
+          padding: { xs: "0", md: "70px 0 0 220px" },
+          flexGrow: 1,
+          backgroundColor: theme.vars
+            ? `rgba(${theme.vars.palette.background.defaultChannel} / 1)`
+            : alpha(theme.palette.background.default, 1),
+          overflow: "auto",
+        })}
+      >
+        <Stack
+          spacing={2}
+          sx={{
+            alignItems: "center",
+            mx: 0,
+            pb: 1,
+            mt: { xs: 8, md: 0 },
           }}
         >
+          <Header />
           <Box
             sx={{
-              display: { xs: "block", lg: "none" },
-              position: "fixed",
-              top: "50%",
-              left: showMenu ? "90%" : "100%",
-              transition: "ease 600ms",
-              transform: showMenu ? "rotate(-180deg)" : "rotate(0deg)",
-              "&:hover": {
-                cursor: "pointer",
-              },
-            }}
-            onClick={() => {
-              setShowMenu(!showMenu);
+              position: "relative",
+              width: "100%",
+              height: "83vh",
+              maxWidth: { sm: "100%", md: "1700px" },
             }}
           >
-            <ArrowForwardIosIcon />
-          </Box>
-          <Typography variant="h4" color="initial" sx={{ padding: "16px" }}>
-            Menu
-          </Typography>
-          <Typography
-            variant="h5"
-            sx={{
-              align: "left",
-              mt: 3,
-              color: "#f4f5ff",
-              "&:hover": {
-                textDecoration: "underline",
-                color: "#f3f4fa",
-                cursor: "pointer",
-              },
-            }}
-          >
-            NUll
-          </Typography>
-          <Typography
-            variant="h5"
-            sx={{
-              align: "left",
-              mt: 3,
-              color: "#f4f5ff",
-              "&:hover": {
-                textDecoration: "underline",
-                color: "#f3f4fa",
-                cursor: "pointer",
-              },
-            }}
-          >
-            NUll
-          </Typography>
-          <Typography
-            variant="h5"
-            sx={{
-              align: "left",
-              mt: 3,
-              color: "#f4f5ff",
-              "&:hover": {
-                textDecoration: "underline",
-                color: "#f3f4fa",
-                cursor: "pointer",
-              },
-            }}
-          >
-            NUll
-          </Typography>
-          <Typography
-            variant="h5"
-            sx={{
-              align: "left",
-              mt: 3,
-              color: "#f4f5ff",
-              "&:hover": {
-                textDecoration: "underline",
-                color: "#f3f4fa",
-                cursor: "pointer",
-              },
-            }}
-          >
-            NUll
-          </Typography>
-          <Typography
-            variant="h5"
-            sx={{
-              align: "left",
-              mt: 3,
-              color: "#f4f5ff",
-              "&:hover": {
-                textDecoration: "underline",
-                color: "#f3f4fa",
-                cursor: "pointer",
-              },
-            }}
-          >
-            NUll
-          </Typography>
-          <Typography
-            variant="h5"
-            sx={{
-              align: "left",
-              mt: 3,
-              color: "#f4f5ff",
-              "&:hover": {
-                textDecoration: "underline",
-                color: "#f3f4fa",
-                cursor: "pointer",
-              },
-            }}
-          >
-            NUll
-          </Typography>
-          <Typography
-            variant="h5"
-            sx={{
-              align: "left",
-              mt: 3,
-              color: "#f4f5ff",
-              "&:hover": {
-                textDecoration: "underline",
-                color: "#f3f4fa",
-                cursor: "pointer",
-              },
-            }}
-          >
-            NUll
-          </Typography>
-        </Box>
-      </Box>
-
-      <Box
-        sx={{
-          flex: 1,
-          display: "flex",
-          flexDirection: "column",
-          overflowY: "auto",
-          overflowX: "hidden", // Adicionado o overfloX para evitar rolagem horizontal
-          maxHeight: "100vh",
-          padding: "150px 24px 0 24px",
-        }}
-        ref={sectionRef}
-      >
-        {!loading ? (
-          <Box
-            component="section"
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              flexDirection: "row",
-              flexWrap: "wrap",
-              gap: "20px",
-            }}
-          >
+            <Typography component="h2" variant="h6" sx={{ mb: 2 }}>
+              Contratos
+            </Typography>
             <Box
               sx={{
-                width: { xs: "calc(100% - 6vh)", md: "25ch" },
-                marginBottom: "16px",
                 position: "absolute",
-                top: { xs: "calc(10vh)", sm: "90px" },
-                right: { xs: "3vw", sm: "3vw", lg: "calc(5vw + 24px)" },
-                marginRight: { xs: "11.5px", sm: "8.5px", lg: "" },
-                zIndex: 400,
+                top: "6.5%",
+                left: 0,
+                right: 0,
+                height: "40px",
+                background:
+                  "linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0))",
+                zIndex: 1,
+                pointerEvents: "none",
               }}
+            />
+            <Box
+              sx={{
+                position: "absolute",
+                bottom: "3.3%",
+                left: 0,
+                right: 0,
+                height: "40px",
+                background:
+                  "linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0))",
+                zIndex: 1,
+                pointerEvents: "none",
+              }}
+            />
+            <Box
+              sx={{
+                overflowY: "auto",
+                height: "90%",
+                pt: "10px",
+                px: 3,
+                display: "flex",
+                gap: 4,
+                justifyContent: "center",
+                flexDirection: "row",
+                flexWrap: "wrap",
+              }}
+              ref={sectionRef}
             >
-              <FormControl
-                sx={{ width: { xs: "100%", md: "25ch" } }}
-                variant="outlined"
-              >
-                <OutlinedInput
-                  size="small"
-                  id="search"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Buscar…"
-                  sx={{
-                    flexGrow: 1,
-                    boxShadow:
-                      "0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12)",
-                    backgroundColor: "rgba(255, 255, 255, 0.4)",
-                    backdropFilter: "blur(24px)",
-                  }}
-                  startAdornment={
-                    <InputAdornment
-                      position="start"
-                      sx={{ color: "text.primary" }}
-                    >
-                      <SearchRoundedIcon fontSize="small" />
-                    </InputAdornment>
-                  }
-                  inputProps={{
-                    "aria-label": "search",
-                  }}
+              {articlesData.slice(0, visibleArticles).map((article) => (
+                <Article
+                  key={article.uuid}
+                  title={article.title}
+                  text={article.text}
+                  imgSrc={article.imgSrc}
+                  onClick={() => handleArticleClick(article)}
                 />
-              </FormControl>
+              ))}
             </Box>
-            {filteredArticles.slice(0, visibleArticles).map((article) => (
-              <Article
-                key={article.id} // Utiliza um identificador único
-                title={article.title}
-                text={article.text}
-                imgSrc={article.imgSrc}
-                onClick={() => handleArticleClick(article)}
-              />
-            ))}
+            <Copyright sx={{ my: 1 }} />
           </Box>
-        ) : (
-          <Box
-            component="section"
-            sx={{
-              paddingTop: "85px",
-              display: "flex",
-              justifyContent: "center",
-              flexDirection: "row",
-              flexWrap: "wrap",
-              gap: "25px",
-            }}
-          >
-            {Array.from({ length: 200 }).map((_, index) => (
-              <Paper
-                key={index}
-                sx={{
-                  padding: "10px",
-                  width: "100%",
-                  maxWidth: "402px",
-                  borderRadius: "25px",
-                  height: "150px",
-                  backgroundColor: "#fefefe41",
-                  display: "flex",
-                  flexDirection: "row",
-                }}
-              >
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    marginRight: "10px",
-                  }}
-                >
-                  <Skeleton variant="circular" width={150} height={150} />
-                </Box>
-                <Box
-                  sx={{ display: "flex", flexDirection: "column", flexGrow: 1 }}
-                >
-                  <Skeleton variant="text" width="80%" height={35} />
-                  <Skeleton variant="text" width="100%" height={20} />
-                  <Skeleton variant="text" width="100%" height={20} />
-                </Box>
-              </Paper>
-            ))}
-          </Box>
-        )}
+        </Stack>
         <ModalRender
           show={showModal}
           onClose={handleCloseModal}
           article={selectedArticle}
         />
       </Box>
-    </Container>
+    </>
   );
 }

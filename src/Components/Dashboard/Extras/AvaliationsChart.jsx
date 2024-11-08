@@ -24,24 +24,25 @@ AreaGradient.propTypes = {
   id: PropTypes.string.isRequired,
 };
 
-function getDaysInMonth(month, year) {
-  const date = new Date(year, month, 0);
-  const monthName = date.toLocaleDateString("en-US", {
-    month: "short",
-  });
-  const daysInMonth = date.getDate();
-  const days = [];
-  let i = 1;
-  while (days.length < daysInMonth) {
-    days.push(`${monthName} ${i}`);
-    i += 1;
-  }
-  return days;
-}
-
-export default function SessionsChart() {
+export default function SatisfactionChart() {
   const theme = useTheme();
-  const data = getDaysInMonth(4, 2024);
+
+  // Função para gerar as datas do mês
+  const generateDates = (startDate, numDays) => {
+    const dates = [];
+    const currentDate = new Date(startDate);
+
+    for (let i = 0; i < numDays; i++) {
+      const dateStr = `${currentDate.getDate()} de ${currentDate.toLocaleString("default", { month: "long" })}`;
+      dates.push(dateStr);
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    return dates;
+  };
+
+  // Gerando as 30 datas a partir do primeiro de outubro
+  const data = generateDates(new Date(2024, 9, 1), 30);
 
   const colorPalette = [
     theme.palette.primary.light,
@@ -53,7 +54,7 @@ export default function SessionsChart() {
     <Card variant="outlined" sx={{ width: "100%" }}>
       <CardContent>
         <Typography component="h2" variant="subtitle2" gutterBottom={true}>
-          Avaliações
+          Índice de Satisfação do Cliente
         </Typography>
         <Stack sx={{ justifyContent: "space-between" }}>
           <Stack
@@ -65,12 +66,12 @@ export default function SessionsChart() {
             }}
           >
             <Typography variant="h4" component="p">
-              1,2K
+              85%
             </Typography>
-            <Chip size="small" color="success" label="+35%" />
+            <Chip size="small" color="success" label="+5%" />
           </Stack>
           <Typography variant="caption" sx={{ color: "text.secondary" }}>
-            Avaliações por dias nos ultimos 30 dias
+            Índice de satisfação dos clientes nos últimos 30 dias
           </Typography>
         </Stack>
         <LineChart
@@ -84,44 +85,44 @@ export default function SessionsChart() {
           ]}
           series={[
             {
-              id: "direct",
-              label: "Direct",
+              id: "positiveFeedback",
+              label: "Feedback Positivo",
               showMark: false,
               curve: "linear",
               stack: "total",
               area: true,
               stackOrder: "ascending",
               data: [
-                300, 900, 600, 1200, 1500, 1800, 2400, 2100, 2700, 3000, 1800,
-                3300, 3600, 3900, 4200, 4500, 3900, 4800, 5100, 5400, 4800,
-                5700, 6000, 6300, 6600, 6900, 7200, 7500, 7800, 8100,
+                100, 120, 150, 130, 200, 170, 190, 180, 220, 210, 230, 260, 240,
+                250, 270, 280, 290, 300, 310, 320, 330, 340, 350, 360, 380, 390,
+                400, 410, 420, 440,
               ],
             },
             {
-              id: "referral",
-              label: "Referral",
+              id: "negativeFeedback",
+              label: "Feedback Negativo",
               showMark: false,
               curve: "linear",
               stack: "total",
               area: true,
               stackOrder: "ascending",
               data: [
-                500, 900, 700, 1400, 1100, 1700, 2300, 2000, 2600, 2900, 2300,
-                3200, 3500, 3800, 4100, 4400, 2900, 4700, 5000, 5300, 5600,
-                5900, 6200, 6500, 5600, 6800, 7100, 7400, 7700, 8000,
+                50, 60, 70, 80, 100, 110, 120, 130, 140, 150, 160, 170, 180,
+                190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290, 300, 310,
+                320, 330, 340, 350,
               ],
             },
             {
-              id: "organic",
-              label: "Organic",
+              id: "overallSatisfaction",
+              label: "Satisfação Geral",
               showMark: false,
               curve: "linear",
               stack: "total",
               stackOrder: "ascending",
               data: [
-                1000, 1500, 1200, 1700, 1300, 2000, 2400, 2200, 2600, 2800,
-                2500, 3000, 3400, 3700, 3200, 3900, 4100, 3500, 4300, 4500,
-                4000, 4700, 5000, 5200, 4800, 5400, 5600, 5900, 6100, 6300,
+                150, 180, 220, 210, 300, 280, 310, 310, 360, 360, 390, 430, 420,
+                440, 470, 490, 510, 530, 550, 570, 590, 610, 630, 640, 670, 690,
+                710, 730, 750, 770,
               ],
               area: true,
             },
@@ -130,14 +131,14 @@ export default function SessionsChart() {
           margin={{ left: 50, right: 20, top: 20, bottom: 20 }}
           grid={{ horizontal: true }}
           sx={{
-            "& .MuiAreaElement-series-organic": {
-              fill: "url('#organic')",
+            "& .MuiAreaElement-series-positiveFeedback": {
+              fill: "url('#positiveFeedback')",
             },
-            "& .MuiAreaElement-series-referral": {
-              fill: "url('#referral')",
+            "& .MuiAreaElement-series-negativeFeedback": {
+              fill: "url('#negativeFeedback')",
             },
-            "& .MuiAreaElement-series-direct": {
-              fill: "url('#direct')",
+            "& .MuiAreaElement-series-overallSatisfaction": {
+              fill: "url('#overallSatisfaction')",
             },
           }}
           slotProps={{
@@ -146,9 +147,18 @@ export default function SessionsChart() {
             },
           }}
         >
-          <AreaGradient color={theme.palette.primary.dark} id="organic" />
-          <AreaGradient color={theme.palette.primary.main} id="referral" />
-          <AreaGradient color={theme.palette.primary.light} id="direct" />
+          <AreaGradient
+            color={theme.palette.success.main}
+            id="positiveFeedback"
+          />
+          <AreaGradient
+            color={theme.palette.error.main}
+            id="negativeFeedback"
+          />
+          <AreaGradient
+            color={theme.palette.primary.main}
+            id="overallSatisfaction"
+          />
         </LineChart>
       </CardContent>
     </Card>

@@ -6,10 +6,17 @@ import Stack from "@mui/material/Stack";
 import Header from "./Extras/Header";
 import MainGrid from "./Extras/MainGrid";
 import SideMenu from "./Extras/SideMenu";
+import SideMenuMobile from "./Extras/SideMenuMobile";
+import { ArrowBackIos as ArrowBackIosIcon } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
+  const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
+
+  const showMenu = (newOpen) => () => {
+    setOpen(newOpen);
+  };
 
   React.useEffect(() => {
     const signedUser = localStorage.getItem("userProfile");
@@ -20,6 +27,40 @@ export default function Dashboard() {
   return (
     <>
       <SideMenu />
+      <Box
+        sx={{
+          display: { xs: "auto", md: "none" },
+          borderTopLeftRadius: 10,
+          borderBottomLeftRadius: 10,
+          borderTop: "1px solid lightgray",
+          borderBottom: "1px solid lightgray",
+          borderLeft: "1px solid lightgray",
+          backdropFilter: "blur(24px)",
+          height: "80px",
+          position: "fixed",
+          backgroundImage:
+            "linear-gradient(to right, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 1))",
+          top: "45%",
+          right: "-0.5%",
+          transition: "ease 190ms",
+          zIndex: "1000",
+          "&:hover": {
+            cursor: "pointer",
+          },
+        }}
+        onClick={() => {
+          showMenu(!open)();
+        }}
+      >
+        <ArrowBackIosIcon
+          sx={{
+            position: "relative",
+            top: "35%",
+            left: "20%",
+          }}
+        />
+      </Box>
+      <SideMenuMobile open={open} showMenu={showMenu} />
       {/* Conteudo principal */}
       <Box
         component="main"
@@ -36,8 +77,8 @@ export default function Dashboard() {
           spacing={2}
           sx={{
             alignItems: "center",
-            mx: 1.5,
-            pb: 5,
+            mx: 3,
+            pb: 1,
             mt: { xs: 8, md: 0 },
           }}
         >
