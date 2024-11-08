@@ -277,7 +277,7 @@ export default function AppAppBar() {
             >
               TOPSKILL
             </Typography>
-            <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <Box sx={{ display: { xs: "none", lg: "flex" } }}>
               {isUserLoggedIn ? (
                 <>
                   <Button
@@ -318,6 +318,34 @@ export default function AppAppBar() {
                     size="small"
                     sx={{ fontWeight: "600" }}
                   >
+                    Recursos
+                  </Button>
+                  <Button
+                    variant="text"
+                    size="small"
+                    sx={{ fontWeight: "600" }}
+                  >
+                    Depoimentos
+                  </Button>
+                  <Button
+                    variant="text"
+                    size="small"
+                    sx={{ fontWeight: "600" }}
+                  >
+                    Destaques
+                  </Button>
+                  <Button
+                    variant="text"
+                    size="small"
+                    sx={{ fontWeight: "600" }}
+                  >
+                    Preços
+                  </Button>
+                  <Button
+                    variant="text"
+                    size="small"
+                    sx={{ fontWeight: "600" }}
+                  >
                     FAQ
                   </Button>
                 </>
@@ -336,7 +364,7 @@ export default function AppAppBar() {
           </Box>
           <Box
             sx={{
-              display: { xs: "none", md: "flex" },
+              display: { xs: "none", lg: "flex" },
               gap: 1,
               alignItems: "center",
             }}
@@ -417,7 +445,7 @@ export default function AppAppBar() {
               </>
             )}
           </Box>
-          <Box sx={{ display: { sm: "flex", md: "none" } }}>
+          <Box sx={{ display: { sm: "flex", lg: "none" } }}>
             <IconButton aria-label="Menu button" onClick={toggleDrawer(true)}>
               <MenuIcon />
             </IconButton>
@@ -463,6 +491,38 @@ export default function AppAppBar() {
                       }}
                     >
                       Overview
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        handleMenuClick("faq");
+                        setOpen(false);
+                      }}
+                    >
+                      Recursos
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        handleMenuClick("faq");
+                        setOpen(false);
+                      }}
+                    >
+                      Depoimentos
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        handleMenuClick("faq");
+                        setOpen(false);
+                      }}
+                    >
+                      Destaques
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        handleMenuClick("faq");
+                        setOpen(false);
+                      }}
+                    >
+                      Preços
                     </MenuItem>
                     <MenuItem
                       onClick={() => {
