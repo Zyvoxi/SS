@@ -142,7 +142,7 @@ const App = () => {
       ),
     },
     {
-      path: "/contract",
+      path: "/contracts",
       element: (
         <>
           <React.Suspense>

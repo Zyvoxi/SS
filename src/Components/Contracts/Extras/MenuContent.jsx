@@ -10,13 +10,15 @@ import {
 import { Pending as PendingIcon } from "@mui/icons-material";
 import AssignmentRoundedIcon from "@mui/icons-material/AssignmentRounded";
 import { Done as DoneIcon } from "@mui/icons-material";
+import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
 import HelpRoundedIcon from "@mui/icons-material/HelpRounded";
 
 const mainListItems = [
   { text: "Contratos", icon: <AssignmentRoundedIcon /> },
   { text: "Em Andamento", icon: <PendingIcon /> },
-  { text: "Finalizados", icon: <DoneIcon /> },
+  { text: "Solicitações", icon: <QuestionAnswerIcon /> },
+  { text: "Completados", icon: <DoneIcon /> },
 ];
 
 const secondaryListItems = [

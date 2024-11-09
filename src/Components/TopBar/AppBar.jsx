@@ -192,7 +192,7 @@ export default function AppAppBar({
 
       case "contratos":
         logger.debug("AppBar - Redirecionando para a página: Contratos.");
-        navigate("/contract"); // Redireciona para a página de contratos
+        navigate("/contracts"); // Redireciona para a página de contratos
         break;
 
       case "blog":
@@ -438,6 +438,18 @@ export default function AppAppBar({
                   anchorEl={anchorEl}
                   open={Boolean(anchorEl)}
                   onClose={handleCloseMenu}
+                  slotProps={{
+                    paper: {
+                      sx: {
+                        backdropFilter: "blur(24px)",
+                        borderRadius: "10px",
+                        border: "1px solid rgba(0, 0, 0, 0.12)",
+                        backgroundColor: "rgba(255, 255, 255, 0.4)",
+                        boxShadow:
+                          "rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px",
+                      },
+                    },
+                  }}
                   sx={{
                     mt: 1.5,
                   }}

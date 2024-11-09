@@ -7,6 +7,7 @@ const Latest = React.lazy(() => import("./Extras/Latest"));
 
 export default function Blog() {
   React.useEffect(() => {
+    window.scrollTo(0, 0); // Rola para o topo da página
     logger.debug("O componente 'Blog' foi carregado.");
   });
 

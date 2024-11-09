@@ -126,7 +126,7 @@ function Search() {
           </InputAdornment>
         }
         inputProps={{
-          "aria-label": "search",
+          "aria-label": "buscar",
         }}
       />
     </FormControl>

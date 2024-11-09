@@ -53,9 +53,9 @@ export default function Footer() {
   const handleFooterClick = (option) => {
     // Verifica a opção selecionada e realiza a ação correspondente
     if (option === "inicio") {
-      navigate("/home"); // Redireciona para a página inicial
+      navigate("/dashboard"); // Redireciona para a página inicial
     } else if (option === "contratos") {
-      navigate("/contract");
+      navigate("/contracts");
     } else if (option === "blog") {
       navigate("/blog");
     }
@@ -166,7 +166,7 @@ export default function Footer() {
                 },
               }}
             >
-              Início
+              Dashboard
             </Link>
             <Link
               color="text.secondary"
@@ -218,13 +218,37 @@ export default function Footer() {
             <Typography variant="body2" sx={{ fontWeight: "medium" }}>
               Empresa
             </Typography>
-            <Link color="text.secondary" variant="body2">
+            <Link
+              color="text.secondary"
+              variant="body2"
+              sx={{
+                "&:hover": {
+                  cursor: "pointer",
+                },
+              }}
+            >
               Sobre nós
             </Link>
-            <Link color="text.secondary" variant="body2">
+            <Link
+              color="text.secondary"
+              variant="body2"
+              sx={{
+                "&:hover": {
+                  cursor: "pointer",
+                },
+              }}
+            >
               Carreiras
             </Link>
-            <Link color="text.secondary" variant="body2">
+            <Link
+              color="text.secondary"
+              variant="body2"
+              sx={{
+                "&:hover": {
+                  cursor: "pointer",
+                },
+              }}
+            >
               Imprensa
             </Link>
           </Box>
@@ -238,13 +262,37 @@ export default function Footer() {
             <Typography variant="body2" sx={{ fontWeight: "medium" }}>
               Legal
             </Typography>
-            <Link color="text.secondary" variant="body2">
+            <Link
+              color="text.secondary"
+              variant="body2"
+              sx={{
+                "&:hover": {
+                  cursor: "pointer",
+                },
+              }}
+            >
               Termos
             </Link>
-            <Link color="text.secondary" variant="body2">
+            <Link
+              color="text.secondary"
+              variant="body2"
+              sx={{
+                "&:hover": {
+                  cursor: "pointer",
+                },
+              }}
+            >
               Privacidade
             </Link>
-            <Link color="text.secondary" variant="body2">
+            <Link
+              color="text.secondary"
+              variant="body2"
+              sx={{
+                "&:hover": {
+                  cursor: "pointer",
+                },
+              }}
+            >
               Contato
             </Link>
           </Box>
@@ -260,13 +308,29 @@ export default function Footer() {
           }}
         >
           <div>
-            <Link color="text.secondary" variant="body2">
+            <Link
+              color="text.secondary"
+              variant="body2"
+              sx={{
+                "&:hover": {
+                  cursor: "pointer",
+                },
+              }}
+            >
               Política de Privacidade
             </Link>
             <Typography sx={{ display: "inline", mx: 0.5, opacity: 0.5 }}>
               &nbsp;•&nbsp;
             </Typography>
-            <Link color="text.secondary" variant="body2">
+            <Link
+              color="text.secondary"
+              variant="body2"
+              sx={{
+                "&:hover": {
+                  cursor: "pointer",
+                },
+              }}
+            >
               Termos de Serviço
             </Link>
             <Copyright />

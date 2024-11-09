@@ -90,6 +90,7 @@ const Article = ({ title, text, imgSrc, onClick }) => {
       onMouseEnter={() => setElevation(15)}
       onMouseLeave={() => setElevation(3)}
       sx={{
+        textAlign: "left",
         padding: "10px",
         width: "100%",
         maxWidth: "400px",
@@ -97,6 +98,7 @@ const Article = ({ title, text, imgSrc, onClick }) => {
         height: "170px",
         backgroundColor: "#f3f4ff40",
         display: "flex",
+        gap: 1,
         flexDirection: "row",
         transition: "transform 0.25s ease, box-shadow 0.25s ease",
         "&:hover": {
@@ -111,6 +113,7 @@ const Article = ({ title, text, imgSrc, onClick }) => {
         <Typography
           variant="subtitle1"
           sx={{
+            textAlign: "left",
             display: "-webkit-box",
             overflow: "hidden",
             textOverflow: "ellipsis",
@@ -298,7 +301,7 @@ export default function Contracts() {
                 top: "6.5%",
                 left: 0,
                 right: 0,
-                height: "40px",
+                height: "25px",
                 background:
                   "linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0))",
                 zIndex: 1,
@@ -311,7 +314,7 @@ export default function Contracts() {
                 bottom: "3.3%",
                 left: 0,
                 right: 0,
-                height: "40px",
+                height: "35px",
                 background:
                   "linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0))",
                 zIndex: 1,
