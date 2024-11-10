@@ -1,14 +1,15 @@
 import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
+import { ptBR } from "@mui/x-data-grid/locales";
 import { columns, rows } from "../internals/data/gridData";
 
 export default function CustomizedDataGrid() {
   return (
     <DataGrid
-      autoHeight={true}
       checkboxSelection={true}
       rows={rows}
       columns={columns}
+      localeText={ptBR.components.MuiDataGrid.defaultProps.localeText} // Define a localização
       getRowClassName={(params) =>
         params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
       }
@@ -42,6 +43,11 @@ export default function CustomizedDataGrid() {
               },
             },
           },
+        },
+      }}
+      sx={{
+        "& .MuiPaper-root": {
+          backgroundColor: "#000", // Cor de fundo
         },
       }}
     />

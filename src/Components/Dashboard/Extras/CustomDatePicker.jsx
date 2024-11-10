@@ -1,12 +1,14 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import dayjs from "dayjs";
+import "dayjs/locale/pt-br";
 import Button from "@mui/material/Button";
 import CalendarTodayRoundedIcon from "@mui/icons-material/CalendarTodayRounded";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+
+dayjs.locale("pt-br");
 
 function ButtonField(props) {
   const {
@@ -30,16 +32,12 @@ function ButtonField(props) {
       startIcon={<CalendarTodayRoundedIcon fontSize="small" />}
       sx={{ minWidth: "fit-content" }}
     >
-      {label ? `${label}` : "Pick a date"}
+      {label ? `${label}` : "Escolha uma data"}
     </Button>
   );
 }
 
 ButtonField.propTypes = {
-  /**
-   * Se 'true' o componente será desabilitado.
-   * @default false
-   */
   disabled: PropTypes.bool,
   id: PropTypes.string,
   inputProps: PropTypes.shape({
@@ -58,10 +56,10 @@ export default function CustomDatePicker() {
   const [open, setOpen] = React.useState(false);
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br">
       <DatePicker
         value={value}
-        label={value === null ? null : value.format("MMM DD, YYYY")}
+        label={value === null ? null : value.format("DD MMM, YYYY")}
         onChange={(newValue) => setValue(newValue)}
         slots={{ field: ButtonField }}
         slotProps={{

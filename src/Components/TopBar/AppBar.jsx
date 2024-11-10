@@ -1,4 +1,3 @@
-/* eslint-disable indent */
 import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import {
@@ -24,7 +23,6 @@ import logo from "../../Assets/Logo/TSLogoIcon.svg";
 import { useNavigate } from "react-router-dom";
 import logger from "../../Extras/Debug/debug";
 import PropTypes from "prop-types";
-import "./Styles/AppBar.css";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: "flex",
@@ -161,6 +159,7 @@ export default function AppAppBar({
    */
   const handleMenuClick = (option) => {
     // Verifica a opção selecionada e realiza a ação correspondente
+    /* eslint-disable indent */
     switch (option) {
       case "perfil":
         logger.debug("AppBar - Redirecionando para o perfil: ", userUUID);
@@ -219,6 +218,7 @@ export default function AppAppBar({
       default:
         break;
     }
+    /* eslint-enable indent */
     handleCloseMenu(); // Fecha o menu
   };
 
@@ -455,11 +455,11 @@ export default function AppAppBar({
                   }}
                   anchorOrigin={{
                     vertical: "bottom",
-                    horizontal: "center",
+                    horizontal: "right",
                   }}
                   transformOrigin={{
                     vertical: "top",
-                    horizontal: "center",
+                    horizontal: "right",
                   }}
                 >
                   <MenuItem onClick={() => handleMenuClick("perfil")}>
@@ -663,12 +663,6 @@ export default function AppAppBar({
                         fullWidth={true}
                         onClick={() => {
                           handleMenuClick("entrar");
-                        }}
-                        sx={{
-                          color: "black",
-                          backgroundColor: "transparent",
-                          borderColor: "black",
-                          "&:hover": { borderColor: "#666" },
                         }}
                       >
                         Entrar

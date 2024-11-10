@@ -282,8 +282,13 @@ export default function SignIn() {
       }}
     >
       <Paper
-        elevation={15}
-        sx={{ padding: 4, width: "100%", position: "relative" }}
+        elevation={3}
+        sx={{
+          padding: 4,
+          width: "100%",
+          position: "relative",
+          borderRadius: 2,
+        }}
       >
         {/* Logo e STOPSKILL lado a lado, no canto superior esquerdo */}
         <Box
@@ -481,14 +486,6 @@ export default function SignIn() {
             variant="outlined"
             startIcon={<GoogleIcon />}
             onClick={handleGoogleLogin}
-            sx={{
-              color: "black",
-              backgroundColor: "transparent",
-              borderColor: "black",
-              "&:hover": {
-                borderColor: "#666",
-              },
-            }}
           >
             Entrar com Google
           </Button>

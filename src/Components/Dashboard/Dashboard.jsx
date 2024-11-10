@@ -6,6 +6,7 @@ import SideMenu from "./Extras/SideMenu";
 import SideMenuMobile from "./Extras/SideMenuMobile";
 import { ArrowBackIos as ArrowBackIosIcon } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import "./Styles/Dashboard.css";
 
 export default function Dashboard() {
   const [open, setOpen] = React.useState(false);

@@ -20,10 +20,10 @@ import {
 } from "../internals/Components/CustomIcons";
 
 const data = [
-  { label: "Brasil", value: 63000 },
-  { label: "EUA", value: 25000 },
-  { label: "India", value: 7000 },
-  { label: "Outros", value: 5000 },
+  { label: "Brasil", value: 63 },
+  { label: "EUA", value: 25 },
+  { label: "India", value: 7 },
+  { label: "Outros", value: 5 },
 ];
 
 const countries = [
@@ -31,7 +31,7 @@ const countries = [
     name: "Brasil",
     value: 63,
     flag: <BrazilFlag />,
-    color: "hsl(220, 25%, 30%)",
+    color: "hsl(220, 25%, 65%)",
   },
   {
     name: "EUA",
@@ -43,7 +43,7 @@ const countries = [
     name: "India",
     value: 7,
     flag: <IndiaFlag />,
-    color: "hsl(220, 25%, 65%)",
+    color: "hsl(220, 25%, 30%)",
   },
   {
     name: "Outros",

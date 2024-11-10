@@ -20,7 +20,7 @@ const items = [
     title: "Dashboard",
     description:
       "Com o Dashboard, você tem acesso rápido às métricas e informações mais importantes sobre o seu produto em um só lugar.",
-    imageLight: "",
+    imageLight: "url('https://pub-2f68c1db324345bb8d0fd40f4f1887c8.r2.dev/dash-light.png')",
     imageDark: "",
   },
   {

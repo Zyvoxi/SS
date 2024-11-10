@@ -12,7 +12,6 @@ import {
   RoomOutlined as RoomOutlinedIcon,
   Business as BusinessIcon,
 } from "@mui/icons-material";
-import "./Styles/Profile.css";
 import { useParams, useNavigate } from "react-router-dom";
 import logger from "../../Extras/Debug/debug";
 

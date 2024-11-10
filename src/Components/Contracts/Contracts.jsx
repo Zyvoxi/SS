@@ -9,6 +9,7 @@ import {
   Avatar,
   Container,
   Stack,
+  Rating,
 } from "@mui/material";
 import { alpha } from "@mui/material";
 import SideMenu from "./Extras/SideMenu";
@@ -32,8 +33,10 @@ const ModalRender = ({ show, onClose, article }) => {
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: 400,
-    bgcolor: "background.paper",
+    bgcolor: "rgba(255, 255, 255, 0.6)",
+    backdropFilter: "blur(24px)",
     border: "1px solid lightgray",
+    borderRadius: "10px",
     boxShadow: 24,
     p: 4,
   };
@@ -108,7 +111,7 @@ const Article = ({ title, text, imgSrc, onClick }) => {
       }}
     >
       <Avatar src={imgSrc} alt={title} sx={{ width: 150, height: 150 }} />
-      <Box>
+      <Box display={"flex"} flexDirection={"column"}>
         <Typography variant="h5">{title}</Typography>
         <Typography
           variant="subtitle1"
@@ -123,6 +126,12 @@ const Article = ({ title, text, imgSrc, onClick }) => {
         >
           {text}
         </Typography>
+        <Box display={"flex"} justifyContent={"right"} pt={1}>
+          <Rating
+            defaultValue={Math.round(Math.ceil(Math.random() * (5 - 1) + 1))}
+            readOnly={true}
+          />
+        </Box>
       </Box>
     </Paper>
   );

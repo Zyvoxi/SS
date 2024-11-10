@@ -7,8 +7,8 @@ import Copyright from "../../Footer/Copyright";
 import ContractsByCountry from "./ContractsByCountry";
 import CustomizedDataGrid from "./CustomizedDataGrid";
 import HighlightedCard from "./HighlightedCard";
-import PageViewsBarChart from "./PageViewsBarChart";
-import SessionsChart from "./AvaliationsChart";
+import PageViewsBarChart from "./HiringClientsChart";
+import SessionsChart from "./SatisfactionChart";
 import StatCard from "./StatCard";
 
 const data = [
