@@ -220,7 +220,7 @@ export default function Contracts() {
   // Função para abrir o modal com o artigo selecionado
   const handleArticleClick = (article) => {
     setSelectedArticle(article);
-    setShowModal(true);
+    setShowModal(false); // desativo o modal
   };
 
   // Função para fechar o modal
