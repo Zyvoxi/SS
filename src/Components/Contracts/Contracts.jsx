@@ -313,6 +313,7 @@ export default function Contracts() {
                 height: "25px",
                 background:
                   "linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0))",
+                backdropFilter: "blur(5px)",
                 zIndex: 1,
                 pointerEvents: "none",
               }}
@@ -326,6 +327,7 @@ export default function Contracts() {
                 height: "35px",
                 background:
                   "linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0))",
+                backdropFilter: "blur(5px)",
                 zIndex: 1,
                 pointerEvents: "none",
               }}
