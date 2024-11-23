@@ -114,7 +114,7 @@ export default function Profile() {
               "Profile - Nenhum usuário encontrado, redirecionando para o perfil: ",
               signedUserUUID,
             );
-            navigate(`/users/${signedUserUUID}`); // Redireciona para o perfil do usuário conectado
+            navigate(`/topskill/users/${signedUserUUID}`); // Redireciona para o perfil do usuário conectado
           }
         } catch (error) {
           // Caso ocorra um erro, loga o erro no console

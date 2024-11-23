@@ -28,7 +28,7 @@ const Overview = React.forwardRef(
     React.useEffect(() => {
       const signedUser = localStorage.getItem("userProfile");
       if (signedUser) {
-        return navigate("/dashboard");
+        return navigate("/topskill/dashboard");
       }
     }, [navigate]);
 

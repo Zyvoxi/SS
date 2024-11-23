@@ -68,17 +68,17 @@ const App = () => {
   // Redirecionamento para o perfil
   const RedirectToProfile = () => {
     const { uuid } = useParams();
-    return <Navigate to={`/users/${uuid}/profile`} replace={true} />;
+    return <Navigate to={`/topskill/users/${uuid}/profile`} replace={true} />;
   };
 
   // Definição do roteamento
   const router = createBrowserRouter([
     {
-      path: "/",
-      element: <Navigate to="/overview" replace={true} />,
+      path: "/topskill",
+      element: <Navigate to="/topskill/overview" replace={true} />,
     },
     {
-      path: "/signin",
+      path: "/topskill/signin",
       element: (
         <React.Suspense fallback={<LoadingFallback />}>
           <SignIn />
@@ -86,7 +86,7 @@ const App = () => {
       ),
     },
     {
-      path: "/signup",
+      path: "/topskill/signup",
       element: (
         <React.Suspense fallback={<LoadingFallback />}>
           <SignUp />
@@ -94,7 +94,7 @@ const App = () => {
       ),
     },
     {
-      path: "/dashboard",
+      path: "/topskill/dashboard",
       element: (
         <>
           <React.Suspense>
@@ -109,7 +109,7 @@ const App = () => {
       ),
     },
     {
-      path: "/overview",
+      path: "/topskill/overview",
       element: (
         <>
           <React.Suspense>
@@ -142,7 +142,7 @@ const App = () => {
       ),
     },
     {
-      path: "/contracts",
+      path: "/topskill/contracts",
       element: (
         <>
           <React.Suspense>
@@ -157,7 +157,7 @@ const App = () => {
       ),
     },
     {
-      path: "/blog",
+      path: "/topskill/blog",
       element: (
         <>
           <React.Suspense>
@@ -192,7 +192,7 @@ const App = () => {
       ),
     },
     {
-      path: "/users/:uuid", // Redireciona para o perfil usando RedirectToProfile
+      path: "/topskill/users/:uuid", // Redireciona para o perfil usando RedirectToProfile
       element: (
         <React.Suspense fallback={<LoadingFallback />}>
           <RedirectToProfile />
@@ -200,7 +200,7 @@ const App = () => {
       ),
     },
     {
-      path: "/users/:uuid/profile",
+      path: "/topskill/users/:uuid/profile",
       element: (
         <>
           <React.Suspense>

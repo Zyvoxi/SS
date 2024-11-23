@@ -19,7 +19,7 @@ export default function Dashboard() {
   React.useEffect(() => {
     const signedUser = localStorage.getItem("userProfile");
     // eslint-disable-next-line curly
-    if (!signedUser) return navigate("/overview");
+    if (!signedUser) return navigate("/topskill/overview");
   }, [navigate]);
 
   return (

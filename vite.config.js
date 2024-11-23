@@ -30,7 +30,7 @@ export default defineConfig({
       algorithm: "brotliCompress",
     }),
   ],
-  base: "/",
+  base: "/topskill",
   server: {
     https: {
       key: fs.readFileSync(keyPath),

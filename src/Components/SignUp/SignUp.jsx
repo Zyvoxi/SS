@@ -109,7 +109,7 @@ export default function SignUp() {
         // Salva o perfil do usuário no armazenamento local (apenas para testes, nenhuma informação é enviada a servidores)
         localStorage.setItem("userProfile", JSON.stringify(userProfile));
 
-        navigate("/dashboard"); // Redireciona para a página principal
+        navigate("/topskill/dashboard"); // Redireciona para a página principal
       } catch (error) {
         console.error("SignUp - Erro:", error);
       }
@@ -211,7 +211,7 @@ export default function SignUp() {
           // Salva o perfil do usuário no armazenamento local (apenas para testes)
           localStorage.setItem("userProfile", JSON.stringify(userProfile));
 
-          navigate("/dashboard"); // Redireciona para a página principal
+          navigate("/topskill/dashboard"); // Redireciona para a página principal
         } catch (error) {
           handleFetchError(error);
         }
@@ -224,7 +224,7 @@ export default function SignUp() {
   React.useEffect(() => {
     const signedUser = localStorage.getItem("userProfile");
     if (signedUser) {
-      return navigate("/dashboard");
+      return navigate("/topskill/dashboard");
     }
 
     // Muda a cor do body para preto
@@ -423,7 +423,7 @@ export default function SignUp() {
               component="button"
               type="button"
               onClick={() => {
-                navigate("/signin");
+                navigate("/topskill/signin");
               }}
               underline="none"
               sx={{

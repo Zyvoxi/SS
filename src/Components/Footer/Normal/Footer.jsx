@@ -53,11 +53,11 @@ export default function Footer() {
   const handleFooterClick = (option) => {
     // Verifica a opção selecionada e realiza a ação correspondente
     if (option === "inicio") {
-      navigate("/dashboard"); // Redireciona para a página inicial
+      navigate("/topskill/dashboard"); // Redireciona para a página inicial
     } else if (option === "contratos") {
-      navigate("/contracts");
+      navigate("/topskill/contracts");
     } else if (option === "blog") {
-      navigate("/blog");
+      navigate("/topskill/blog");
     }
   };
 

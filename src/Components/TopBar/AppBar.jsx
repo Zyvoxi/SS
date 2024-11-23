@@ -163,7 +163,7 @@ export default function AppAppBar({
     switch (option) {
       case "perfil":
         logger.debug("AppBar - Redirecionando para o perfil: ", userUUID);
-        navigate(`/users/${userUUID}/profile`); // Redireciona para o perfil do usuário conectado
+        navigate(`/topskill/users/${userUUID}/profile`); // Redireciona para o perfil do usuário conectado
         break;
 
       case "config":
@@ -176,37 +176,37 @@ export default function AppAppBar({
         logger.debug("AppBar - Logout do usuário: ", userUUID);
         setIsUserLoggedIn(false); // Marca o usuário como deslogado
         localStorage.removeItem("userProfile"); // Remove dados do perfil do localStorage
-        navigate("/signin"); // Redireciona para a página de login
+        navigate("/topskill/signin"); // Redireciona para a página de login
         break;
 
       case "inicio":
         logger.debug("AppBar - Redirecionando para a página: Dashboard.");
-        navigate("/dashboard"); // Redireciona para a página inicial
+        navigate("/topskill/dashboard"); // Redireciona para a página inicial
         break;
 
       case "overview":
         logger.debug("AppBar - Redirecionando para a página: Overview.");
-        navigate("/overview"); // Redireciona para a página overview
+        navigate("/topskill/overview"); // Redireciona para a página overview
         break;
 
       case "contratos":
         logger.debug("AppBar - Redirecionando para a página: Contratos.");
-        navigate("/contracts"); // Redireciona para a página de contratos
+        navigate("/topskill/contracts"); // Redireciona para a página de contratos
         break;
 
       case "blog":
         logger.debug("AppBar - Redirecionando para a página: Blog.");
-        navigate("/blog"); // Redireciona para a página do Blog
+        navigate("/topskill/blog"); // Redireciona para a página do Blog
         break;
 
       case "entrar":
         logger.debug("AppBar - Redirecionando para a página: Login.");
-        navigate("/signin"); // Redireciona para a página de login
+        navigate("/topskill/signin"); // Redireciona para a página de login
         break;
 
       case "registrar-se":
         logger.debug("AppBar - Redirecionando para a página: Registro");
-        navigate("/signup"); // Redireciona para a página de registro
+        navigate("/topskill/signup"); // Redireciona para a página de registro
         break;
 
       case "faq":
