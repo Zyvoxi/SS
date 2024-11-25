@@ -235,6 +235,7 @@ export default function SignUp() {
     const loadGoogleScript = () => {
       const script = document.createElement("script");
       script.src = "https://accounts.google.com/gsi/client"; // URL do script do Google
+      script.nonce = "nonce-P31415926535";
       script.async = true; // Carrega o script de forma assíncrona
       script.defer = true; // Atrasar a execução do script até que o documento seja analisado
       script.onload = () => {
