@@ -93,8 +93,8 @@ export default function FAQ() {
             >
               Absolutamente! Oferecemos uma política de devolução sem
               complicações. Se você não estiver completamente satisfeito, pode
-              devolver o produto dentro de [número de dias] dias para um
-              reembolso total ou troca.
+              devolver o produto dentro de 30 dias para um reembolso total ou
+              troca.
             </Typography>
           </AccordionDetails>
         </Accordion>
@@ -143,10 +143,10 @@ export default function FAQ() {
               gutterBottom={true}
               sx={{ maxWidth: { sm: "100%", md: "70%" } }}
             >
-              Sim, nosso produto vem com uma garantia de [duração da garantia].
-              Ela cobre defeitos de materiais e mão de obra. Se você encontrar
-              qualquer problema coberto pela garantia, entre em contato com
-              nosso suporte ao cliente para assistência.
+              Sim, nosso produto vem com uma garantia de 1 ano. Ela cobre
+              defeitos de materiais e mão de obra. Se você encontrar qualquer
+              problema coberto pela garantia, entre em contato com nosso suporte
+              ao cliente para assistência.
             </Typography>
           </AccordionDetails>
         </Accordion>

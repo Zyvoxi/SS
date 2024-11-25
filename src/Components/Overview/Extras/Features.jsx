@@ -20,7 +20,7 @@ const items = [
     title: "Dashboard",
     description:
       "Com o Dashboard, você tem acesso rápido às métricas e informações mais importantes sobre o seu produto em um só lugar.",
-    imageLight: "url('https://pub-2f68c1db324345bb8d0fd40f4f1887c8.r2.dev/dash-light.png')",
+    imageLight: "url('https://r2.storage.zyvoxi.com/dash-light.png')",
     imageDark: "",
   },
   {
@@ -158,9 +158,9 @@ export default function Features() {
           variant="body1"
           sx={{ color: "text.secondary", mb: { xs: 2, sm: 4 } }}
         >
-          Descubra as principais funcionalidades que o TOPSKILL oferece para você! 
+          Descubra as principais funcionalidades que o TOPSKILL oferece para você!
           Desde ferramentas que facilitam seu aprendizado até recursos exclusivos que
-          potencializam suas habilidades, temos tudo que você precisa para se destacar 
+          potencializam suas habilidades, temos tudo que você precisa para se destacar
           no mercado.
         </Typography>
 

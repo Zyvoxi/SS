@@ -23,7 +23,7 @@ import {
 import logger from "../../../Extras/Debug/debug";
 
 const cardResponse = await fetch(
-  "https://pub-2f68c1db324345bb8d0fd40f4f1887c8.r2.dev/Jsons/CardData.json",
+  "https://r2.storage.zyvoxi.com/Jsons/CardData.json",
 );
 const card = await cardResponse.json();
 

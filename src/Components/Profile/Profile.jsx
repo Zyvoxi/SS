@@ -84,7 +84,7 @@ export default function Profile() {
       const fetchUserData = async () => {
         try {
           const data = fetchAndProcessData(
-            "https://pub-2f68c1db324345bb8d0fd40f4f1887c8.r2.dev/Jsons/users.json",
+            "https://r2.storage.zyvoxi.com/Jsons/users.json",
           ); // Busca os dados do usuário a partir da API externa
 
           // Encontra o usuário correspondente ao UUID na lista de usuários

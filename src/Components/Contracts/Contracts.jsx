@@ -184,7 +184,7 @@ export default function Contracts() {
     const fetchUsersData = async () => {
       try {
         const response = await fetch(
-          "https://pub-2f68c1db324345bb8d0fd40f4f1887c8.r2.dev/Jsons/users.json",
+          "https://r2.storage.zyvoxi.com/Jsons/users.json",
         );
 
         // eslint-disable-next-line curly, prettier/prettier
@@ -304,34 +304,6 @@ export default function Contracts() {
             <Typography component="h2" variant="h6" sx={{ mb: 2 }}>
               Contratos
             </Typography>
-            <Box
-              sx={{
-                position: "absolute",
-                top: "6.5%",
-                left: 0,
-                right: 0,
-                height: "25px",
-                background:
-                  "linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(200, 200, 200, 0.1), rgba(255, 255, 255, 0))",
-                backdropFilter: "blur(3px)",
-                zIndex: 1,
-                pointerEvents: "none",
-              }}
-            />
-            <Box
-              sx={{
-                position: "absolute",
-                bottom: "3.3%",
-                left: 0,
-                right: 0,
-                height: "35px",
-                background:
-                  "linear-gradient(to top, rgba(255, 255, 255, 1), rgba(200, 200, 200, 0.1), rgba(255, 255, 255, 0))",
-                backdropFilter: "blur(3px)",
-                zIndex: 1,
-                pointerEvents: "none",
-              }}
-            />
             <Box
               sx={{
                 overflowY: "auto",

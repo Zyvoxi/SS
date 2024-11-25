@@ -10,7 +10,7 @@ import { styled } from "@mui/material/styles";
 import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
 
 const articleResponse = await fetch(
-  "https://pub-2f68c1db324345bb8d0fd40f4f1887c8.r2.dev/Jsons/articleInfo.json",
+  "https://r2.storage.zyvoxi.com/Jsons/articleInfo.json",
 );
 const articleInfo = await articleResponse.json();
 

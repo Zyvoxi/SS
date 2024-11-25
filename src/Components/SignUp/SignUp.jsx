@@ -78,10 +78,10 @@ export default function SignUp() {
         const userId = crypto.randomUUID(); // Gera um UUID único para o usuário
 
         const companiesData = await fetchAndProcessData(
-          "https://pub-2f68c1db324345bb8d0fd40f4f1887c8.r2.dev/Jsons/Companies.json",
+          "https://r2.storage.zyvoxi.com/Jsons/Companies.json",
         );
         const skillsData = await fetchAndProcessData(
-          "https://pub-2f68c1db324345bb8d0fd40f4f1887c8.r2.dev/Jsons/Skills.json",
+          "https://r2.storage.zyvoxi.com/Jsons/Skills.json",
         );
 
         // Seleciona uma empresa e uma habilidade aleatoriamente
@@ -181,10 +181,10 @@ export default function SignUp() {
 
         try {
           const companiesData = await fetchAndProcessData(
-            "https://pub-2f68c1db324345bb8d0fd40f4f1887c8.r2.dev/Jsons/Companies.json",
+            "https://r2.storage.zyvoxi.com/Jsons/Companies.json",
           );
           const skillsData = await fetchAndProcessData(
-            "https://pub-2f68c1db324345bb8d0fd40f4f1887c8.r2.dev/Jsons/Skills.json",
+            "https://r2.storage.zyvoxi.com/Jsons/Skills.json",
           );
 
           // Seleciona uma empresa e uma habilidade aleatoriamente
