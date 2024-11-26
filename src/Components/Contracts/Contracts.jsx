@@ -165,7 +165,7 @@ export default function Contracts() {
     const signedUser = localStorage.getItem("userProfile");
 
     // eslint-disable-next-line curly
-    if (!signedUser) return navigate("/overview");
+    if (!signedUser) return navigate("/topskill/overview");
 
     const handleScroll = () => {
       const SCROLL_OFFSET_THRESHOLD = 1000;
